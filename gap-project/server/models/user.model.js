@@ -7,12 +7,38 @@ const Schema = mongoose.Schema;
 // example
 const userSchema = new Schema({
 
-    username: {
+    firstName: {
         type: String,
+        trim: true,
+    },
+    lastName: {
+        type: String,
+        trim: true,
+    },
+    phoneNumber: {
+        type: String,
+        trim: true,
+    },
+    email: {
+        type: String,
+        trime: true,
+    },
+    birthday: {
+        type: Date,
+    },
+    role: {
+        type: String,
+        enum: ['patient', 'admin', 'pharmacist', 'intake'],
         required: true,
-        unique: true,
-        trim: true, //trim the whitespace at the end
-        minlength: 3
+    },
+    checkinList: {
+        type: Array,
+    },
+    infusionType: {
+        type: Array,
+    },
+    notification: {
+        type: Array
     },
 }, {
     timestamps: true,
