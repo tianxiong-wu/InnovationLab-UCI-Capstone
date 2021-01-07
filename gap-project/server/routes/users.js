@@ -5,21 +5,22 @@ let User = require('../models/user.model');
 router.route('/all').get((req, res) => {
     User.find()
         .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(500).json('Error: ' + err));
 });
 
 //find user by ID
 router.route('/:id').get((req, res) =>{
     User.findById(req.params.id)
         .then(user => res.json(user))
-        .catch(err => res.status(400).json('Error: '+ err));
+        .catch(err => res.status(500).json('Error: ' + err));
 });
 
 //find users by role [patient, admin, pharmacist, intake]
 router.route('/all/:role').get((req, res) =>{
     User.find().where('role').equals(req.params.role.toLowerCase())
         .then(users => res.json(users))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(500).json('Error: ' + err));
 });
 
 //TODO: need to match with registration info
@@ -34,10 +35,8 @@ router.route('/register').post((req, res) => {
     const checkinList = [];
     const infusionType = [];
     const notification = [];
-    // some other examples
-    // const description = req.body.description;
-    // const duration = Number(req.body.duration);
-    // const date = Date.parse(req.body.date)
+    
+    // TODO: add validation 
 
     const newUser = new User({
         firstName,
@@ -49,16 +48,12 @@ router.route('/register').post((req, res) => {
         checkinList,
         infusionType,
         notification});
-    /* const newUser = new User({
-        username,
-        descriptoion,
-        duration,
-        date,
-    })*/
+   
 
     newUser.save()
-        .then(() => res.json('User added'))
-        .catch(err => res.status(400).json('Error: ' + err));
+        .then(() => res.json(newUser))
+        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(500).json('Error: ' + err));
 });
 
 module.exports = router;
