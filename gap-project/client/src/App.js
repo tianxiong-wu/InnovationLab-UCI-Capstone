@@ -1,13 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
+import Nav from './components/nav/nav';
 
 function App() {
   return (
-    <div className="App">
+    <Nav/>
+  );
+}
+
+export default App;
+/**
+ <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Hellp world
+          Hello world
         </p>
         <a
           className="App-link"
@@ -19,7 +26,4 @@ function App() {
         </a>
       </header>
     </div>
-  );
-}
-
-export default App;
+ */
