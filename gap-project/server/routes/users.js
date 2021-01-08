@@ -23,6 +23,31 @@ router.route('/all/:role').get((req, res) =>{
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
+//delete a user
+router.route('/delete/:id').post((req, res) =>{
+    User.findByIdAndDelete(req.params.id)
+        .then(() => res.json('User deleted.'))
+        .catch(err => res.status(400).json('Error: ' + err))
+});
+
+
+//update user info
+// WILL NOT THROW ERROR & UPDATE IF YOU TRY TO CHANGE OTHER FIELDS
+router.route('/update/:id').post((req, res) =>{
+    User.findById(req.params.id).then(user =>{
+        user.phoneNumber = req.body.phoneNumber;
+        user.email = req.body.email;
+        user.birthday = req.body.birthday;
+
+        user.save()
+            .then(() => res.json(user))
+            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(500).json('Error: ' + err));
+});
+
 //TODO: need to match with registration info
 //code below for testing
 router.route('/register').post((req, res) => {
