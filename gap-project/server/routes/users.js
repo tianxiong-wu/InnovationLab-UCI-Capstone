@@ -32,12 +32,17 @@ router.route('/delete/:id').post((req, res) =>{
 
 
 //update user info
+// TODO: OVERRIDE OTHER FIELDS IF LEFT EMPTY
 // WILL NOT THROW ERROR & UPDATE IF YOU TRY TO CHANGE OTHER FIELDS
 router.route('/update/:id').post((req, res) =>{
     User.findById(req.params.id).then(user =>{
+        
         user.phoneNumber = req.body.phoneNumber;
         user.email = req.body.email;
         user.birthday = req.body.birthday;
+        user.checkinList = req.body.checkinList;
+        user.infusionType = req.body.infusionType;
+        user.notification = req.body.notification;
 
         user.save()
             .then(() => res.json(user))
