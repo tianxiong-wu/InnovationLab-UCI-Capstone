@@ -30,19 +30,15 @@ router.route('/delete/:id').post((req, res) =>{
         .catch(err => res.status(400).json('Error: ' + err))
 });
 
-
-//update user info
-// TODO: OVERRIDE OTHER FIELDS IF LEFT EMPTY
+// ! - NEED TO REUPLOAD SAME DATA FROM FRONTEND
+// update user info
+// OVERRIDE OTHER FIELDS IF LEFT EMPTY
 // WILL NOT THROW ERROR & UPDATE IF YOU TRY TO CHANGE OTHER FIELDS
-router.route('/update/:id').post((req, res) =>{
-    User.findById(req.params.id).then(user =>{
-        
+router.route('/updateInfo/:id').post((req, res) =>{
+    User.findByIdAndUpdate(req.params.id).then(user =>{
         user.phoneNumber = req.body.phoneNumber;
         user.email = req.body.email;
         user.birthday = req.body.birthday;
-        user.checkinList = req.body.checkinList;
-        user.infusionType = req.body.infusionType;
-        user.notification = req.body.notification;
 
         user.save()
             .then(() => res.json(user))
@@ -53,7 +49,7 @@ router.route('/update/:id').post((req, res) =>{
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
-//TODO: need to match with registration info
+//TODO: need to match with registration info and auth API
 //code below for testing
 router.route('/register').post((req, res) => {
     const firstName = req.body.firstName;
