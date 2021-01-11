@@ -10,18 +10,22 @@ const userSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
+        required: true
     },
     lastName: {
         type: String,
         trim: true,
+        required: true
     },
     phoneNumber: {
         type: String,
         trim: true,
+        required: true
     },
     email: {
         type: String,
         trime: true,
+        required: true
     },
     birthday: {
         type: Date,
@@ -31,10 +35,7 @@ const userSchema = new Schema({
         enum: ['patient', 'admin', 'pharmacist', 'intake'],
         required: true,
     },
-    checkinList: {
-        type: Array,
-    },
-    infusionType: {
+    infusionArray: {
         type: Array,
     },
     notification: {

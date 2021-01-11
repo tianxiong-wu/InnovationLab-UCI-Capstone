@@ -77,8 +77,7 @@ router.route('/register').post((req, res) => {
     const email = req.body.email;
     const birthday = Date.parse(req.body.birthday);
     const role = req.body.role.toLowerCase();
-    const checkinList = [];
-    const infusionType = [];
+    const infusionArray = [];
     const notification = [];
     
     // TODO: add validation 
@@ -90,8 +89,7 @@ router.route('/register').post((req, res) => {
         email,
         birthday,
         role,
-        checkinList,
-        infusionType,
+        infusionArray,
         notification});
    
 
