@@ -51,13 +51,9 @@ router.route('/updateInfo/:id').post((req, res) =>{
 
 // ! - NEED TO REUPLOAD SAME DATA FROM FRONTEND
 // update user infusion info
-// OVERRIDE OTHER FIELDS IF LEFT EMPTY
-// WILL NOT THROW ERROR & UPDATE IF YOU TRY TO CHANGE OTHER FIELDS
 router.route('/updateInfusion/:id').post((req, res) =>{
     User.findByIdAndUpdate(req.params.id).then(user =>{
-        user.checkinList = req.body.checkinList;
         user.infusionType = req.body.infusionType;
-        user.notification = req.body.notification;
 
         user.save()
             .then(() => res.json(user))
@@ -67,6 +63,19 @@ router.route('/updateInfusion/:id').post((req, res) =>{
     .catch(err => res.status(400).json('Error: ' + err))
     .catch(err => res.status(500).json('Error: ' + err));
 });
+
+// update user notification 
+router.route('/updateNotification/:id').post((req, res) =>{
+    User.findByIdAndUpdate(req.params.id).then(user => {
+        user.notification = req.body.notification;
+        user.save()
+            .then(() => res.json(user))
+            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(500).json('Error: ' + err));
+})
 
 //TODO: need to match with registration info and auth API
 //code below for testing
