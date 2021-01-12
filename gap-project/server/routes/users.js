@@ -23,6 +23,8 @@ router.route('/all/:role').get((req, res) =>{
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
+
+
 //delete a user
 router.route('/delete/:id').post((req, res) =>{
     User.findByIdAndDelete(req.params.id)
@@ -53,7 +55,7 @@ router.route('/updateInfo/:id').post((req, res) =>{
 // update user infusion info
 router.route('/updateInfusion/:id').post((req, res) =>{
     User.findByIdAndUpdate(req.params.id).then(user =>{
-        user.infusionType = req.body.infusionType;
+        user.infusionArray = req.body.infusionArray;
 
         user.save()
             .then(() => res.json(user))
