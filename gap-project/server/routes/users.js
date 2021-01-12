@@ -23,7 +23,21 @@ router.route('/all/:role').get((req, res) =>{
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
+// get user's infusion list via id
+router.route('/infusion/:id').get((req, res) => {
+    User.findById(req.params.id).where('infusionArray')
+        .then(user => res.json(user.infusionArray))
+        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(500).json('Error: ' + err));
+});
 
+// get user's notification list via id
+router.route('/notification/:id').get((req, res) => {
+    User.findById(req.params.id).where('notification')
+        .then(user => res.json(user.infusionArray))
+        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(500).json('Error: ' + err));
+});
 
 //delete a user
 router.route('/delete/:id').post((req, res) =>{
