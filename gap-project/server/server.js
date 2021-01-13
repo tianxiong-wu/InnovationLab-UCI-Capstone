@@ -24,11 +24,12 @@ connection.once('open', () => {
 
 // routers
 const usersRouter = require('./routes/users');
+const tutorialsRouter = require('./routes/tutorials');
 
 
 
 
-
+app.use('/tutorials', tutorialsRouter);
 app.use('/users', usersRouter);
 
 
