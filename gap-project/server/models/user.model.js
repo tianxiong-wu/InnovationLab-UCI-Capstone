@@ -3,6 +3,15 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const infusionSchema = new Schema({
+    infusion: {
+        type: tutorial.schema,
+        required: true,
+    },
+    note: {
+        type: String,
+    }
+});
 // example
 const userSchema = new Schema({
 
@@ -25,7 +34,6 @@ const userSchema = new Schema({
         type: String,
         trime: true,
         required: true,
-        unique: true
     },
     birthday: {
         type: Date,
@@ -36,7 +44,7 @@ const userSchema = new Schema({
         required: true,
     },
     infusionArray: {
-        type: [tutorial.schema],
+        type: [infusionSchema],
     },
     notification: {
         type: Array
