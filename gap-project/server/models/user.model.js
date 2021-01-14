@@ -41,6 +41,25 @@ const userSchema = new Schema({
     notification: {
         type: Array
     },
+    gender: {
+        type: String,
+        enum: ['male', 'female', 'others'],
+        required: true,
+    },
+    recentCheckIn: {
+        type: Date,
+        required: true,
+    },
+    nextCheckin: {
+        type: Date,
+        required: true,
+    },
+    notificationType: {
+        type: String,
+        enum: ['text', 'email', 'both', 'none'],
+        required: true,
+        default: 'both'
+    }
 }, {
     timestamps: true,
 });

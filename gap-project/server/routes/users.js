@@ -91,7 +91,19 @@ router.route('/updateNotification/:id').post((req, res) =>{
     })
     .catch(err => res.status(400).json('Error: ' + err))
     .catch(err => res.status(500).json('Error: ' + err));
-})
+});
+// update next check in 
+router.route('/updateCheckin/:id').post((req, res) =>{
+    User.findByIdAndUpdate(req.params.id).then(user => {
+        user.nextCheckin = req.body.nextCheckin;
+        user.save()
+            .then(() => res.json(user))
+            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(500).json('Error: ' + err));
+});
 
 //TODO: need to match with registration info and auth API
 //code below for testing
@@ -102,8 +114,13 @@ router.route('/register').post((req, res) => {
     const email = req.body.email;
     const birthday = Date.parse(req.body.birthday);
     const role = req.body.role.toLowerCase();
-    const infusionArray = [];
+    const infusionArray = req.body.infusionArray;
     const notification = [];
+    const gender = req.body.gender;
+    const recentCheckIn = Date.parse(req.body.recentCheckIn);
+    const nextCheckin = Date.parse(req.body.nextCheckin);
+    const notificationType = req.body.notificationType;
+
     
     // TODO: add validation 
 
@@ -115,7 +132,11 @@ router.route('/register').post((req, res) => {
         birthday,
         role,
         infusionArray,
-        notification});
+        notification,
+        gender,
+        recentCheckIn,
+        nextCheckin,
+        notificationType});
    
 
     newUser.save()
