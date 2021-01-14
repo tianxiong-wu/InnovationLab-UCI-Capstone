@@ -50,7 +50,7 @@ const userSchema = new Schema({
         type: Date,
         required: true,
     },
-    nextCheckin: {
+    nextCheckIn: {
         type: Date,
         required: true,
     },

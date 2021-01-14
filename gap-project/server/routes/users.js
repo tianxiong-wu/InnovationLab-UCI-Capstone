@@ -118,7 +118,7 @@ router.route('/register').post((req, res) => {
     const notification = [];
     const gender = req.body.gender;
     const recentCheckIn = Date.parse(req.body.recentCheckIn);
-    const nextCheckin = Date.parse(req.body.nextCheckin);
+    const nextCheckIn = Date.parse(req.body.nextCheckIn);
     const notificationType = req.body.notificationType;
 
     
@@ -135,7 +135,7 @@ router.route('/register').post((req, res) => {
         notification,
         gender,
         recentCheckIn,
-        nextCheckin,
+        nextCheckIn,
         notificationType});
    
 
