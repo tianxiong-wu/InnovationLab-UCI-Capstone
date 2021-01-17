@@ -38,6 +38,10 @@ const patientSchema = new Schema({
     birthday: {
         type: Date,
     },
+    role: {
+        type: String,
+        default: 'patient'
+    },
     infusionArray: {
         type: [infusionSchema],
     },

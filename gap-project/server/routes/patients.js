@@ -4,14 +4,14 @@ let Patient = require('../models/patient.model');
 //get all users in database
 router.route('/all').get((req, res) => {
     Patient.find()
-        .then(users => res.json(users))
+        .then(patients => res.json(patients))
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
 //find user by ID
 router.route('/:id').get((req, res) =>{
     Patient.findById(req.params.id)
-        .then(user => res.json(user))
+        .then(patient => res.json(patient))
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
@@ -27,7 +27,7 @@ router.route('/all/:role').get((req, res) =>{
 // get user's infusion list via id
 router.route('/infusion/:id').get((req, res) => {
     Patient.findById(req.params.id).where('infusionArray')
-        .then(user => res.json(user.infusionArray))
+        .then(patient => res.json(patient.infusionArray))
         .catch(err => res.status(400).json('Error: ' + err))
         .catch(err => res.status(500).json('Error: ' + err));
 });
@@ -35,7 +35,7 @@ router.route('/infusion/:id').get((req, res) => {
 // get user's notification list via id
 router.route('/notification/:id').get((req, res) => {
     Patient.findById(req.params.id).where('notification')
-        .then(user => res.json(user.infusionArray))
+        .then(patient => res.json(patient.infusionArray))
         .catch(err => res.status(400).json('Error: ' + err))
         .catch(err => res.status(500).json('Error: ' + err));
 });
@@ -52,13 +52,13 @@ router.route('/delete/:id').post((req, res) =>{
 // OVERRIDE OTHER FIELDS IF LEFT EMPTY
 // WILL NOT THROW ERROR & UPDATE IF YOU TRY TO CHANGE OTHER FIELDS
 router.route('/updateInfo/:id').post((req, res) =>{
-    Patient.findByIdAndUpdate(req.params.id).then(user =>{
-        user.phoneNumber = req.body.phoneNumber;
-        user.email = req.body.email;
-        user.birthday = req.body.birthday;
+    Patient.findByIdAndUpdate(req.params.id).then(patient =>{
+        patient.phoneNumber = req.body.phoneNumber;
+        patient.email = req.body.email;
+        patient.birthday = req.body.birthday;
 
-        user.save()
-            .then(() => res.json(user))
+        patient.save()
+            .then(() => res.json(patient))
             .catch(err => res.status(400).json('Error: ' + err))
             .catch(err => res.status(500).json('Error: ' + err));
     })
@@ -69,11 +69,11 @@ router.route('/updateInfo/:id').post((req, res) =>{
 // ! - NEED TO REUPLOAD SAME DATA FROM FRONTEND
 // update user infusion info
 router.route('/updateInfusion/:id').post((req, res) =>{
-    Patient.findByIdAndUpdate(req.params.id).then(user =>{
-        user.infusionArray = req.body.infusionArray;
+    Patient.findByIdAndUpdate(req.params.id).then(patient =>{
+        patient.infusionArray = req.body.infusionArray;
 
-        user.save()
-            .then(() => res.json(user))
+        patient.save()
+            .then(() => res.json(patient))
             .catch(err => res.status(400).json('Error: ' + err))
             .catch(err => res.status(500).json('Error: ' + err));
     })
@@ -83,10 +83,10 @@ router.route('/updateInfusion/:id').post((req, res) =>{
 
 // update user notification 
 router.route('/updateNotification/:id').post((req, res) =>{
-    Patient.findByIdAndUpdate(req.params.id).then(user => {
-        user.notification = req.body.notification;
-        user.save()
-            .then(() => res.json(user))
+    Patient.findByIdAndUpdate(req.params.id).then(patient => {
+        patient.notification = req.body.notification;
+        patient.save()
+            .then(() => res.json(patient))
             .catch(err => res.status(400).json('Error: ' + err))
             .catch(err => res.status(500).json('Error: ' + err));
     })
@@ -95,10 +95,10 @@ router.route('/updateNotification/:id').post((req, res) =>{
 });
 // update next check in 
 router.route('/updateCheckin/:id').post((req, res) =>{
-    Patient.findByIdAndUpdate(req.params.id).then(user => {
-        user.nextCheckin = req.body.nextCheckin;
-        user.save()
-            .then(() => res.json(user))
+    Patient.findByIdAndUpdate(req.params.id).then(patient => {
+        patient.nextCheckin = req.body.nextCheckin;
+        patient.save()
+            .then(() => res.json(patient))
             .catch(err => res.status(400).json('Error: ' + err))
             .catch(err => res.status(500).json('Error: ' + err));
     })
@@ -114,7 +114,7 @@ router.route('/register').post((req, res) => {
     const phoneNumber = req.body.phoneNumber;
     const email = req.body.email;
     const birthday = Date.parse(req.body.birthday);
-    //const role = req.body.role.toLowerCase();
+    const role = req.body.role.toLowerCase();
     const infusionArray = req.body.infusionArray;
     const notification = [];
     const gender = req.body.gender;
@@ -132,7 +132,7 @@ router.route('/register').post((req, res) => {
         phoneNumber,
         email,
         birthday,
-        //role,
+        role,
         infusionArray,
         notification,
         gender,
