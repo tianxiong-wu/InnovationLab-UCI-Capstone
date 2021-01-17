@@ -1,13 +1,14 @@
 import logo from './logo.svg';
 import './App.css';
 import Nav from './components/nav/nav';
-
+import FAQ from './pages/FAQ/FAQ';
 function App() {
-  return (
+  return (<>
     <Nav/>
+    <FAQ />
+    </>
   );
 }
-
 export default App;
 /**
  <div className="App">
