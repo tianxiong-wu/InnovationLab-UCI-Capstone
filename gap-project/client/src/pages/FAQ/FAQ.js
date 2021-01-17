@@ -111,6 +111,7 @@ const FAQ = () => {
             <SearchBar
                 className={classes.searchBar}
                 value={value}
+                type='text'
                 onChange={(newValue) => setValue(newValue)}
                 onRequestSearch={() => handleSearch(value)}
             >
