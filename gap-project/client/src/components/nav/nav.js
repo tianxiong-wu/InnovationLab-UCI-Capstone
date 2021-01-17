@@ -11,6 +11,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+
+import {
+  Link
+} from "react-router-dom";
 import '../nav/nav.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -56,19 +60,19 @@ export default function MenuAppBar() {
             Icon
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Home</a>
+            <Link className="navItem" to="/">Home</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Tutorials</a>
+            <Link className="navItem" href="#">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Link</a>
+            <Link className="navItem">Link</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">FAQ</a>
+            <Link className="navItem"  to="/faq">FAQ</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Contact</a>
+            <Link className="navItem" href="#">Contact</Link>
         </Typography>
           {auth && (
             <div>
