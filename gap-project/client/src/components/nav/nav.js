@@ -66,7 +66,7 @@ export default function MenuAppBar() {
             <Link className="navItem" href="#">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <Link className="navItem">Link</Link>
+            <Link className="navItem">Schedule</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
             <Link className="navItem"  to="/faq">FAQ</Link>

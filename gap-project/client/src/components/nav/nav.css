@@ -1,8 +1,10 @@
 .navStyling{
     margin: 0 2% !important;
+    text-align: center;
 }
 
 .navItem{
     text-decoration: none;
+    font-family: 'roboto';
     color: white;
 }
