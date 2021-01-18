@@ -62,7 +62,7 @@ export default function MenuAppBar() {
             <a className="navItem" href="#">Tutorials</a>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Link</a>
+            <a className="navItem" href="#">Schedule</a>
         </Typography>
         <Typography variant="h6" className={classes.title}>
             <a className="navItem" href="#">FAQ</a>
@@ -96,10 +96,10 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Jasmine Miller</MenuItem>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
-                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Jasmine Miller</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Profile</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Settings</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Log Out</MenuItem>
               </Menu>
             </div>
           )}
