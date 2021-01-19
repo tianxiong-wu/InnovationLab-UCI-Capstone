@@ -35,7 +35,15 @@ router.route('/infusion/:id').get((req, res) => {
 // get user's notification list via id
 router.route('/notification/:id').get((req, res) => {
     Patient.findById(req.params.id).where('notification')
-        .then(patient => res.json(patient.infusionArray))
+        .then(patient => res.json(patient.notification))
+        .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(500).json('Error: ' + err));
+});
+
+// get user's pharmacist
+router.route('/assignedPharmacist/:id').get((req, res) =>{
+    Patient.findById(req.params.id).where('assignedPharmacist')
+        .then(patient => res.json(patient.assignedPharmacist))
         .catch(err => res.status(400).json('Error: ' + err))
         .catch(err => res.status(500).json('Error: ' + err));
 });
