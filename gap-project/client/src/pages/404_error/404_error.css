@@ -1,16 +1,17 @@
-.error_Container{
-	/*display: flex;
-	flex-direction: column;
-	justify-content: center;
+.errorContainer{
+	display: flex;
 	align-items: center;
-	border: 1px solid black;*/
+  justify-content: center;
+  height: 100vh;
+
 }
 
 .errorMessage{
-	/*width: 55%;
+  color: #00529B;
+  font-weight: bold;
+/*width: 55%;
 	height: 150px;
 	font-size: 48px;
 	text-align: center;
-	border: 1px solid black;
 	padding: 20px 0 40px 0;*/
 }
