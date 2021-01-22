@@ -1,0 +1,62 @@
+.profileContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.leftContainer {
+
+  width: 40%;
+  margin: 20px;
+  height: 70vh;
+
+}
+
+.rightContainer {
+  border: 5px solid #00529B;
+  width: 40%;
+  margin: 20px;
+  height: 70vh;
+  border-radius: 25px;
+}
+
+.infoContainer{
+  height: 40%;
+}
+
+.scheduleOutline {
+  border: 5px solid #00529B;
+  height: 55%;
+  margin-top: 20px;
+  border-radius: 25px 25px 0px 0px;
+
+}
+
+.scheduleContainer{
+  background-color: #00529B;
+  color: #ffffff;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px 25px 0px 0px;
+
+}
+
+.tutorialContainer {
+  justify-content: flex-end;
+  background-color: #00529B;
+  color: #ffffff;
+  height: 10%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px 25px 0px 0px;
+}
+
+.firstName, .lastName {
+  font-size: 2em;
+}
+
+.pharmacy, .email, .phone, .tutorialContainer, .scheduleContainer{
+  font-size: 1.5em;
+}

@@ -10,11 +10,12 @@ import {
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
+import Profile from './pages/profile/profile';
 function App() {
   return (<>
 
   <Router>
-      <Nav/>  
+      <Nav/>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -29,9 +30,10 @@ function App() {
             Home
           </Route>
         </Switch>
+      <Profile/>
     </Router>
- 
- 
+
+
     </>
   );
 }
