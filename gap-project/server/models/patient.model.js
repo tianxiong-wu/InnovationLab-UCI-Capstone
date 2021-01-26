@@ -12,8 +12,8 @@ const infusionSchema = new Schema({
         type: String,
     }
 });
-// example
-const userSchema = new Schema({
+// patient
+const patientSchema = new Schema({
 
     firstName: {
         type: String,
@@ -40,8 +40,7 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['patient', 'admin', 'pharmacist', 'intake'],
-        required: true,
+        default: 'patient'
     },
     infusionArray: {
         type: [infusionSchema],
@@ -67,11 +66,14 @@ const userSchema = new Schema({
         enum: ['text', 'email', 'both', 'none'],
         required: true,
         default: 'both'
+    },
+    assignedPharmacist: {
+        type: String
     }
 }, {
     timestamps: true,
 });
 
-const User = mongoose.model('User', userSchema);
+const Patient = mongoose.model('Patient', patientSchema);
 
-module.exports = User;
+module.exports = Patient;

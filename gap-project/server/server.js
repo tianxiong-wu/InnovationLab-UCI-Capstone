@@ -23,14 +23,18 @@ connection.once('open', () => {
 
 
 // routers
-const usersRouter = require('./routes/users');
+const patientsRouter = require('./routes/patients');
 const tutorialsRouter = require('./routes/tutorials');
+const pharmacistsRouter = require('./routes/pharmacists');
+const pharmacyRouter = require('./routes/pharmacy');
 
 
 
 
 app.use('/tutorials', tutorialsRouter);
-app.use('/users', usersRouter);
+app.use('/patients', patientsRouter);
+app.use('/pharmacists', pharmacistsRouter);
+app.use('/pharmacy', pharmacyRouter);
 
 
 

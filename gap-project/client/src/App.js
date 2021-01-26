@@ -1,13 +1,40 @@
 import logo from './logo.svg';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 import './App.css';
 import Nav from './components/nav/nav';
-
+import FAQ from './pages/FAQ/FAQ';
 function App() {
-  return (
-    <Nav/>
+  return (<>
+
+  <Router>
+      <Nav/>  
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/faq">
+          <FAQ />
+          </Route>
+          <Route path="/users">
+            User
+          </Route>
+          <Route path="/">
+            Home
+          </Route>
+        </Switch>
+    </Router>
+ 
+ 
+    </>
   );
 }
-
 export default App;
 /**
  <div className="App">
