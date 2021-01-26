@@ -10,6 +10,7 @@ import {
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
+import Tutorials from './pages/Tutorial_List/Tutorial_List'
 function App() {
   return (<>
 
@@ -22,8 +23,11 @@ function App() {
           <Route path="/faq">
           <FAQ />
           </Route>
-          <Route path="/users">
-            User
+          <Route path="/Schedule">
+            Schedule
+          </Route>
+          <Route path="/tutorials">
+            <Tutorials/>
           </Route>
           <Route path="/">
             Home
