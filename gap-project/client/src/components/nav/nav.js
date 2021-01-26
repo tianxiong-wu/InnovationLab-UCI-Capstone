@@ -56,23 +56,23 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className="navStyling">
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        <IconButton edge="start" className={classes.menuButton} color="#00529b" aria-label="menu">
             Icon
         </IconButton>
         <Typography variant="h6" className={classes.title}>
             <Link className="navItem" to="/">Home</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <Link className="navItem" href="#">Tutorials</Link>
+            <Link className="navItem" to="/tutorials">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <Link className="navItem">Link</Link>
+            <Link className="navItem" to="/schedule">Schedule</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
             <Link className="navItem"  to="/faq">FAQ</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <Link className="navItem" href="#">Contact</Link>
+            <Link className="navItem" to = "/contact">Contact</Link>
         </Typography>
           {auth && (
             <div>

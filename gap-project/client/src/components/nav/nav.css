@@ -1,8 +1,12 @@
 .navStyling{
     margin: 0 2% !important;
+    text-align: center;
+    background-color: '#00529b';
 }
 
 .navItem{
     text-decoration: none;
     color: white;
+    font-family: 'roboto';
+    background-color: '#00529b'
 }
