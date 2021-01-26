@@ -6,10 +6,11 @@ import {
   Route,
   Link
 } from "react-router-dom";
-
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
+import PatientHome from './pages/homePage/patient/patientHome';
+
 function App() {
   return (<>
 
@@ -20,13 +21,13 @@ function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/faq">
-          <FAQ />
+            <FAQ />
           </Route>
           <Route path="/users">
             User
           </Route>
           <Route path="/">
-            Home
+            <PatientHome/>
           </Route>
         </Switch>
     </Router>
