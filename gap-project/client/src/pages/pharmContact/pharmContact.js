@@ -5,20 +5,32 @@ import Container from '@material-ui/core/Container';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import '../pharmContact/pharmContact.css'
+import ContactImage from '../pharmContact/pharmContact_image.png'
 
 
 const useStyles = makeStyles((theme) => ({
-    card: {
-        // height: "100%",
-        // width:"100%"
+    pageTitle:{
+        textAlign: 'center',
+        margin: '20px'
     },
     cardHeader: {
         backgroundColor: '#00529B',
         color: '#FFFFFF'
         
+    },
+    image:{
+        width: '50%',
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: '20px',
+        marginBottom: '20px'
+
     }
+
+
 }));
 
 const info = [
@@ -45,25 +57,34 @@ export default function Contact() {
     return (
         <Container>
             
-            <Typography variant='h2' align="center">Contact Us</Typography>
-            {info.map((info) => (
-                <Grid item xs={6} container spacing={3} justify="center" 
-                    alignItems="center" direction = "row">
-                    <Card>
-                        <CardHeader
-                            className={classes.cardHeader}
-                            title={info.title}
-                        />
-                        <CardContent>
-                            <Typography>{info.subtitleOne}</Typography>
-                            <Typography>{info.infoOne}</Typography>
-                            
-                            <Typography>{info.subtitleTwo}</Typography>
-                            <Typography>{info.infoTwo}</Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            ))}
+            <Typography variant='h2' className={classes.pageTitle}>Contact Us</Typography>
+            
+            <img
+                src={ContactImage}
+                alt="Pharmacist holding a medicine bottle"
+                className={classes.image} />
+
+            <Box align='center'>
+                {info.map((info) => (
+                    <Box width="50%" alignContent='center'>
+                        <Card>
+                            <CardHeader
+                                className={classes.cardHeader}
+                                title={info.title}
+                                align='center'
+                            />
+                            <CardContent>
+                                <Typography align='center' >{info.subtitleOne}</Typography>
+                                <Typography align='center' >{info.infoOne}</Typography>
+                                
+                                <Typography align='center' >{info.subtitleTwo}</Typography>
+                                <Typography align='center' >{info.infoTwo}</Typography>
+                            </CardContent>
+                        </Card>
+                    </Box>
+                
+                ))}
+            </Box>
             
             
         </Container>
