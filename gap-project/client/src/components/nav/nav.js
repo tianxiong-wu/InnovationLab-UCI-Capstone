@@ -11,11 +11,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-
-import {
-  Link
-} from "react-router-dom";
-import '../nav/nav.css'
+import '../nav/nav.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -69,7 +65,7 @@ export default function MenuAppBar() {
             <Link className="navItem" to="/tutorials">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <Link className="navItem" to="/schedule">Schedule</Link>
+            <a className="navItem" href="#">Schedule</a>
         </Typography>
         <Typography variant="h6" className={classes.title}>
             <Link className="navItem"  to="/faq">FAQ</Link>
@@ -104,10 +100,10 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Jasmine Miller</MenuItem>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
-                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Jasmine Miller</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Profile</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Settings</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Log Out</MenuItem>
               </Menu>
             </div>
           )}

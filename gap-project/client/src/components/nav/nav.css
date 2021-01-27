@@ -1,12 +1,32 @@
 .navStyling{
-    margin: 0 2% !important;
-    text-align: center;
-    background-color: '#00529b';
+  margin: 0 0% !important;
+	background-color: #00529B;
+	box-shadow: inset 0px 3px 3px #70ADE3;
+
 }
 
 .navItem{
     text-decoration: none;
     color: white;
-    font-family: 'roboto';
-    background-color: '#00529b'
+}
+
+.navItem:hover{
+	background-color: #FFBC62;
+	color: #834B00;
+}
+
+.profileItem{
+	width: 120px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 30px;
+	
+	background-color: #00529B;
+	color: white;
+}
+
+.profileItem:hover{
+	background-color: #FFBC62;
+	color: #834B00;	
 }
