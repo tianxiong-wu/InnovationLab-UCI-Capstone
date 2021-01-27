@@ -11,6 +11,8 @@ import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
 import Profile from './pages/profile/profile';
+import Error from './pages/404_error/404_error';
+
 function App() {
   return (<>
 
@@ -23,14 +25,18 @@ function App() {
           <Route path="/faq">
           <FAQ />
           </Route>
-          <Route path="/users">
-            User
+          <Route path="/Schedule">
+            Schedule
+          </Route>
+          <Route path="/tutorials">
+            <Tutorials/>
           </Route>
           <Route path="/">
             Home
           </Route>
         </Switch>
       <Profile/>
+
     </Router>
 
 
