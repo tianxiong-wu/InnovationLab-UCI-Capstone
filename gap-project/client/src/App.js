@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import Tutorials from './pages/Tutorial_List/Tutorial_List'; 
 
 import {
   BrowserRouter as Router,
@@ -28,7 +29,7 @@ function App() {
           <Route path="/Schedule">
             Schedule
           </Route>
-          <Route path="/tutorials">
+          <Route path="/Tutorials">
             <Tutorials/>
           </Route>
           <Route path="/">
