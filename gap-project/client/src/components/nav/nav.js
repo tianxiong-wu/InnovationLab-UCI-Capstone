@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  m: {
+    marginTop: 50,
+  }
 }));
 
 export default function MenuAppBar() {
@@ -52,23 +55,23 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar className="navStyling">
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        <IconButton edge="start" className={classes.menuButton} color="#00529b" aria-label="menu">
             Icon
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Home</a>
+            <Link className="navItem" to="/">Home</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Tutorials</a>
+            <Link className="navItem" to="/tutorials">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
             <a className="navItem" href="#">Schedule</a>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">FAQ</a>
+            <Link className="navItem"  to="/faq">FAQ</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Contact</a>
+            <Link className="navItem" to = "/contact">Contact</Link>
         </Typography>
           {auth && (
             <div>
@@ -81,7 +84,8 @@ export default function MenuAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
+              <Menu 
+                className={classes.m}
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{

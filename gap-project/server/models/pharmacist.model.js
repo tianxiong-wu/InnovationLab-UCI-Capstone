@@ -1,12 +1,9 @@
-
-
 const mongoose = require('mongoose');
+const patient = require('./patient.model');
 
 const Schema = mongoose.Schema;
 
-// example
-const userSchema = new Schema({
-
+const pharmacistSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
@@ -26,24 +23,17 @@ const userSchema = new Schema({
     birthday: {
         type: Date,
     },
+    assignedPatient: {
+        type: [patient.schema]
+    },
     role: {
         type: String,
-        enum: ['patient', 'admin', 'pharmacist', 'intake'],
-        required: true,
-    },
-    checkinList: {
-        type: Array,
-    },
-    infusionType: {
-        type: Array,
-    },
-    notification: {
-        type: Array
-    },
-}, {
-    timestamps: true,
+        default: 'pharmacist'
+    }
+},{
+    timestamps: true
 });
 
-const User = mongoose.model('User', userSchema);
+const Pharmacist = mongoose.model('Pharmacist', pharmacistSchema);
 
-module.exports = User;
+module.exports = Pharmacist;
