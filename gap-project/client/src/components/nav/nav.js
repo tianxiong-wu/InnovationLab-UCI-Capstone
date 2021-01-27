@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  m: {
+    marginTop: 50,
+  }
 }));
 
 export default function MenuAppBar() {
@@ -85,7 +88,8 @@ export default function MenuAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
+              <Menu 
+                className={classes.m}
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
