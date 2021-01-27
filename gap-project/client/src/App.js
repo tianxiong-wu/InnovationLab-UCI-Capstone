@@ -10,12 +10,14 @@ import {
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
-import Tutorials from './pages/Tutorial_List/Tutorial_List'
+import Profile from './pages/profile/profile';
+import Error from './pages/404_error/404_error';
+
 function App() {
   return (<>
 
   <Router>
-      <Nav/>  
+      <Nav/>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -33,9 +35,11 @@ function App() {
             Home
           </Route>
         </Switch>
+      <Profile/>
+
     </Router>
- 
- 
+
+
     </>
   );
 }
