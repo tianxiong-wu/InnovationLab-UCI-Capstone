@@ -10,6 +10,7 @@ import {
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
+import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 
 function App() {
@@ -34,8 +35,8 @@ function App() {
             Home
           </Route>
         </Switch>
-      {/*Error page commented out*/}
-      {/*<Error/>*/}
+      <Profile/>
+
     </Router>
 
 
