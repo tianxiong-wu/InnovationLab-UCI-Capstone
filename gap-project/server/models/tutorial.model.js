@@ -5,30 +5,38 @@ const Schema = mongoose.Schema;
 const urlSchema = new Schema({
     url: {
         type: String,
-        required: true
+    },
+    thumbnail: {
+        type: String
     },
     order: {
         type: Number,
-        required: true
+    },
+    description: {
+        type: String,
+    },
+    duration: {
+        type: Number
     }
 });
 
 const tutorialSchema = new Schema({
     name: {
         type: String,
-        required: true,
         trim: true
     },
     description: {
         type: String,
-        required: true,
+
         trim: true
     },
     url: {
         type: [urlSchema],
-        required: true,
-    }
 
+    },
+    duration: {
+        type: Number
+    }
 },{
     timestamps: true
 });
