@@ -2,13 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import Nav from './components/nav/nav';
 import Footer from './components/footer/footer'; 
-import Dashboard from './pages/dashboard/dashboard';
 
 function App() {
   return (
 	<div className="fullPage">
 		<Nav/>
-		<Dashboard/>
 		<Footer/>
 	</div>
   );
