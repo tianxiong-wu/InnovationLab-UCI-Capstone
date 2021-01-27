@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import Tutorials from './pages/Tutorial_List/Tutorial_List'; 
-
+import Footer from './components/footer/footer'
 import {
   BrowserRouter as Router,
   Switch,
@@ -36,7 +36,8 @@ function App() {
             Home
           </Route>
         </Switch>
-      <Profile/>
+
+      <Footer></Footer>
 
     </Router>
 
