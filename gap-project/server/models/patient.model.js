@@ -24,6 +24,9 @@ const patientSchema = new Schema({
         trim: true,
   
     },
+    password: {
+        type: String
+    },
     phoneNumber: {
         type: String,
         trim: true,

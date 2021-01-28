@@ -1,6 +1,5 @@
 import logo from './logo.svg';
-import Tutorials from './pages/Tutorial_List/Tutorial_List'; 
-import Footer from './components/footer/footer'
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -29,15 +28,14 @@ function App() {
           <Route path="/Schedule">
             Schedule
           </Route>
-          <Route path="/Tutorials">
+          <Route path="/tutorials">
             <Tutorials/>
           </Route>
           <Route path="/">
             Home
           </Route>
         </Switch>
-
-      <Footer></Footer>
+      <Profile/>
 
     </Router>
 
