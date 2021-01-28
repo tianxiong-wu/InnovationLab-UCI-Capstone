@@ -10,12 +10,13 @@ import {
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
+import PharmContact from './pages/pharmContact/pharmContact'
 function App() {
   return (<>
 
   <Router>
       <Nav/>  
-
+        <PharmContact/>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
