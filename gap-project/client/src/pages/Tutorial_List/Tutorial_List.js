@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop: '33px',
       borderRadius: 20,
       color: 'white',
+      backgroundColor: '#00529b',
     },
     details: {
       display: 'flex',

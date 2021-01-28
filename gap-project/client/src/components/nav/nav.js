@@ -12,6 +12,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import '../nav/nav.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +67,7 @@ export default function MenuAppBar() {
             <Link className="navItem" to="/">Home</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <Link className="navItem" to="/tutorials">Tutorials</Link>
+            <Link className="navItem" to="/Tutorials">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
             <a className="navItem" href="#">Schedule</a>

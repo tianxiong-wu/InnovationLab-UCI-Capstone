@@ -4,7 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 
 import './App.css';
@@ -12,6 +11,8 @@ import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
 import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
+import Tutorials from './pages/Tutorial_List/Tutorial_List';
+import Footer from './components/footer/footer'
 
 function App() {
   return (<>
@@ -28,14 +29,14 @@ function App() {
           <Route path="/Schedule">
             Schedule
           </Route>
-          <Route path="/tutorials">
+          <Route path="/Tutorials">
             <Tutorials/>
           </Route>
           <Route path="/">
             Home
           </Route>
         </Switch>
-      <Profile/>
+      <Footer></Footer>
 
     </Router>
 
