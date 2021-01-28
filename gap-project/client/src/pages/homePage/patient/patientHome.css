@@ -34,6 +34,11 @@
     height: 33vh !important;
 }
 
+.infusionVideoContainer img {
+    width: 100% !important;
+    height: 90% !important;
+}
+
 .notifWidget {
     height: 23vh !important;
 }
