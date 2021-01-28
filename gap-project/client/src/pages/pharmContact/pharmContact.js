@@ -61,8 +61,8 @@ export default function Contact() {
     return (
         <Container>
             <Grid container >
-                <Grid item xs={2}></Grid>
-                <Grid item xs={8}>
+                <Grid item xl={2} lg={2} xs={2}></Grid>
+                <Grid item xl={8} lg={8} xs={8}>
                     <Typography variant='h2' className={classes.pageTitle}>Contact Us</Typography>
                     
                     <img
@@ -70,15 +70,15 @@ export default function Contact() {
                         alt="Pharmacist holding a medicine bottle"
                         className={classes.image} />
                 </Grid>
-                <Grid item xs={2}></Grid>
+                <Grid item xl={2} lg={2} xs={2}></Grid>
 
 
             </Grid>
 
-            <Grid>
-                <Grid item xs={2}></Grid>
+            <Grid container>
+                <Grid item xs={2} xl={2} lg={2} md={2} sm={2}></Grid>
 
-                <Grid item xs={4} justify='center'>
+                <Grid item xs={4} xl={4} lg={4} md={4} sm={4}>
                     
                         {pharmInfo.map((pharmInfo) => (
                             //<Box alignContent='center'>
@@ -91,7 +91,7 @@ export default function Contact() {
                                     <CardContent>
                                         <Typography align='center' >{pharmInfo.subtitleOne}</Typography>
                                         <Typography align='center' >{pharmInfo.infoOne}</Typography>
-                                        
+                
                                         <Typography align='center' >{pharmInfo.subtitleTwo}</Typography>
                                         <Typography align='center' >{pharmInfo.infoTwo}</Typography>
                                     </CardContent>
@@ -104,7 +104,7 @@ export default function Contact() {
                     
                 
 
-                <Grid item xs={4} justify='center'>
+                <Grid item xs={4} xl={4} lg={4} md={4} sm={4}>
                     {contactInfo.map((contactInfo) => (
                                 //<Box  alignContent='center'>
                                     <Card>
@@ -126,7 +126,7 @@ export default function Contact() {
                     ))}
                 </Grid>
 
-                <Grid item xs={2}></Grid>
+                <Grid item xs={2} xl={2} lg={2} md={2} sm={4}></Grid>
                 
             
             </Grid>
