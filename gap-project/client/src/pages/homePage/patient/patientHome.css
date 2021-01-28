@@ -1,5 +1,6 @@
 .nextInfusionSummary{
     text-align: center !important;
+    margin-top: 2% !important;
 }
 
 .summaryContainer {
@@ -7,15 +8,7 @@
 }
 
 .widgetContainer {
-    display: flex !important;
-    margin-top: 2.5rem !important;
     text-align: center !important;
-}
-
-
-.leftWidgets {
-    width: 50% !important;
-    margin-right: 2.5rem !important;
 }
 
 .infusionWidget {
@@ -31,16 +24,17 @@
 }
 
 .infusionVideoContainer{
-    height: 33vh !important;
+    height: 26vh !important;
 }
 
 .infusionVideoContainer img {
     width: 100% !important;
-    height: 90% !important;
+    height: 80% !important;
 }
 
 .notifWidget {
-    height: 23vh !important;
+    height: 20vh !important;
+    margin-bottom: 1% !important;
 }
 
 .notificationContainer {
@@ -61,12 +55,12 @@
 }
 
 .scheduleWidget {
-    height: 65.5vh !important;
-    width: 100% !important;
+    height: 50vh !important;
     -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     border-radius: 10px !important;
+    margin-bottom: 1% !important;
 }
 
 .scheduleLabel {
@@ -75,7 +69,4 @@
     padding: 2% !important;
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
-}
-
-.scheduleContainer {
 }
