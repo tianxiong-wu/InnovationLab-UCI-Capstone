@@ -65,7 +65,7 @@ const Tutorials = ()=>{
 
     const tutorials = [{
         name:'Infusion A',
-        summary:`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra cursus augue, et suscipit dolor volutpat et. Fusce ut diam justo. Aliquam erat volutpat. Curabitur egestas diam sed lacus consectetur accumsan. Pellentesque consequat sem libero, vitae vestibulum arcu euismod sit amet. Nullam vitae lectus vitae arcu auctor venenatis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis cursus nunc ut leo condimentum ultricies. In volutpat nisl nulla, at ornare augue pellentesque non. Phasellus hendrerit, elit vel condimentum auctor, quam velit molestie dolor, vel auctor felis purus eu ligula. Fusce ut semper lorem, ac lobortis enim. Vestibulum lectus justo, aliquet a ligula eget, vulputate pulvinar orci. Vestibulum dapibus et ligula eget egestas. Aenean eu felis magna. Nunc dapibus commodo nisi. Quisque in dignissim enim.`,
+        summary:`Lorem ipsum dolor sit amet`,
         duration:'20 min',
         img:'https://picsum.photos/seed/picsum/150/150',
     },{
