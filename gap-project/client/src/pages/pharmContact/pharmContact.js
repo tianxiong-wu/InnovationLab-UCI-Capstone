@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import '../pharmContact/pharmContact.css'
-import ContactImage from '../pharmContact/pharmContact_image.png'
+import ContactImage from '../pharmContact/pharmContact_image2.png'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -22,13 +22,20 @@ const useStyles = makeStyles((theme) => ({
         
     },
     image:{
-        width: '75%',
+        width: '100%',
         display: 'block',
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: '20px',
         marginBottom: '20px'
 
+    },
+    innerBox:{
+        margin: '10px',
+        border: '1px',
+        borderColor: '#00529B',
+        borderStyle: 'solid',
+        borderRadius: '20px'
     }
 
 
@@ -60,78 +67,77 @@ export default function Contact() {
     
     return (
         <Container>
-            <Grid container >
+            {/* top half */}
+            <Grid container>
                 <Grid item xs={2}></Grid>
+                
                 <Grid item xs={8}>
-                    <Typography variant='h2' className={classes.pageTitle}>Contact Us</Typography>
+                    <Typography variant='h3' className={classes.pageTitle}>Contact Us</Typography>
                     
                     <img
                         src={ContactImage}
-                        alt="Pharmacist holding a medicine bottle"
+                        alt="Single tree with clouds in the background"
                         className={classes.image} />
                 </Grid>
+                
                 <Grid item xs={2}></Grid>
-
-
             </Grid>
 
-            <Grid>
+            {/* bottom half */}
+            <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
 
                 <Grid item xs={4} justify='center'>
                     
-                        {pharmInfo.map((pharmInfo) => (
-                            //<Box alignContent='center'>
-                                <Card>
-                                    <CardHeader
-                                        className={classes.cardHeader}
-                                        title={pharmInfo.title}
-                                        align='center'
-                                    />
-                                    <CardContent>
-                                        <Typography align='center' >{pharmInfo.subtitleOne}</Typography>
-                                        <Typography align='center' >{pharmInfo.infoOne}</Typography>
-                                        
-                                        <Typography align='center' >{pharmInfo.subtitleTwo}</Typography>
-                                        <Typography align='center' >{pharmInfo.infoTwo}</Typography>
-                                    </CardContent>
-                                </Card>
-                            //</Box>
-                        
+                    {pharmInfo.map((pharmInfo) => (
+                        <Card borderRadius={30}>
+                            <CardHeader
+                                className={classes.cardHeader}
+                                title={pharmInfo.title}
+                                align='center'
+                            />
+                            <CardContent>
+                                <Box className={classes.innerBox}>
+                                    <Typography align='center' >{pharmInfo.subtitleOne}</Typography>
+                                    <Typography align='center' >{pharmInfo.infoOne}</Typography>
+                                </Box>
+                                <Box className={classes.innerBox}>
+                                    <Typography align='center' >{pharmInfo.subtitleTwo}</Typography>
+                                    <Typography align='center' >{pharmInfo.infoTwo}</Typography>
+                                </Box>
+                            </CardContent>
+                        </Card>
                     ))}
                     
                 </Grid>
                     
                 
-
                 <Grid item xs={4} justify='center'>
                     {contactInfo.map((contactInfo) => (
-                                //<Box  alignContent='center'>
-                                    <Card>
-                                        <CardHeader
-                                            className={classes.cardHeader}
-                                            title={contactInfo.title}
-                                            align='center'
-                                        />
-                                        <CardContent>
-                                            <Typography align='center' >{contactInfo.subtitleOne}</Typography>
-                                            <Typography align='center' >{contactInfo.infoOne}</Typography>
-                                            
-                                            <Typography align='center' >{contactInfo.subtitleTwo}</Typography>
-                                            <Typography align='center' >{contactInfo.infoTwo}</Typography>
-                                        </CardContent>
-                                    </Card>
-                                //</Box>
-                            
+                        <Card>
+                            <CardHeader
+                                className={classes.cardHeader}
+                                title={contactInfo.title}
+                                align='center'
+                            />
+                            <CardContent>
+                                <Box className={classes.innerBox}>
+                                    <Typography align='center' >{contactInfo.subtitleOne}</Typography>
+                                    <Typography align='center' >{contactInfo.infoOne}</Typography>
+                                </Box>
+                                <Box className={classes.innerBox}>
+                                    <Typography align='center' >{contactInfo.subtitleTwo}</Typography>
+                                    <Typography align='center' >{contactInfo.infoTwo}</Typography>
+                                </Box>
+                            </CardContent>
+                        </Card>
                     ))}
                 </Grid>
 
                 <Grid item xs={2}></Grid>
-                
             
             </Grid>
         </Container>
-
         
     )
 }
