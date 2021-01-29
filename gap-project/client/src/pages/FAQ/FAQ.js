@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import SearchBar from "material-ui-search-bar";
 import { makeStyles } from '@material-ui/core/styles';
@@ -85,21 +85,29 @@ const FAQ = () => {
     }));
 
     const [questions, setQuestions] = useState([{
-        title: 'question 1', content: 'Aenean in lorem massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
+        title: 'question 1', content: 'Aenean in apple massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
     }, {
         title: 'question 2', content: 'Aenean in lorem massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
     }, {
-        title: 'question 3', content: 'Aenean in lorem massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
+        title: 'question 3', content: 'Aenean in lorem massa. Praesent banana bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
     }, {
         title: 'question 4', content: 'Aenean in lorem massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
     }, {
         title: 'question 5', content: 'Aenean in lorem massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
     }]);
+    const [displayedQuestions,setDisplayedQuestions] = useState([]);
+
+    useEffect(()=>{
+        setDisplayedQuestions(questions);
+    },[])
 
     const [value, setValue] = useState('');
     const classes = useStyles();
     const handleSearch = (value) => {
-
+        let q = questions.filter((question)=>{
+            return question.title.includes(value) || question.content.includes(value);
+        })
+        setDisplayedQuestions(q);
     }
 
 
@@ -113,13 +121,13 @@ const FAQ = () => {
                 value={value}
                 type='text'
                 onChange={(newValue) => setValue(newValue)}
-                onRequestSearch={() => handleSearch(value)}
+                onRequestSearch={(value) => handleSearch( value)}
             >
             </SearchBar>
             <Typography variant="h4" className={classes.title2}>
                 Frequently Asked Questions
         </Typography>
-            <Questions questions={questions}></Questions>
+            <Questions questions={displayedQuestions}></Questions>
             <Typography variant="h4" className={classes.information}>
                 Still have questions? <br />
             Contact us using online Help <br />

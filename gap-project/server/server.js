@@ -27,16 +27,18 @@ const patientsRouter = require('./routes/patients');
 const tutorialsRouter = require('./routes/tutorials');
 const pharmacistsRouter = require('./routes/pharmacists');
 const pharmacyRouter = require('./routes/pharmacy');
-
-
+const adminRouter = require('./routes/admin');
+const FAQRouter = require('./routes/FAQ');
+const eventRouter = require('./routes/events');
 
 
 app.use('/tutorials', tutorialsRouter);
 app.use('/patients', patientsRouter);
 app.use('/pharmacists', pharmacistsRouter);
 app.use('/pharmacy', pharmacyRouter);
-
-
+app.use('/admin', adminRouter);
+app.use('/FAQs', FAQRouter);
+app.use('/events', eventRouter);
 
 
 
