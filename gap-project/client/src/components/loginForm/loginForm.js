@@ -30,24 +30,28 @@ export default function LoginForm(){
     }
 
     return(
-        <div>
-            {loginLanding === true ? 
-            <div className="buttonStyling" onClick={toggleOne}>
-              <span className="textHolder">
-                  <Typography variant="h3" className="textStyling textHolder">Login</Typography>
-                  <Typography variant="h6" className="textStyling">(with Existing Account)</Typography>
-              </span>
-            </div>
-            : null }
-            {loginForm === true ? 
-            <div className="formDiv signupSuccessDiv">
-                    <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
-                    <TextField className="formStyling" id="outlined-basic" label="Username" variant="outlined" required />
-                    <TextField className="formStyling" id="outlined-basic" label="Password" variant="outlined" required />
-                    <Button variant="text" color="primary" className="forgotButton">Forgot Password?</Button><br></br>
-                    <Button variant="contained" color="primary" className="signupSuccessButton" onClick={toggleTwo}>Login</Button>
-            </div>
-            : null }
-        </div>
+        <Typography>bom</Typography>
     )
 }
+
+/*
+<div>
+    {loginLanding === true ? 
+    <div className="buttonStyling" onClick={toggleOne}>
+      <span className="textHolder">
+          <Typography variant="h3" className="textStyling textHolder">Login</Typography>
+          <Typography variant="h6" className="textStyling">(with Existing Account)</Typography>
+      </span>
+    </div>
+    : null }
+    {loginForm === true ? 
+    <div className="formDiv signupSuccessDiv">
+            <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
+            <TextField className="formStyling" id="outlined-basic" label="Username" variant="outlined" required />
+            <TextField className="formStyling" id="outlined-basic" label="Password" variant="outlined" required />
+            <Button variant="text" color="primary" className="forgotButton">Forgot Password?</Button><br></br>
+            <Button variant="contained" color="primary" className="signupSuccessButton" onClick={toggleTwo}>Login</Button>
+    </div>
+    : null }
+</div>
+*/

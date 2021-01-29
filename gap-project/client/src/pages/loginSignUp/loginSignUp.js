@@ -18,6 +18,14 @@ export default function LoginSignUp(){
 
     return (
         <Grid container>
+            <SignUpForm/>
+        </Grid>
+    )
+}
+
+/*
+
+ <Grid container>
             <Grid item lg={3} xl={3} />
             <Grid item lg={6} xl={3} >
                 {signUp === true ? 
@@ -33,5 +41,5 @@ export default function LoginSignUp(){
             </Grid>
             <Grid item lg={3} xl={3} />
         </Grid>
-    )
-}
+
+*/
