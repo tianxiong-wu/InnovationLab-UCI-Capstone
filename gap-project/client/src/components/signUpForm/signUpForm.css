@@ -30,7 +30,7 @@
 .formStyling{
     text-align: center !important;
     width: 100% !important;
-    margin: 3% auto !important;
+    margin: 2% auto !important;
 }
 
 .formTitle{
@@ -50,6 +50,18 @@
     height: 4rem !important;
     background-color: #00529B !important;
     margin-top: 10% !important;
+}
+
+.nextFullLogin{
+    margin-top: 3% !important;
+}
+
+.nextFullPassword{
+    font-weight: bold !important;
+    width: 100% !important;
+    font-size: 18px !important;
+    height: 4rem !important;
+    margin-top: 5% !important;
 }
 
 .prev{
@@ -86,6 +98,7 @@
 .signupSuccessPhoto{
     width: 100% !important;
     height: 250px !important;
+    margin-top: -5% !important;
 }
 
 .signupSuccessButton{

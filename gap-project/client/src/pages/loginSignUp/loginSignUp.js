@@ -18,7 +18,20 @@ export default function LoginSignUp(){
 
     return (
         <Grid container>
-            <SignUpForm/>
+            <Grid item xs={2}></Grid>
+            <Grid item xs={8}>
+                {signUp === true ?
+                <div onClick={toggleSignupClicked}> 
+                    <SignUpForm/>
+                </div>
+                : null }
+                {login === true ?
+                <div onClick={toggleLoginClicked}>
+                    <LoginForm/>
+                </div>
+                : null }
+            </Grid>
+            <Grid item xs={2}></Grid>
         </Grid>
     )
 }
