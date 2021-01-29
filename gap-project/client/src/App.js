@@ -5,10 +5,10 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-
 import './App.css';
 import Nav from './components/nav/nav';
 import FAQ from './pages/FAQ/FAQ';
+import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
@@ -24,7 +24,7 @@ function App() {
             renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/faq">
-          <FAQ />
+            <FAQ />
           </Route>
           <Route path="/Schedule">
             Schedule
@@ -33,7 +33,7 @@ function App() {
             <Tutorials/>
           </Route>
           <Route path="/">
-            Home
+            <PatientHome/>
           </Route>
         </Switch>
       <Footer></Footer>
