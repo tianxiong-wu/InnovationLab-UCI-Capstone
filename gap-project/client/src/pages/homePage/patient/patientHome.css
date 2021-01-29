@@ -1,6 +1,6 @@
 .nextInfusionSummary{
     text-align: center !important;
-    margin-top: 2% !important;
+    margin-top: 4% !important;
 }
 
 .summaryContainer {
@@ -25,6 +25,8 @@
 
 .infusionVideoContainer{
     height: 26vh !important;
+    width: 100% !important;
+    margin-top: 2.5% !important;
 }
 
 .infusionVideoContainer img {
@@ -33,8 +35,9 @@
 }
 
 .notifWidget {
-    height: 20vh !important;
-    margin-bottom: 1% !important;
+    height: 18vh !important;
+    margin-top: 2% !important;
+    margin-bottom: 7.5% !important;
 }
 
 .notificationContainer {
@@ -55,7 +58,7 @@
 }
 
 .scheduleWidget {
-    height: 50vh !important;
+    height: 48vh !important;
     -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
@@ -64,6 +67,7 @@
 }
 
 .scheduleLabel {
+    margin-top: 2.5% !important;
     color: white !important;
     background-color: #00529b !important;
     padding: 2% !important;
