@@ -7,7 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import '../nav/nav.css'
+import '../nav/nav.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
+  m: {
+    marginTop: 50,
+  }
 }));
 
 export default function MenuAppBar() {
@@ -46,25 +54,26 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" className="navStyling">
-        <Toolbar>
-        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+
+      <AppBar position="static">
+        <Toolbar className="navStyling">
+        <IconButton edge="start" className={classes.menuButton} color="#00529b" aria-label="menu">
             Icon
         </IconButton>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Home</a>
+            <Link className="navItem" to="/">Home</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Tutorials</a>
+            <Link className="navItem" to="/Tutorials">Tutorials</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Link</a>
+            <a className="navItem" href="#">Schedule</a>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">FAQ</a>
+            <Link className="navItem"  to="/faq">FAQ</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
-            <a className="navItem" href="#">Contact</a>
+            <Link className="navItem" to = "/contact">Contact</Link>
         </Typography>
           {auth && (
             <div>
@@ -77,7 +86,8 @@ export default function MenuAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
+              <Menu 
+                className={classes.m}
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
@@ -92,10 +102,10 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Jasmine Miller</MenuItem>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
-                <MenuItem onClick={handleClose}>Log Out</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Jasmine Miller</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Profile</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Settings</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>Log Out</MenuItem>
               </Menu>
             </div>
           )}
