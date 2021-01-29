@@ -1,14 +1,12 @@
 .buttonStyling{
     height: 30vh !important;
+    width: 45rem !important;
     background-color: #00529B !important;
     color: white !important;
     text-align: center !important;
     border-radius: 50px !important;
     margin-top: 50px !important;
-}
 
-.signupButton {
-    text-align: center !important;
 }
 
 .textHolder{
@@ -19,10 +17,6 @@
     font-weight: bold !important;
 }
 
-.formMargin{
-    margin: 2% !important;
-}
-
 .formDiv{
     margin-top: 10vh !important;
 }
@@ -30,7 +24,7 @@
 .formStyling{
     text-align: center !important;
     width: 100% !important;
-    margin: 2% auto !important;
+    margin: 1% auto !important;
 }
 
 .formTitle{
@@ -38,52 +32,14 @@
     margin: 1% auto !important;
 }
 
-.selectGender {
-    width: 100% !important;
-}
-
-.nextFull{
+.submitStyling{
     color: white !important;
     font-weight: bold !important;
-    width: 100% !important;
+    width: 50% !important;
     font-size: 18px !important;
     height: 4rem !important;
+    margin: 1% 12vw !important;
     background-color: #00529B !important;
-    margin-top: 10% !important;
-}
-
-.nextFullLogin{
-    margin-top: 3% !important;
-}
-
-.nextFullPassword{
-    font-weight: bold !important;
-    width: 100% !important;
-    font-size: 18px !important;
-    height: 4rem !important;
-    margin-top: 5% !important;
-}
-
-.prev{
-    color: white !important;
-    font-weight: bold !important;
-    width: 45% !important;
-    font-size: 18px !important;
-    height: 4rem !important;
-    background-color: #00529B !important;
-    margin-top: 10% !important;
-    margin-right: 5% !important;
-}
-
-.next{
-    color: white !important;
-    font-weight: bold !important;
-    width: 45% !important;
-    font-size: 18px !important;
-    height: 4rem !important;
-    background-color: #00529B !important;
-    margin-top: 10% !important;
-    margin-left: 5% !important;
 }
 
 .signupSuccessDiv{
@@ -96,9 +52,17 @@
 }
 
 .signupSuccessPhoto{
-    width: 100% !important;
-    height: 250px !important;
-    margin-top: -5% !important;
+    width: 300px !important;
+    height: 300px !important;
+}
+
+.forgotButton{
+    width: 15vw !important;
+    height: 10vh !important;
+    margin: 3% !important;
+    color: #00529B !important;
+    font-weight: bold !important;
+    border-radius: 20px !important;
 }
 
 .signupSuccessButton{
