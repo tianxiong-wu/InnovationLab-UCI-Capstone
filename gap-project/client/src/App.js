@@ -36,9 +36,7 @@ function App() {
           </Route>
           <Route path="/">
             <PatientHome/>
-          </Route>
         </Switch>
-        <Settings/>
     </Router>
 
 

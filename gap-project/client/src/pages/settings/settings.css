@@ -172,6 +172,7 @@
   height: 30px;
   border-radius: 10px;
   align-items: center;
+  font-size: 0.7em;
 }
 
 .phone, .email {
