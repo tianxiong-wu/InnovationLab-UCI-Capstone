@@ -1,0 +1,111 @@
+.buttonStyling{
+    height: 30vh !important;
+    background-color: #00529B !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: 50px !important;
+    margin-top: 50px !important;
+}
+
+.signupButton {
+    text-align: center !important;
+}
+
+.textHolder{
+    line-height: 18vh !important;
+}
+
+.textStyling{
+    font-weight: bold !important;
+}
+
+.formMargin{
+    margin: 2% !important;
+}
+
+.formDiv{
+    margin-top: 10vh !important;
+}
+
+.formStyling{
+    text-align: center !important;
+    width: 100% !important;
+    margin: 2% auto !important;
+}
+
+.formTitle{
+    text-align: center !important;
+    margin: 1% auto !important;
+}
+
+.selectGender {
+    width: 100% !important;
+}
+
+.nextFull{
+    color: white !important;
+    font-weight: bold !important;
+    width: 100% !important;
+    font-size: 18px !important;
+    height: 4rem !important;
+    background-color: #00529B !important;
+    margin-top: 10% !important;
+}
+
+.nextFullLogin{
+    margin-top: 3% !important;
+}
+
+.nextFullPassword{
+    font-weight: bold !important;
+    width: 100% !important;
+    font-size: 18px !important;
+    height: 4rem !important;
+    margin-top: 5% !important;
+}
+
+.prev{
+    color: white !important;
+    font-weight: bold !important;
+    width: 45% !important;
+    font-size: 18px !important;
+    height: 4rem !important;
+    background-color: #00529B !important;
+    margin-top: 10% !important;
+    margin-right: 5% !important;
+}
+
+.next{
+    color: white !important;
+    font-weight: bold !important;
+    width: 45% !important;
+    font-size: 18px !important;
+    height: 4rem !important;
+    background-color: #00529B !important;
+    margin-top: 10% !important;
+    margin-left: 5% !important;
+}
+
+.signupSuccessDiv{
+    text-align: center !important;
+    margin-top: 10vh !important;
+}
+
+.signupSuccessTypography{
+    margin: 5% 0 0 0 !important;
+}
+
+.signupSuccessPhoto{
+    width: 100% !important;
+    height: 250px !important;
+    margin-top: -5% !important;
+}
+
+.signupSuccessButton{
+    width: 15vw !important;
+    height: 10vh !important;
+    margin: 3% !important;
+    background-color: #00529B !important;
+    font-weight: bold !important;
+    border-radius: 20px !important;
+}

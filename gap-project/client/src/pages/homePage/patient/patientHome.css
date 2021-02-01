@@ -1,0 +1,76 @@
+.nextInfusionSummary{
+    text-align: center !important;
+    margin-top: 4% !important;
+}
+
+.summaryContainer {
+    margin-top: 2rem !important;
+}
+
+.widgetContainer {
+    text-align: center !important;
+}
+
+.infusionWidget {
+    color: #00529b;
+    -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+}
+
+.infusionLabel{
+    margin-top: -5.5% !important;
+    margin-bottom: 3% !important;
+}
+
+.infusionVideoContainer{
+    height: 26vh !important;
+    width: 100% !important;
+    margin-top: 2.5% !important;
+}
+
+.infusionVideoContainer img {
+    width: 100% !important;
+    height: 80% !important;
+}
+
+.notifWidget {
+    height: 18vh !important;
+    margin-top: 2% !important;
+    margin-bottom: 7.5% !important;
+}
+
+.notificationContainer {
+    height: 100% !important;
+    border-color: black !important;
+    -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    border-radius: 10px !important;
+}
+
+.notificationLabel {
+    color: white !important;
+    background-color: #00529b !important;
+    padding: 2% !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+.scheduleWidget {
+    height: 48vh !important;
+    -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
+    border-radius: 10px !important;
+    margin-bottom: 1% !important;
+}
+
+.scheduleLabel {
+    margin-top: 2.5% !important;
+    color: white !important;
+    background-color: #00529b !important;
+    padding: 2% !important;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
