@@ -7,6 +7,14 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import axios from 'axios';
+
+
+axios.get('http://localhost:5000/faqs/all').then(res => {
+        console.log(res.data)
+    });
+
+
 
 const Questions = ({ questions }) => {
 
@@ -84,6 +92,8 @@ const FAQ = () => {
         }
     }));
 
+    
+
     const [questions, setQuestions] = useState([{
         title: 'question 1', content: 'Aenean in apple massa. Praesent mattis bibendum hendrerit. Nunc bibendum odio nisi, vitae efficitur lacus molestie ac. Aenean eget venenatis magna. Ut accumsan urna et ex fringilla, nec malesuada tortor aliquam. Curabitur ullamcorper urna id volutpat vestibulum. Pellentesque quam eros, mollis iaculis feugiat eu, tempus sit amet sapien.'
     }, {
@@ -109,6 +119,7 @@ const FAQ = () => {
         })
         setDisplayedQuestions(q);
     }
+
 
 
     return (
