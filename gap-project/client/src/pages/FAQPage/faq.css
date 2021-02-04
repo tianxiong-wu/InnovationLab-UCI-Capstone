@@ -1,0 +1,31 @@
+.searchBar{
+    width: 80%;
+    border-radius: 50px;
+    margin: 0 auto;
+    color: #00529b;
+}
+
+.title{
+    width: 100%;
+    color: #00529b;
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 24px;
+    padding: 45px 0;
+}
+
+.information{
+    color: #00529b;
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 18px;
+    padding: 25px 0;
+}
+
+.titleTwo{
+    color: #00529b;
+    text-align: center;
+    font-family: 'Roboto';
+    font-Size: 18px;
+    padding: 50px 0;
+}
