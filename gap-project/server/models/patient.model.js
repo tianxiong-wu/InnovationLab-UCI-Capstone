@@ -46,9 +46,15 @@ const patientSchema = new Schema({
     },
     infusionArray: {
         type: [infusionSchema],
+        default: []
+
+    },
+    password: {
+        type: String
     },
     notification: {
-        type: Array
+        type: Array,
+        default: []
     },
     gender: {
         type: String,
@@ -69,7 +75,8 @@ const patientSchema = new Schema({
         type: pharmacist.schema
     },
     events: {
-        type: [event.schema]
+        type: [event.schema],
+        default: []
     }
 }, {
     timestamps: true,

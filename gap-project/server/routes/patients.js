@@ -1,6 +1,6 @@
 const router = require('express').Router();
 let Patient = require('../models/patient.model');
-
+const bcrypt = require('bcryptjs');
 //get all users in database
 router.route('/all').get((req, res) => {
     Patient.find()
@@ -117,45 +117,43 @@ router.route('/updateCheckin/:id').post((req, res) =>{
 //TODO: need to match with registration info and auth API
 //code below for testing
 router.route('/register').post((req, res) => {
-
-    /*const firstName = req.body.firstName;
+    const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const password = req.body.password;
     const phoneNumber = req.body.phoneNumber;
     const email = req.body.email;
     const birthday = Date.parse(req.body.birthday);
-    const role = req.body.role;
-    const infusionArray = req.body.infusionArray;
-    const notification = [];
     const gender = req.body.gender;
-    const recentCheckIn = Date.parse(req.body.recentCheckIn);
-    const nextCheckIn = Date.parse(req.body.nextCheckIn);
-    const notificationType = req.body.notificationType;
-    const assignedPharmacist = req.body.assignedPharmacist;
+    const role = req.body.role;
 
     
-    // TODO: add validation 
+
 
     const newPatient = new Patient({
         firstName,
         lastName,
         phoneNumber,
+        password,
         email,
         birthday,
         role,
-        infusionArray,
-        notification,
         gender,
-        recentCheckIn,
-        nextCheckIn,
-        notificationType,
-        assignedPharmacist});
-   
+    });
 
-    newPatient.save()
+    //hash password
+    bcrypt.genSalt(10, (err, salt) => bcrypt.hash(newPatient.password, salt, (err, hash) =>{
+        if (err)
+            console.log(err);
+        //set password to hashed
+        newPatient.password = hash;
+        console.log(newPatient.password)
+        //save
+        newPatient.save()
+        .then(() => console.log(newPatient))
         .then(() => res.json(newPatient))
         .catch(err => res.status(400).json('Error: ' + err))
-        .catch(err => res.status(500).json('Error: ' + err));*/
+        .catch(err => res.status(500).json('Error: ' + err));
+    }))
 });
 
 module.exports = router;

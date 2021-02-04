@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import "../signUpForm/signUpForm.css"
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUpForm(){
     // Email validation
-    var validator = require('email-validator');
+    /*var validator = require('email-validator');
     function validateEmail(email) {
         validator.validate(email);
     }
@@ -41,7 +42,7 @@ export default function SignUpForm(){
     .has().lowercase()                              // Must have lowercase letters
     .has().digits(2)                                // Must have at least 2 digits
     .has().not().spaces()                           // Should not have spaces
-    .has().symbols();                                // Must have at least one symbol
+    .has().symbols();                                // Must have at least one symbol*/
 
     const classes = useStyles();
     const [signupLanding, setSignupLanding] = useState(true);
@@ -54,7 +55,15 @@ export default function SignUpForm(){
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");    
   
-
+    const user = {
+      firstName: firstName,
+      lastName: lastName,
+      birthday: birthdate,
+      gender: gender,
+      email: email,
+      phoneNumber: phoneNumber,
+      password: password
+    }
 
     const toggleOne = () => {
       setSignupLanding(false);
@@ -67,8 +76,14 @@ export default function SignUpForm(){
     }
 
     const toggleThree = () => {
+      console.log(user);
       setSignupFormPageTwo(false);
       setSuccessPage(true);
+      
+      axios.post('http://localhost:5000/patients/register', user).then(res=>{
+        console.log(res);
+      })
+
     }
 
     const toggleFour = () => {
@@ -78,6 +93,9 @@ export default function SignUpForm(){
 
     const toggleFive = () => {
       alert('Aye you done!!')
+      setSignupLanding(true);
+      
+      setSuccessPage(false);
     }
 
     const [signupFormPageOne, setSignupFormPageOne] = useState(false);
@@ -99,6 +117,20 @@ export default function SignUpForm(){
     const handleBirthdateChange = (event) => {
         setBirthdate(event.target.value);
     }
+
+    const handleEmailChange = (event) => {
+      setEmail(event.target.value)
+    }
+
+    const handlePasswordChange = (event) => {
+      setPassword(event.target.value)
+    }
+
+    const handlePhoneNumberChange = (event) => {
+      setPhoneNumber(event.target.value)
+    }
+
+
 
     return(
       <div className={classes.root}>
@@ -151,13 +183,13 @@ export default function SignUpForm(){
                 <Grid item xs={6}>
                   <div className="formDiv">
                     <Typography variant="h5" color="primary" className="formTitle">Create your account</Typography>
-                    <TextField className="formStyling formMargin" id="outlined-basic" label="Email" variant="outlined" defaultValue={email} required />
-                    <TextField className="formStyling formMargin" id="outlined-basic" label="Phone" variant="outlined" defaultValue={phoneNumber} required />
-                    <TextField className="formStyling formMargin" id="outlined-basic" label="Password" variant="outlined" required />
-                    <TextField className="formStyling formMargin" id="outlined-basic" label="Repeat Password" variant="outlined" required />
+                    <TextField className="formStyling formMargin" id="outlined-basic" label="Email" variant="outlined" defaultValue={email} onChange = {handleEmailChange}required />
+                    <TextField className="formStyling formMargin" id="outlined-basic" label="Phone" variant="outlined" defaultValue={phoneNumber} onChange = {handlePhoneNumberChange}required />
+                    <TextField className="formStyling formMargin" type="password" id="outlined-basic" label="Password" variant="outlined" onChange = {handlePasswordChange}required />
+                    <TextField className="formStyling formMargin" type="password" id="outlined-basic" label="Repeat Password" variant="outlined" required />
                   </div>
                   <Button variant="outlined" className="prev" onClick={toggleFour}>Back</Button>
-                  <Button disabled={email === "" || validateEmail(email) === false || phoneNumber === {} || schema.validate(password) === false || password !== repeatPassword } variant="outlined" className="next" onClick={toggleThree}>Submit</Button>
+                  <Button /*disabled={email === "" || validateEmail(email) === false || phoneNumber === {} || schema.validate(password) === false || password !== repeatPassword }*/ variant="outlined" className="next" onClick={toggleThree}>Submit</Button>
                 </Grid>
               : null}
               {successPage === true ? 
