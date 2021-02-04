@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import EditIcon from '@material-ui/icons/Edit';
 import '../settings/settings.css'
 
 function switchNotification () {
@@ -91,8 +92,11 @@ export default function settings() {
 					              <div className = 'phone'>
 					                (408)123-4567
 					              </div>
-					              <div className = 'edit'>
-					                edit
+					              <div className = 'editContainer'>
+					                <EditIcon/>
+													<div className = 'edit'>
+														Edit
+													</div>
 					              </div>
 											</div>
 										</div>
