@@ -10,9 +10,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
 
 
-axios.get('http://localhost:5000/faqs/all').then(res => {
+
+
+function apiCall(){
+    axios.get('http://localhost:5000/faqs/all').then(res => {
         console.log(res.data)
     });
+}
 
 
 
@@ -124,6 +128,7 @@ const FAQ = () => {
 
     return (
         <Container >
+            <button onClick={apiCall}>click me test</button>
             <Typography variant="h4" className={classes.title}>
                 How can we help you?
         </Typography>
