@@ -164,10 +164,13 @@ router.route('/register').post((req, res) => {
 router.route('/login').post((req, res, next) => {
     passport.authenticate('local', (err, user, info) =>{
         if (err) throw err;
-        if (!user) { res.redirect('http://localhost:3000/login') }
+        //if (!user) {res.redirect('http://localhost:3000/login')}
+        if (!user) { console.log('failture') }
         req.logIn(user, (err) =>{
-            if (err) throw err;
-            console.log('success')
+            if (err){
+                console.log('failture')
+            }else{
+            console.log('success')};
         })
     })(req, res, next);
 })
