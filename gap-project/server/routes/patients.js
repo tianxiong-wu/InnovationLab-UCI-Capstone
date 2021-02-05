@@ -1,6 +1,10 @@
 const router = require('express').Router();
 let Patient = require('../models/patient.model');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
+
+
+
 //get all users in database
 router.route('/all').get((req, res) => {
     Patient.find()
@@ -155,5 +159,21 @@ router.route('/register').post((req, res) => {
         .catch(err => res.status(500).json('Error: ' + err));
     }))
 });
+
+//TO DO: fix the failure part
+router.route('/login').post((req, res, next) => {
+    passport.authenticate('local', (err, user, info) =>{
+        if (err) throw err;
+        if (!user) { console.log('failture') }
+        req.logIn(user, (err) =>{
+            if (err) throw err;
+            console.log('success')
+        })
+    })(req, res, next);
+})
+
+router.route('logout').get((req, res) => {
+    req.logout();
+})
 
 module.exports = router;
