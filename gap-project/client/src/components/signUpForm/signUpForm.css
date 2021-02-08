@@ -113,3 +113,7 @@
 .nextFull:disabled {
     background-color: grey !important;
 }
+
+.next:disabled {
+    background-color: grey !important;
+}

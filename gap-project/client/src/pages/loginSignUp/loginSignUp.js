@@ -27,7 +27,7 @@ export default function LoginSignUp(){
                 : null }
                 {login === true ?
                 <div onClick={toggleLoginClicked}>
-                    <LoginForm/>
+                    <LoginForm loginLanding={true} loginForm={false}/>
                 </div>
                 : null }
             </Grid>

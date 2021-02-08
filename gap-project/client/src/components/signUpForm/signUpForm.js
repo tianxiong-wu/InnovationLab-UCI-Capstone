@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { Typography } from "@material-ui/core";
-import { Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import LoginForm from "../loginForm/loginForm"
 import "../signUpForm/signUpForm.css"
 import axios from "axios";
 
@@ -20,20 +20,16 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-export default function SignUpForm(){
+export default function SignUpForm(props){
     // Email validation
-    /*var validator = require('email-validator');
+    var validator = require('email-validator');
     function validateEmail(email) {
         validator.validate(email);
     }
 
     // Phone validation
-    const phone = require('phone');
-
-    
+    const phone = require('fonz.js');
     var passwordValidator = require('password-validator');
- 
-    // Create a schema for passwords
     var schema = new passwordValidator();
     schema
     .is().min(8)                                    // Minimum length 8
@@ -53,7 +49,8 @@ export default function SignUpForm(){
     const [email, setEmail] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState("");    
+    const [repeatPassword, setRepeatPassword] = useState("");
+    const [loginLanding, setLoginLanding] = useState(false);    
   
     const user = {
       firstName: firstName,
@@ -83,7 +80,6 @@ export default function SignUpForm(){
       axios.post('http://localhost:5000/patients/register', user).then(res=>{
         console.log(res);
       })
-
     }
 
     const toggleFour = () => {
@@ -92,10 +88,8 @@ export default function SignUpForm(){
     }
 
     const toggleFive = () => {
-      alert('Aye you done!!')
-      setSignupLanding(true);
-      
       setSuccessPage(false);
+      setLoginLanding(true);
     }
 
     const [signupFormPageOne, setSignupFormPageOne] = useState(false);
@@ -103,7 +97,7 @@ export default function SignUpForm(){
     const [successPage, setSuccessPage] = useState(false);
 
     const handleChange = (event) => {
-      setGender(event.target.value);
+        setGender(event.target.value);
     }
 
     const handleFirstNameChange = (event) => {
@@ -119,18 +113,20 @@ export default function SignUpForm(){
     }
 
     const handleEmailChange = (event) => {
-      setEmail(event.target.value)
+        setEmail(event.target.value);
     }
 
     const handlePasswordChange = (event) => {
-      setPassword(event.target.value)
+        setPassword(event.target.value);
     }
 
     const handlePhoneNumberChange = (event) => {
-      setPhoneNumber(event.target.value)
+        setPhoneNumber(event.target.value);
     }
 
-
+    const handleRepeatChange = (event) => {
+        setRepeatPassword(event.target.value);
+    }
 
     return(
       <div className={classes.root}>
@@ -183,13 +179,19 @@ export default function SignUpForm(){
                 <Grid item xs={6}>
                   <div className="formDiv">
                     <Typography variant="h5" color="primary" className="formTitle">Create your account</Typography>
-                    <TextField className="formStyling formMargin" id="outlined-basic" label="Email" variant="outlined" defaultValue={email} onChange = {handleEmailChange}required />
-                    <TextField className="formStyling formMargin" id="outlined-basic" label="Phone" variant="outlined" defaultValue={phoneNumber} onChange = {handlePhoneNumberChange}required />
-                    <TextField className="formStyling formMargin" type="password" id="outlined-basic" label="Password" variant="outlined" onChange = {handlePasswordChange}required />
-                    <TextField className="formStyling formMargin" type="password" id="outlined-basic" label="Repeat Password" variant="outlined" required />
+                    <TextField className="formStyling formMargin" id="outlined-basic" label="Email" variant="outlined" defaultValue={email} onChange = {handleEmailChange} required />
+                    <TextField className="formStyling formMargin" id="outlined-basic" label="Phone" variant="outlined" defaultValue={phoneNumber} onChange = {handlePhoneNumberChange} required />
+                    <TextField className="formStyling formMargin" type="password" id="outlined-basic" label="Password" variant="outlined" onChange = {handlePasswordChange} required />
+                    <TextField className="formStyling formMargin" type="password" id="outlined-basic" label="Repeat Password" variant="outlined" onChange = {handleRepeatChange} required />
                   </div>
                   <Button variant="outlined" className="prev" onClick={toggleFour}>Back</Button>
-                  <Button /*disabled={email === "" || validateEmail(email) === false || phoneNumber === {} || schema.validate(password) === false || password !== repeatPassword }*/ variant="outlined" className="next" onClick={toggleThree}>Submit</Button>
+                  <Button disabled = {
+                        email === "" ||
+                        validateEmail(email) === true || 
+                        phone.validate(phoneNumber) === false || 
+                        schema.validate(password) === false || 
+                        password !== repeatPassword } 
+                        variant="outlined" className="next" onClick={toggleThree}>Submit</Button>
                 </Grid>
               : null}
               {successPage === true ? 
@@ -202,6 +204,9 @@ export default function SignUpForm(){
                 <Button variant="outlined" className="nextFull" onClick={toggleFive}>Login</Button>
                 </Grid>
               : null }
+              {loginLanding === true ? 
+                <LoginForm loginLanding={false} loginForm={true}/>
+              : null}
               <Grid item xs={3}></Grid>                 
           </Grid>
       </div>

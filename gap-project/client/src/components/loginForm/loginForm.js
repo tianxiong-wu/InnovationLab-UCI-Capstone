@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function LoginForm(){
+export default function LoginForm(props){
     const classes = useStyles();
 
     const [email, setEmail] = useState("");
@@ -29,7 +29,7 @@ export default function LoginForm(){
       password: password
     }
 
-    const [loginLanding, setLoginLanding] = useState(true);
+    const [loginLanding, setLoginLanding] = useState(props.loginLanding);
     const toggleOne = () => {
         setLoginLanding(false);
         setLoginForm(true);
@@ -43,7 +43,7 @@ export default function LoginForm(){
       setPassword(event.target.value)
     }
 
-    const [loginForm, setLoginForm] = useState(false);
+    const [loginForm, setLoginForm] = useState(props.loginForm);
     const toggleTwo = () => {
       axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
         console.log(res);
@@ -78,25 +78,3 @@ export default function LoginForm(){
         </div>
     )
 }
-
-/*
-<div>
-    {loginLanding === true ? 
-    <div className="buttonStyling" onClick={toggleOne}>
-      <span className="textHolder">
-          <Typography variant="h3" className="textStyling textHolder">Login</Typography>
-          <Typography variant="h6" className="textStyling">(with Existing Account)</Typography>
-      </span>
-    </div>
-    : null }
-    {loginForm === true ? 
-    <div className="formDiv signupSuccessDiv">
-            <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
-            <TextField className="formStyling" id="outlined-basic" label="Username" variant="outlined" required />
-            <TextField className="formStyling" id="outlined-basic" label="Password" variant="outlined" required />
-            <Button variant="text" color="primary" className="forgotButton">Forgot Password?</Button><br></br>
-            <Button variant="contained" color="primary" className="signupSuccessButton" onClick={toggleTwo}>Login</Button>
-    </div>
-    : null }
-</div>
-*/
