@@ -128,8 +128,11 @@ export default function settings() {
 					              <div className = 'email'>
 					                innovationlab@email.com
 					              </div>
-					              <div className = 'edit'>
-					                edit
+												<div className = 'editContainer'>
+					                <EditIcon/>
+													<div className = 'edit'>
+														Edit
+													</div>
 					              </div>
 											</div>
 										</div>
