@@ -13,6 +13,23 @@ import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
 import Footer from './components/footer/footer'
+import PatientSettings from './pages/patientSettings/settings';
+//import Settings from './pages/settings/settings'
+
+/*
+<Route path="/faq">
+  <FAQ />
+</Route>
+<Route path="/Schedule">
+  Schedule
+</Route>
+<Route path="/Tutorials">
+  <Tutorials/>
+</Route>
+<Route path="/">
+  <PatientHome/>
+</Route>
+*/
 
 function App() {
   return (<>
@@ -37,8 +54,6 @@ function App() {
             <PatientHome/>
           </Route>
         </Switch>
-      <Footer></Footer>
-
     </Router>
 
 
