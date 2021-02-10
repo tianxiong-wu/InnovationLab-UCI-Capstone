@@ -16,7 +16,6 @@ function App() {
 
   <Router>
       <Nav/>  
-        <PharmContact/>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
@@ -25,6 +24,9 @@ function App() {
           </Route>
           <Route path="/users">
             User
+          </Route>
+          <Route path="/contact">
+            <PharmContact/>
           </Route>
           <Route path="/">
             Home

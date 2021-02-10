@@ -72,7 +72,7 @@ export default function Contact() {
             <Grid container>
                 <Grid item xl={2} lg={2} xs={2}></Grid>
                 
-                <Grid item xs={8} lg={8} xs={8}>
+                <Grid item xs={12} md={8}>
                     <Typography variant='h3' className={classes.pageTitle}>Contact Us</Typography>
                     
                     <img
@@ -86,9 +86,9 @@ export default function Contact() {
 
             {/* bottom half */}
             <Grid container spacing={2}>
-                <Grid item xl={2} lg={2} md={2} sm={2} xs={2}></Grid>
+                <Grid item xs={2}></Grid>
 
-                <Grid item xs={4} xl={4} lg={4} md={4} sm={4}>
+                <Grid item xs={12} md={4}>
                     {pharmInfo.map((pharmInfo) => (
                         <Card borderRadius={30}>
                             <CardHeader
@@ -110,7 +110,7 @@ export default function Contact() {
                     ))}
                 </Grid>
                     
-                <Grid item xl={4} lg={4} md={4} sm={4} xs={4} justify='center'>
+                <Grid item xs={12} md={4}>
                     {contactInfo.map((contactInfo) => (
                         <Card>
                             <CardHeader
@@ -132,7 +132,7 @@ export default function Contact() {
                     ))}
                 </Grid>
 
-                <Grid item xl={2} lg={2} md={2} sm={4} xs={2}></Grid>
+                <Grid item xs={2} sm={4} md={2} lg={2} xl={2}></Grid>
             </Grid>
         </Container>
         
