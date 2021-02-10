@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import './App.css';
 import Nav from './components/nav/nav';
+import PharmContact from './pages/pharmContact/pharmContact'
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/profile/profile';
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route path="/Tutorials">
             <Tutorials/>
+          </Route>
+          <Route path="/contact">
+            <PharmContact/>
           </Route>
           <Route path="/">
             <PatientHome/>
