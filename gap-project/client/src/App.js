@@ -7,13 +7,30 @@ import {
 } from "react-router-dom";
 import './App.css';
 import Nav from './components/nav/nav';
-import FAQ from './pages/FAQ/FAQ';
+import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
-import Footer from './components/footer/footer';
 import LoginSignUp from "./pages/loginSignUp/loginSignUp";
+import Footer from './components/footer/footer'
+import PatientSettings from './pages/patientSettings/settings';
+//import Settings from './pages/settings/settings'
+
+/*
+<Route path="/faq">
+  <FAQ />
+</Route>
+<Route path="/Schedule">
+  Schedule
+</Route>
+<Route path="/Tutorials">
+  <Tutorials/>
+</Route>
+<Route path="/">
+  <PatientHome/>
+</Route>
+*/
 
 function App() {
   return (
@@ -21,7 +38,7 @@ function App() {
       <Nav/>
         <Switch>
           <Route path="/faq">
-            <FAQ />
+            <FAQPage />
           </Route>
           <Route path="/Schedule">
             Schedule

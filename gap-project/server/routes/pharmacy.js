@@ -1,6 +1,13 @@
 const router = require('express').Router();
 let Pharmacy = require('../models/pharmacy.model');
 
+router.route('/all').get((req, res) =>{
+    Pharmacy.find()
+    .then(pharmacy => res.json(pharmacy))
+    .catch(err => res.status(500).json('Error: ' + err))
+});
+
+
 router.route('/add').post((req, res) => {
     const name = req.body.name;
     const streetName = req.body.streetName;
