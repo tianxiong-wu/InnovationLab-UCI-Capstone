@@ -17,16 +17,7 @@ import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 
 function App() {
   return (
-    <LoginSignUp/>
-
-  
-
-    
-  );
-}
-export default App;
-/*
-<Router>
+    <Router>
       <Nav/>
         <Switch>
           <Route path="/faq">
@@ -44,4 +35,12 @@ export default App;
         </Switch>
       <Footer/>
     </Router>
+  
+
+    
+  );
+}
+export default App;
+/*
+
 */
