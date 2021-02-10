@@ -45,8 +45,7 @@ export default function FAQ(){
                 className="searchBar"
                 value={value}
                 type="text"
-                onChange={(value) => handleSearch(value)}
-            >
+                onChange={(value) => handleSearch(value)}>
             </SearchBar>
             <Typography variant="h4" className="titleTwo">Frequently Asked Questions</Typography>
             <Questions questionList={displayQuestions} />
