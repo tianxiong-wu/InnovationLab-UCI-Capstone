@@ -27,7 +27,7 @@ export default function LoginSignUp(){
                 : null }
                 {login === true ?
                 <div onClick={toggleLoginClicked}>
-                    <LoginForm/>
+                    <LoginForm loginLanding={true} loginForm={false}/>
                 </div>
                 : null }
             </Grid>
@@ -35,24 +35,3 @@ export default function LoginSignUp(){
         </Grid>
     )
 }
-
-/*
-
- <Grid container>
-            <Grid item lg={3} xl={3} />
-            <Grid item lg={6} xl={3} >
-                {signUp === true ? 
-                <div onClick={toggleSignupClicked}>
-                    <SignUpForm />
-                </div>
-                : null }
-                {login === true ? 
-                <div onClick={toggleLoginClicked}>
-                    <LoginForm  />
-                </div>
-                : null }
-            </Grid>
-            <Grid item lg={3} xl={3} />
-        </Grid>
-
-*/

@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-
+import React, { useState } from "react"
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +12,7 @@ import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
+import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
 import PatientSettings from './pages/patientSettings/settings';
 //import Settings from './pages/settings/settings'
@@ -32,14 +33,9 @@ import PatientSettings from './pages/patientSettings/settings';
 */
 
 function App() {
-  return (<>
-
-  <Router>
+  return (
+    <Router>
       <Nav/>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-
         <Switch>
           <Route path="/faq">
             <FAQPage />
@@ -54,10 +50,14 @@ function App() {
             <PatientHome/>
           </Route>
         </Switch>
+      <Footer/>
     </Router>
+  
 
-
-    </>
+    
   );
 }
 export default App;
+/*
+
+*/
