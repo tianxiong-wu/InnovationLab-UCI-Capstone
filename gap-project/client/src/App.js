@@ -13,7 +13,8 @@ import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
 import Footer from './components/footer/footer'
-import Settings from './pages/settings/settings'
+import PatientSettings from './pages/patientSettings/settings';
+//import Settings from './pages/settings/settings'
 
 /*
 <Route path="/faq">
@@ -39,7 +40,7 @@ function App() {
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Settings/>
+          <PatientSettings/>
         </Switch>
     </Router>
 

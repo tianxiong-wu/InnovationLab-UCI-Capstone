@@ -1,0 +1,194 @@
+@media screen and (min-width: 16em) { 
+    .appBar{
+        background-color: #00529b !important;
+        padding-bottom: 20px !important;
+        margin: auto !important; 
+        margin-bottom: -10px !important;
+        z-index: 100 !important;
+        width: 70vw !important;
+    }
+    .tabAlign{
+        margin: auto !important;
+    }
+    .tabs{
+        font-size: 14px !important;
+        font-weight: bold !important;
+    }
+    .pageLabel{
+        color: #00529b !important;
+        margin-top: 3vh !important;
+        margin-bottom: 3vh !important;
+        font-size: 2rem !important;
+    }
+
+    .phoneNumberContainer, .emailContainer{
+        width: 70vw !important;
+        margin: auto !important;
+    }
+
+    .phoneHeading, .emailHeading{
+        color: white !important;
+        background-color: #00529b !important;
+        padding: 10px !important;
+    }
+
+    .formHalf{
+        width: 45% !important;
+    }
+
+    .settingsForm{
+        width: 100% !important;
+        margin-top: 4vh !important;
+        margin-left: 2vh !important;
+        height: 16vh !important;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    .saveButtonContainer{
+        width: 100% !important;
+        text-align: center !important;
+        margin: 4vh 0 1vh 0 !important;
+    }
+
+    .saveButton{
+        width: 70vw !important;
+        height: 8vh !important;
+        background-color: #00529b !important;
+        color: white !important;
+        font-size: 25px !important;
+        border-radius: 25px !important;
+        margin-top: -4vh !important;
+    }
+
+    .panelStyling{
+        text-align: center !important;
+    }
+
+    .securityStyling{
+        max-width: 70vw !important;
+        margin: 1vh 0 !important;
+    }
+}
+
+
+ @media screen and (min-width: 60em){
+
+.blueOutline{
+    box-shadow: 0px 0px 0px 30px #00529b;
+    border-radius: 25px !important;
+}
+
+.appBar{
+    background-color: #00529b !important;
+    padding-bottom: 20px !important;
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    margin: auto !important; 
+    margin-bottom: -20px !important;
+    z-index: 100 !important;
+    width: 100% !important;
+}
+
+.tabAlign{
+    margin: auto !important;
+}
+
+.tabs{
+    font-size: 25px !important;
+    font-weight: bold !important;
+}
+
+.pageLabel{
+    color: #00529b !important;
+    margin-top: 3vh !important;
+    margin-bottom: 5vh !important;
+}
+
+.tabContainer{
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+}
+
+.panelStyling{
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    padding: 30px !important;
+    border-bottom-left-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    z-index: -1 !important;
+    margin-left: -4vh !important;
+}
+
+
+.phoneNumberContainer, .emailContainer{
+    width: 40% !important;
+    margin: auto !important;
+    box-shadow: 0px 0px 0px 5px #00529b;
+    border-radius: 25px !important;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll !important;
+}
+
+.phoneHeading, .emailHeading{
+    color: white !important;
+    background-color: #00529b !important;
+    padding: 10px !important;
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
+    font-weight: bold !important;
+}
+
+.settingsForm{
+    width: 100% !important;
+    margin: auto !important;
+    height: 13vw !important;
+    box-shadow: 0 0 0 1pt #00529b !important;
+    border-bottom-left-radius: 25px !important;
+    border-bottom-right-radius: 25px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap;
+}
+
+.formControl{
+    margin-top: 0 !important;
+}
+.formLabel{
+    margin: 2vh !important;
+}
+
+.formLabelShift{
+    margin-left: 2vh !important;
+    max-width: 90% !important;
+}
+
+.formHalf{
+    margin: auto !important;
+}
+
+.saveButtonContainer{
+    width: 100% !important;
+    text-align: center !important;
+    margin: 4vh 0 1vh 0 !important;
+}
+
+.saveButton{
+    width: 25% !important;
+    height: 10vh !important;
+    background-color: #00529b !important;
+    color: white !important;
+    font-weight: bold !important;
+    font-size: 25px !important;
+    border-radius: 30px !important;
+    margin-top: 2vh !important;
+}
+
+.securityStyling{
+    margin: 1.5vh auto !important;
+}
+}
