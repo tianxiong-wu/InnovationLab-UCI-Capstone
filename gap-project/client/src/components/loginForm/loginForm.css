@@ -1,0 +1,75 @@
+.buttonStyling{
+    height: 30vh !important;
+    width: 45rem !important;
+    background-color: #00529B !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: 50px !important;
+    margin-top: 50px !important;
+
+}
+
+.textHolder{
+    line-height: 18vh !important;
+}
+
+.textStyling{
+    font-weight: bold !important;
+}
+
+.formDiv{
+    margin-top: 10vh !important;
+}
+
+.formStyling{
+    text-align: center !important;
+    width: 100% !important;
+    margin: 1% auto !important;
+}
+
+.formTitle{
+    text-align: center !important;
+    margin: 1% auto !important;
+}
+
+.submitStyling{
+    color: white !important;
+    font-weight: bold !important;
+    width: 50% !important;
+    font-size: 18px !important;
+    height: 4rem !important;
+    margin: 1% 12vw !important;
+    background-color: #00529B !important;
+}
+
+.signupSuccessDiv{
+    text-align: center !important;
+    margin-top: 10vh !important;
+}
+
+.signupSuccessTypography{
+    margin: 5% 0 0 0 !important;
+}
+
+.signupSuccessPhoto{
+    width: 300px !important;
+    height: 300px !important;
+}
+
+.forgotButton{
+    width: 15vw !important;
+    height: 10vh !important;
+    margin: 3% !important;
+    color: #00529B !important;
+    font-weight: bold !important;
+    border-radius: 20px !important;
+}
+
+.signupSuccessButton{
+    width: 15vw !important;
+    height: 10vh !important;
+    margin: 3% !important;
+    background-color: #00529B !important;
+    font-weight: bold !important;
+    border-radius: 20px !important;
+}

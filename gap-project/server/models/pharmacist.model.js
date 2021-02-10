@@ -7,28 +7,28 @@ const pharmacistSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
-        required: true
     },
     lastName: {
         type: String,
         trim: true,
-        required: true
     },
     phoneNumber: {
         type: String,
         trim: true,
-        required: true
     },
     email: {
         type: String,
         trime: true,
-        required: true,
     },
     birthday: {
         type: Date,
     },
     assignedPatient: {
         type: [patient.schema]
+    },
+    role: {
+        type: String,
+        default: 'pharmacist'
     }
 },{
     timestamps: true

@@ -1,12 +1,12 @@
 const tutorial  = require('./tutorial.model');
+const pharmacist = require('./pharmacist.model');
+const event = require('./event.model');
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const infusionSchema = new Schema({
     infusion: {
         type: tutorial.schema,
-        required: true,
     },
     note: {
         type: String,
@@ -18,17 +18,19 @@ const patientSchema = new Schema({
     firstName: {
         type: String,
         trim: true,
-        required: true
     },
     lastName: {
         type: String,
         trim: true,
-        required: true
+  
+    },
+    password: {
+        type: String
     },
     phoneNumber: {
         type: String,
         trim: true,
-        required: true
+   
     },
     email: {
         type: String,
@@ -44,31 +46,37 @@ const patientSchema = new Schema({
     },
     infusionArray: {
         type: [infusionSchema],
+        default: []
+
+    },
+    password: {
+        type: String
     },
     notification: {
-        type: Array
+        type: Array,
+        default: []
     },
     gender: {
         type: String,
         enum: ['male', 'female', 'others'],
-        required: true,
     },
     recentCheckIn: {
         type: Date,
-        required: true,
     },
     nextCheckIn: {
         type: Date,
-        required: true,
     },
     notificationType: {
         type: String,
         enum: ['text', 'email', 'both', 'none'],
-        required: true,
         default: 'both'
     },
     assignedPharmacist: {
-        type: String
+        type: pharmacist.schema
+    },
+    events: {
+        type: [event.schema],
+        default: []
     }
 }, {
     timestamps: true,

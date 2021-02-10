@@ -3,32 +3,33 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // schema for url
 const urlSchema = new Schema({
-    url: {
+    //video id
+    id: {
         type: String,
-        required: true
     },
     order: {
         type: Number,
-        required: true
-    }
+    },
+    description: {
+        type: String,
+    },
+ 
 });
 
 const tutorialSchema = new Schema({
     name: {
         type: String,
-        required: true,
         trim: true
     },
     description: {
         type: String,
-        required: true,
+
         trim: true
     },
     url: {
         type: [urlSchema],
-        required: true,
-    }
 
+    }
 },{
     timestamps: true
 });
