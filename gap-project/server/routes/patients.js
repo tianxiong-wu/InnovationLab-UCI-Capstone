@@ -117,8 +117,7 @@ router.route('/updateCheckin/:id').post((req, res) =>{
 //TODO: need to match with registration info and auth API
 //code below for testing
 router.route('/register').post((req, res) => {
-    const {firstName,
-    lastName}
+
     /*const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const password = req.body.password;

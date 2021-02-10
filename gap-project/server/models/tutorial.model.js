@@ -3,11 +3,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // schema for url
 const urlSchema = new Schema({
-    url: {
+    //video id
+    id: {
         type: String,
-    },
-    thumbnail: {
-        type: String
     },
     order: {
         type: Number,
@@ -15,9 +13,7 @@ const urlSchema = new Schema({
     description: {
         type: String,
     },
-    duration: {
-        type: Number
-    }
+ 
 });
 
 const tutorialSchema = new Schema({
@@ -33,9 +29,6 @@ const tutorialSchema = new Schema({
     url: {
         type: [urlSchema],
 
-    },
-    duration: {
-        type: Number
     }
 },{
     timestamps: true
