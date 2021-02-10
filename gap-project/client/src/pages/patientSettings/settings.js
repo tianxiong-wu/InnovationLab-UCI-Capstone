@@ -60,16 +60,39 @@ function TabPanel(props) {
 export default function PatientSettings(){
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-
     const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
-    const [notifyPhone, setNotifyPhone] = useState(false);
-    const [notifyEmail, setNotifyEmail] = useState(true);
+    const [currentPass, setCurrentPass] = useState("");
+    const [newPass, setNewPass] = useState("");
+    const [repeatPass, setRepeatPass] = useState("");
+
+    const [notifyPhone, setNotifyPhone] = useState("Yes");
+    const [notifyEmail, setNotifyEmail] = useState("Yes");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-      };
-      
+    }
+
+    const handleNotifyPhone = (event, newValue) => {
+        setNotifyPhone(newValue);
+    };
+
+    const handleNotifyEmail = (event, newValue) => {
+        setNotifyEmail(newValue);
+    };
+
+    const handleCurrentPass = (event, newValue) => {
+        setCurrentPass(newValue);
+    }
+
+    const handleNewPass = (event, newValue) => {
+        setNewPass(newValue);
+    }
+
+    const handleRepeatPass = (event, newValue) => {
+        setRepeatPass(newValue);
+    }
+
     function updatePatientSettings() {
         alert('you saved your phone number')
     }
@@ -90,29 +113,35 @@ export default function PatientSettings(){
                 <TabPanel value={value} index={0} >
                     <div className="panelStyling">
                         <TextField 
-                            id="outlined-basic"
+                            type="password"
+                            id="password"
                             label="Enter current password"
-                            defaultValue=""
+                            defaultValue={currentPass}
                             variant="outlined"
                             className="securityStyling"
+                            onChange={setCurrentPass}
                             fullWidth
                             required>
                         </TextField>
                         <TextField 
-                            id="outlined-basic"
+                            type="password"
+                            id="password"
                             label="Enter new password"
-                            defaultValue=""
+                            defaultValue={newPass}
                             variant="outlined"
-                            className="securityStyling"                            
+                            className="securityStyling"
+                            onChange={setNewPass}                            
                             fullWidth
                             required>
                         </TextField>
                         <TextField 
-                            id="outlined-basic"
+                            type="password"
+                            id="password"
                             label="Confirm new password"
-                            defaultValue=""
+                            defaultValue={repeatPass}
                             variant="outlined"
                             className="securityStyling"
+                            onChange={setRepeatPass}
                             fullWidth
                             required>
                         </TextField>
@@ -126,8 +155,8 @@ export default function PatientSettings(){
                             <div className="settingsForm">
                                 <div className="formHalf">
                                     <FormControl component="fieldset" className="formControl">
-                                        <FormLabel component="legend" className="formLabel">Notify Me?</FormLabel>
-                                        <RadioGroup row ria-label="gender" name="gender1" className="formLabelShift" value={value} onChange={handleChange}>
+                                        <FormLabel component="legend">Notify Me?</FormLabel>
+                                        <RadioGroup row ria-label="phone notification" name="phone notification" className="formLabelShift" value={notifyPhone} onChange={handleNotifyPhone}>
                                             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                             <FormControlLabel value="No" control={<Radio />} label="No" />
                                         </RadioGroup>
@@ -135,11 +164,11 @@ export default function PatientSettings(){
                                 </div>
                                 <div className="formHalf">
                                     <FormControl component="fieldset" className="formControl">
-                                        <FormLabel component="legend" className="formLabel"></FormLabel>
+                                        <FormLabel component="legend" className="formLabel">Set a new phone?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
                                             label="714-123-4567"
-                                            defaultValue=""
+                                            defaultValue={phone}
                                             variant="outlined"
                                             className="formLabelShift"
                                             fullWidth>
@@ -153,8 +182,8 @@ export default function PatientSettings(){
                             <div className="settingsForm">
                                 <div className="formHalf">
                                     <FormControl component="fieldset" className="formControl">
-                                        <FormLabel component="legend" className="formLabel">Notify Me?</FormLabel>
-                                        <RadioGroup row ria-label="gender" name="gender1" className="formLabelShift" value={value} onChange={handleChange}>
+                                        <FormLabel component="legend">Notify Me?</FormLabel>
+                                        <RadioGroup row ria-label="email notification" name="email notification" className="formLabelShift" value={notifyEmail} onChange={handleNotifyEmail}>
                                             <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
                                             <FormControlLabel value="No" control={<Radio />} label="No" />
                                         </RadioGroup>
@@ -162,11 +191,11 @@ export default function PatientSettings(){
                                 </div>
                                 <div className="formHalf">
                                     <FormControl component="fieldset" className="formControl">
-                                        <FormLabel component="legend" className="formLabel"></FormLabel>
+                                        <FormLabel component="legend" className="formLabel">Set a new email?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
                                             label="JMiller@gmail.com"
-                                            defaultValue=""
+                                            defaultValue={email}
                                             variant="outlined"
                                             className="formLabelShift">
                                         </TextField>
