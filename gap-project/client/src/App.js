@@ -13,6 +13,7 @@ import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
+import Tutorial from './pages/TutorialPage/tutorial';
 import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
 import PatientSettings from './pages/patientSettings/settings';
@@ -45,7 +46,7 @@ function App() {
             Schedule
           </Route>
           <Route path="/Tutorials">
-            <Tutorials/>
+            <Tutorial/>
           </Route>
           <Route path="/contact">
             <PharmContact/>

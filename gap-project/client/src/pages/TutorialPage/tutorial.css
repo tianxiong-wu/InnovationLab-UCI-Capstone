@@ -1,0 +1,64 @@
+.centralContainer{
+    margin-top: 3vh !important;
+}
+.noteContainer {
+    box-Shadow: 0 0 0 2px #00529b !important;
+    height: 55vh !important;
+}
+
+.infusionContainer{
+    height: 45vh !important;
+    box-shadow: 0 0 0 2px #00529b !important;
+    width: 95% !important;
+}
+
+.videoContainer{
+    height: 33vh !important;
+}
+
+.videoButtonsContainer{
+    display: flex !important;
+    flex-direction: row !important;
+    width: 100% !important;
+}
+
+.videoButtons{
+    width: 70% !important;
+    background-color: #00529b !important;
+    color: white !important;
+    padding: 20px !important;
+    margin-top: -5vh !important;
+}
+
+.videoAndDesc{
+    width: 95% !important;
+}
+
+.description{
+    margin-top: 2vh !important;
+}
+
+.infusionTitle{
+    background-color: #00529b;
+    padding: 8px !important;
+    color: white !important;
+    width: 103% !important;
+}
+
+.noteTabs{
+    background-color: #00529b !important;
+}
+
+.buttonContainer{
+    display: flex !important;
+    flex-direction: row !important;
+    margin: auto !important;
+}
+
+.desktopButtons{
+    color: white !important; 
+    background-color: #00529b !important;
+    margin: auto !important;
+    width: 50% !important;
+    padding: 20px !important;
+}
