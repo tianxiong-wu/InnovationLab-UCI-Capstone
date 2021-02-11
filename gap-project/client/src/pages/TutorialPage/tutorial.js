@@ -56,7 +56,7 @@ function TabPanel(props) {
         flexDirection: "row",
     },
     infusionTitleContainer: {
-        width: "95%"
+        width: "100%"
     },
   }));
 
@@ -76,9 +76,9 @@ export default function TutorialPage(){
         <Grid container>
             <Grid xs={1}></Grid>
             <Grid xs={10} container className="centralContainer">
-                <Grid xs={6} md={7} container>
+                <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
-                        <div className={classes.infusionTitleContainer}>
+                        <div>
                             <Typography variant="h5" align="center" className="infusionTitle">Infusion Name: (1/6)</Typography>
                         </div>
                         <div className="videoContainer"></div>
@@ -92,7 +92,8 @@ export default function TutorialPage(){
                         <Typography variant="body1" className="description">Description: </Typography>
                     </div>
                 </Grid>
-                <Grid xs={0} md={4} container>
+                <Grid sm={1}></Grid>
+                <Grid xs={0} md={5} container className="">
                     <div className={classes.root}>
                         <div className="noteContainer">
                             <AppBar position="static" className="noteTabs" fullWidth>
@@ -114,8 +115,7 @@ export default function TutorialPage(){
                         </div>
                         <Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
                         <Button variant="contained" className="desktopButtons">Download Full Text</Button>
-                    </div>
-                        
+                    </div>   
                 </Grid>
             </Grid>
             <Grid xs={1}></Grid>
