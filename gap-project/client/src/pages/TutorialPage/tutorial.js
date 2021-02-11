@@ -92,10 +92,10 @@ export default function TutorialPage(){
     const [descOpen, setOpenDesc] = React.useState(false);
     const handleClickOpenDesc = () => {
         setOpenDesc(true);
-      };
+    }
     const handleCloseDesc = () => {
         setOpenDesc(false);
-      };
+    }
 
     const [stepOpen, setOpenStep] = React.useState(false);
     const handleClickOpenStep = () => {
@@ -137,8 +137,8 @@ export default function TutorialPage(){
                 <Grid xs={0} md={5} container className="desktopInteraction">
                     <div className={classes.root}>
                         <div className="noteContainer">
-                            <AppBar position="static" className="noteTabs" fullWidth>
-                                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+                            <AppBar position="static" className="no teTabs" fullWidth>
+                                <Tabs value={value} onChange={handleChange} centered className="tabsColor" aria-label="simple tabs example">
                                     <Tab wrapped label="Pharmacist Notes" {...a11yProps(0)} />
                                     <Tab wrapped label="Text-Only Step List" {...a11yProps(1)} />
                                     <Tab wrapped label="Infusion Notes" {...a11yProps(2)} />
@@ -159,16 +159,17 @@ export default function TutorialPage(){
                     </div>  
                 </Grid>
             </Grid>
+
             <BottomNavigation
-                        value={navValue}
-                        onChange={handleNavChange}
-                        showLabels
-                        className="bottomNav mobileInteraction"
-                    >
-                        <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenDesc} label="Description"/>
-                        <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenStep} label="Step List"/>
-                        <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenNotes} label="Notes"/>    
-                        <BottomNavigationAction className="bottomNavItem" label="Download Text"/>        
+                value={navValue}
+                onChange={handleNavChange}
+                showLabels
+                className="bottomNav mobileInteraction"
+            >
+                <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenDesc} label="Description"/>
+                <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenStep} label="Step List"/>
+                <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenNotes} label="Notes"/>    
+                <BottomNavigationAction className="bottomNavItem" label="Download Text"/>        
             </BottomNavigation> 
             <Dialog
                 open={descOpen}
@@ -232,9 +233,7 @@ export default function TutorialPage(){
                 </Button>
                 </DialogActions>
             </Dialog>
-            
             <Grid xs={1}></Grid>
-
         </Grid>
     )
 }
