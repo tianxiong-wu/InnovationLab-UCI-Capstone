@@ -11,6 +11,8 @@ import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,6 +69,11 @@ export default function TutorialPage(){
         setValue(newValue);
     }
 
+    const [navValue, setNavValue] = useState(0);
+    const handleNavChange = (event, newValue) => {
+        setNavValue(newValue);
+    }
+
     const [pausePlay, setPausePlay] = useState(true);
     const handlePause = (event) => {
         setPausePlay(!pausePlay);
@@ -89,11 +96,11 @@ export default function TutorialPage(){
                             <Button variant="contained" className="videoButtons" onClick={handlePause}>{pausePlay === true ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
                             <Button variant="contained" className="videoButtons"><KeyboardArrowRightIcon/></Button>
                         </div>
-                        <Typography variant="body1" className="description">Description: </Typography>
+                        <Typography variant="body1" className="description desktopInteraction">Description: </Typography>
                     </div>
                 </Grid>
                 <Grid sm={1}></Grid>
-                <Grid xs={0} md={5} container className="">
+                <Grid xs={0} md={5} container className="desktopInteraction">
                     <div className={classes.root}>
                         <div className="noteContainer">
                             <AppBar position="static" className="noteTabs" fullWidth>
@@ -115,10 +122,22 @@ export default function TutorialPage(){
                         </div>
                         <Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
                         <Button variant="contained" className="desktopButtons">Download Full Text</Button>
-                    </div>   
+                    </div>  
                 </Grid>
             </Grid>
+            <BottomNavigation
+                        value={navValue}
+                        onChange={handleNavChange}
+                        showLabels
+                        className="bottomNav mobileInteraction"
+                    >
+                        <BottomNavigationAction className="bottomNavItem" label="Description"/>
+                        <BottomNavigationAction className="bottomNavItem" label="Step List"/>
+                        <BottomNavigationAction className="bottomNavItem" label="Notes"/>    
+                        <BottomNavigationAction className="bottomNavItem" label="Download Text"/>        
+                    </BottomNavigation> 
             <Grid xs={1}></Grid>
+
         </Grid>
     )
 }

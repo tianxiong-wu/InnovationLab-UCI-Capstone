@@ -1,3 +1,84 @@
+@media screen and (min-width: 16em){
+    .desktopInteraction{
+        display: none !important;
+    }
+
+    .centralContainer{
+        margin-top: 5vh !important;
+    }
+    .noteContainer {
+        box-Shadow: 0 0 0 2px #00529b !important;
+        height: 55vh !important;
+    }
+
+    .infusionContainer{
+        height: 56vh !important;
+        box-shadow: 0 0 0 2px #00529b !important;
+        width: 100% !important;
+    }
+
+    .videoContainer{
+        height: 33vh !important;
+    }
+
+    .videoButtonsContainer{
+        display: flex !important;
+        flex-direction: row !important;
+        width: 100% !important;
+    }
+
+    .videoButtons{
+        width: 70% !important;
+        background-color: #00529b !important;
+        color: white !important;
+        padding: 20px !important;
+    }
+
+    .videoAndDesc{
+        width: 100% !important;
+    }
+
+    .description{
+        margin-top: 2vh !important;
+        margin-bottom: 3vh !important;
+    }
+
+    .infusionTitle{
+        background-color: #00529b;
+        color: white !important;
+        width: 100% !important;
+        padding: 10px 0 !important;
+    }
+
+    .bottomNav {
+        width: 100% !important;
+        background-Color: #00529b !important;
+        text-align: center !important;
+        margin-top: 7.25vh !important;
+    }
+
+    .bottomNavItem{
+        color: white !important;
+        width: 25% !important;
+        font-weight: bold !important;
+        margin-top: 1.5vh !important;
+    }
+
+    .mobileInteraction{
+        display: block !important;
+    }
+}
+
+@media screen and (min-width: 40em){
+
+.desktopInteraction{
+    display: block !important; 
+}
+
+.mobileInteraction{
+    display: none !important;
+}
+
 .centralContainer{
     margin-top: 3vh !important;
 }
@@ -42,6 +123,7 @@
     background-color: #00529b;
     color: white !important;
     width: 100% !important;
+    padding: 10px 0 !important;
 }
 
 .noteTabs{
@@ -60,4 +142,6 @@
     margin: auto !important;
     width: 50% !important;
     padding: 20px !important;
+}
+
 }
