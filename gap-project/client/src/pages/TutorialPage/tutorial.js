@@ -13,6 +13,12 @@ import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -46,6 +52,10 @@ function TabPanel(props) {
       'aria-controls': `simple-tabpanel-${index}`,
     };
   }
+
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
   
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -78,6 +88,30 @@ export default function TutorialPage(){
     const handlePause = (event) => {
         setPausePlay(!pausePlay);
     }
+
+    const [descOpen, setOpenDesc] = React.useState(false);
+    const handleClickOpenDesc = () => {
+        setOpenDesc(true);
+      };
+    const handleCloseDesc = () => {
+        setOpenDesc(false);
+      };
+
+    const [stepOpen, setOpenStep] = React.useState(false);
+    const handleClickOpenStep = () => {
+        setOpenStep(true);
+    };
+    const handleCloseStep = () => {
+        setOpenStep(false);
+    };
+
+    const [notesOpen, setOpenNotes] = React.useState(false);
+    const handleClickOpenNotes = () => {
+        setOpenNotes(true);
+    };
+    const handleCloseNotes = () => {
+        setOpenNotes(false);
+    };
 
     return(
         <Grid container>
@@ -131,11 +165,74 @@ export default function TutorialPage(){
                         showLabels
                         className="bottomNav mobileInteraction"
                     >
-                        <BottomNavigationAction className="bottomNavItem" label="Description"/>
-                        <BottomNavigationAction className="bottomNavItem" label="Step List"/>
-                        <BottomNavigationAction className="bottomNavItem" label="Notes"/>    
+                        <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenDesc} label="Description"/>
+                        <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenStep} label="Step List"/>
+                        <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenNotes} label="Notes"/>    
                         <BottomNavigationAction className="bottomNavItem" label="Download Text"/>        
-                    </BottomNavigation> 
+            </BottomNavigation> 
+            <Dialog
+                open={descOpen}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleCloseDesc}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title">{"Description"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Infusion description here
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleCloseDesc} color="primary">
+                    Close
+                </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog
+                open={stepOpen}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleCloseStep}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title">{"Step List"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Step List here
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleCloseStep} color="primary">
+                    Close
+                </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Dialog
+                open={notesOpen}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleCloseNotes}
+                aria-labelledby="alert-dialog-slide-title"
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle id="alert-dialog-slide-title">{"Notes"}</DialogTitle>
+                <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    Notes here
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleCloseNotes} color="primary">
+                    Close
+                </Button>
+                </DialogActions>
+            </Dialog>
+            
             <Grid xs={1}></Grid>
 
         </Grid>
