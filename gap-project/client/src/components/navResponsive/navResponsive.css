@@ -31,8 +31,52 @@
 	color: #834B00;
 }
 
-@media only screen and (max-width: 600px) {
-  body {
-    background-color: lightblue;
+.burgerItem {
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  background-color: #00529B;
+  color: white;
+  border: 1px solid #397EBC;
+  padding: 5%;
+}
+
+
+@media only screen and (min-width: 601px) {
+
+  .navItem {
+    display: block;
   }
+
+  #hamburger, #close {
+    display: none;
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+
+  .navStyling{
+    display: flex;
+    justify-content: center;
+}
+
+#logoIcon {
+/*not sure if we want to center the icon, but couldn't get it to work easily so may need to revisit*/
+}
+
+  .navItem {
+    display: none;
+  }
+
+  #hamburger {
+    display: block;
+  }
+
+  #close {
+    display: none;
+  }
+
 }

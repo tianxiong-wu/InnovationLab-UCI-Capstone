@@ -8,6 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
 import '../navResponsive/navResponsive.css';
 import {
   BrowserRouter as Router,
@@ -34,7 +35,9 @@ export default function MenuAppBar() {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorE2, setAnchorE2] = React.useState(null);
   const open = Boolean(anchorEl);
+  const open2 = Boolean(anchorE2);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -48,51 +51,69 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleHamburger = (event) => {
+    setAnchorE2(event.currentTarget);
+    document.getElementById("hamburger").style.display = "none";
+    document.getElementById("close").style.display = "block";
+  }
+
+  const handleHamburgerClose = () => {
+    setAnchorE2(null);
+    document.getElementById("close").style.display = "none";
+    document.getElementById("hamburger").style.display = "block";
+  };
+
 // replace all the <a> tags with <Link> to use react routing once the other pages are built.
 // add a react conditional rendering: if not logged in, only show the logo on the nav bar.
 // currently developed for desktop pov. Add css media queries to show a different nav format
 // if the size of the window is larger than a mobile size.
 
   return (
+
     <div className={classes.root}>
 
       <AppBar position="static">
         <Toolbar className="navStyling">
         <div>
           <IconButton
-            aria-label="account of current user"
+            aria-label="hamburger list of pages"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            onClick={handleMenu}
+            onClick={handleHamburger}
             color="inherit"
           >
-            <MenuIcon/>
+            <MenuIcon id = "hamburger"/>
+            <CloseIcon id = "close"/>
           </IconButton>
           <Menu
             className={classes.m}
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem class="profileItem" onClick={handleClose}>Jasmine Miller</MenuItem>
-            <MenuItem class="profileItem" onClick={handleClose}>Profile</MenuItem>
-            <Link className="navItem" to="/Tutorials">Tutorials</Link>
+            id="menu-hamburger"
+            anchorEl={anchorE2}
 
-            <MenuItem class="profileItem" onClick={handleClose}>Settings</MenuItem>
-            <MenuItem class="profileItem" onClick={handleClose}>Log Out</MenuItem>
+            keepMounted
+
+            open={open2}
+            onClose={handleHamburgerClose}
+            PaperProps={{
+             style: {
+                  width: "100%",
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  left: 0,
+                  right: 0,
+                }
+              }}
+              marginThreshold={0}
+          >
+            <Link className="burgerItem" onClick={handleHamburgerClose} to="/">Home</Link>
+            <Link className="burgerItem" onClick={handleHamburgerClose} to="/Tutorials">Tutorials</Link>
+            <Link className="burgerItem" onClick={handleHamburgerClose} href="#">Schedule</Link>
+            <Link className="burgerItem" onClick={handleHamburgerClose} to="/faq">FAQ</Link>
+            <Link className="burgerItem" onClick={handleHamburgerClose} to = "/contact">Contact</Link>
+
           </Menu>
         </div>
-        <IconButton edge="start" className={classes.menuButton} color="#00529b" aria-label="menu">
+        <IconButton edge="start" className={classes.menuButton} id = "logoIcon" color="#00529b" aria-label="menu">
             Icon
         </IconButton>
         <Typography variant="h6" className={classes.title}>
