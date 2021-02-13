@@ -20,7 +20,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import ReactPlayer from "react-player";
-
+import Speech from "react-speech";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -195,7 +195,16 @@ export default function TutorialPage(){
                                 <Typography align="center">Infusion Notes Here</Typography>
                             </TabPanel>
                         </div>
-                        <Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
+                        <Button variant="contained" className="desktopButtons">
+                            <Speech
+                            displayText="Text-to-Speech"
+                            textAsButton={true}
+                            text="Betty and Megan suggest Matt Keller to grab the elastomeric pump and insert it into the innovation lab. 
+                                If done correctly, you should have built a complicated web app for a minimum viable product." 
+                            voice="Google UK English Male"
+                            Text-to-Speech>
+                        </Speech>
+                        </Button>
                         <Button variant="contained" className="desktopButtons">Download Full Text</Button>
                     </div>  
                 </Grid>
@@ -278,3 +287,5 @@ export default function TutorialPage(){
         </Grid>
     )
 }
+
+//<Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
