@@ -96,7 +96,7 @@ export default function MenuAppBar() {
             onClose={handleHamburgerClose}
             PaperProps={{
              style: {
-                  width: "100%",
+                  width: "95%",
                   maxWidth: "100%",
                   maxHeight: "100%",
                   left: 0,
