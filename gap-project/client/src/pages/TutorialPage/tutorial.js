@@ -86,9 +86,13 @@ export default function TutorialPage(){
         setNavValue(newValue);
     }
 
-    const [pausePlay, setPausePlay] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const handlePause = (event) => {
-        setPausePlay(!pausePlay);
+        setPlaying(false);
+    }
+
+    const handlePlay = (event) => {
+        setPlaying(true);
     }
 
     const [descOpen, setOpenDesc] = React.useState(false);
@@ -115,6 +119,7 @@ export default function TutorialPage(){
         setOpenNotes(false);
     };
 
+    // create a video object with url, pharmacist notes, text only list, infusion notes, etc.
     const videoArray = [
         "https://www.youtube.com/watch?v=-omGy5hsmMM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=1",
         "https://www.youtube.com/watch?v=xkKLs2gao34&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=2",
@@ -137,9 +142,6 @@ export default function TutorialPage(){
             setVideoCounter(newCount);
             setCurrentVideo(videoArray[newCount]);
         }
-        else {
-            alert('No more videos to play');
-        }
     }
 
     const handlePrevVideo = () => {
@@ -147,9 +149,6 @@ export default function TutorialPage(){
             let newCount = videoCounter - 1;
             setVideoCounter(newCount);
             setCurrentVideo(videoArray[newCount]);
-        }
-        else {
-            alert('No more videos to play');
         }
     }
 
@@ -163,14 +162,14 @@ export default function TutorialPage(){
                             <Typography variant="h5" align="center" className="infusionTitle">IV Push: ({videoCounter+1}/{videoArray.length})</Typography>
                         </div>
                         <div className="videoContainer">
-                            <ReactPlayer className="video" url={currentVideo}/>
+                            <ReactPlayer className="video" url={currentVideo} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
                         </div>
                     </div>
                     <div className="videoAndDesc">
                         <div className="videoButtonsContainer">
-                            <Button variant="contained" className="videoButtons" onClick={handlePrevVideo}><KeyboardArrowLeftIcon/></Button>
-                            <Button variant="contained" className="videoButtons" onClick={handlePause}>{pausePlay === true ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
-                            <Button variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
+                            <Button disabled={videoCounter === 0} variant="contained" className="videoButtons" onClick={handlePrevVideo}><KeyboardArrowLeftIcon/></Button>
+                            <Button variant="contained" className="videoButtons" onClick={playing === false ? handlePlay : handlePause}>{playing === false ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
+                            <Button disabled={videoCounter === 9} variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
                         </div>
                         <Typography variant="body1" className="description desktopInteraction">Description: </Typography>
                     </div>
@@ -179,7 +178,7 @@ export default function TutorialPage(){
                 <Grid xs={0} md={5} container className="desktopInteraction">
                     <div className={classes.root}>
                         <div className="noteContainer">
-                            <AppBar position="static" className="no teTabs" fullWidth>
+                            <AppBar position="static" className="noteTabs" fullWidth>
                                 <Tabs value={value} onChange={handleChange} centered className="tabsColor" aria-label="simple tabs example">
                                     <Tab wrapped label="Pharmacist Notes" {...a11yProps(0)} />
                                     <Tab wrapped label="Text-Only Step List" {...a11yProps(1)} />
