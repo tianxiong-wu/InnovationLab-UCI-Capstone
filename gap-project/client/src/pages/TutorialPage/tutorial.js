@@ -19,6 +19,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import ReactPlayer from "react-player";
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -113,6 +115,44 @@ export default function TutorialPage(){
         setOpenNotes(false);
     };
 
+    const videoArray = [
+        "https://www.youtube.com/watch?v=-omGy5hsmMM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=1",
+        "https://www.youtube.com/watch?v=xkKLs2gao34&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=2",
+        "https://www.youtube.com/watch?v=KD9HdDpDXwA&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=3",
+        "https://www.youtube.com/watch?v=Kl9uvkkRJ5g&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=4",
+        "https://www.youtube.com/watch?v=MF9EubHp7bM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=5",
+        "https://www.youtube.com/watch?v=y1VA35aPVZM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=6",
+        "https://www.youtube.com/watch?v=iJtk2s1ru2Q&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=7",
+        "https://www.youtube.com/watch?v=Itpv9XrS0m8&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=8",
+        "https://www.youtube.com/watch?v=h84wymxoBXI&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=9",
+        "https://www.youtube.com/watch?v=-er0hrmeMkI&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=10"
+    ]
+
+    const [videoCounter, setVideoCounter] = useState(videoArray.length - videoArray.length);
+    const [currentVideo, setCurrentVideo] = useState(videoArray[videoCounter]);
+
+    const handleNextVideo = () => {
+        if (videoCounter < videoArray.length-1){
+            let newCount = videoCounter + 1;
+            setVideoCounter(newCount);
+            setCurrentVideo(videoArray[newCount]);
+        }
+        else {
+            alert('No more videos to play');
+        }
+    }
+
+    const handlePrevVideo = () => {
+        if (videoCounter > 0){
+            let newCount = videoCounter - 1;
+            setVideoCounter(newCount);
+            setCurrentVideo(videoArray[newCount]);
+        }
+        else {
+            alert('No more videos to play');
+        }
+    }
+
     return(
         <Grid container>
             <Grid xs={1}></Grid>
@@ -120,15 +160,17 @@ export default function TutorialPage(){
                 <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
                         <div>
-                            <Typography variant="h5" align="center" className="infusionTitle">Infusion Name: (1/6)</Typography>
+                            <Typography variant="h5" align="center" className="infusionTitle">IV Push: ({videoCounter+1}/{videoArray.length})</Typography>
                         </div>
-                        <div className="videoContainer"></div>
+                        <div className="videoContainer">
+                            <ReactPlayer className="video" url={currentVideo}/>
+                        </div>
                     </div>
                     <div className="videoAndDesc">
                         <div className="videoButtonsContainer">
-                            <Button variant="contained" className="videoButtons"><KeyboardArrowLeftIcon/></Button>
+                            <Button variant="contained" className="videoButtons" onClick={handlePrevVideo}><KeyboardArrowLeftIcon/></Button>
                             <Button variant="contained" className="videoButtons" onClick={handlePause}>{pausePlay === true ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
-                            <Button variant="contained" className="videoButtons"><KeyboardArrowRightIcon/></Button>
+                            <Button variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
                         </div>
                         <Typography variant="body1" className="description desktopInteraction">Description: </Typography>
                     </div>
