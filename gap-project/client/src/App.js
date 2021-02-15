@@ -10,6 +10,7 @@ import Nav from './components/nav/nav';
 import NavResponsive from './components/navResponsive/navResponsive';
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
+import PharmacistHome from './pages/homePage/pharmacist/pharmacistHome';
 import Profile from './pages/profile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
@@ -35,7 +36,7 @@ function App() {
             <Tutorials/>
           </Route>
           <Route path="/">
-            <PatientHome/>
+            <PharmacistHome/>
           </Route>
         </Switch>
       <Footer></Footer>
