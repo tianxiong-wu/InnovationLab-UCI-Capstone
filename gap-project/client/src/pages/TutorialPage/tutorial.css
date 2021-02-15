@@ -12,7 +12,7 @@
     }
 
     .infusionContainer{
-        height: 56vh !important;
+        height: 42vh !important;
         box-shadow: 0 0 0 2px #00529b !important;
         width: 100% !important;
     }
@@ -54,7 +54,7 @@
         width: 100% !important;
         background-Color: #00529b !important;
         text-align: center !important;
-        margin-top: 7.25vh !important;
+        margin-top: 20.25vh !important;
     }
 
     .bottomNavItem{
@@ -66,6 +66,12 @@
 
     .mobileInteraction{
         display: block !important;
+    }
+
+    .video{
+        width: 100% !important;
+        height: 100% !important;
+        margin-top: 1vh !important;
     }
 }
 

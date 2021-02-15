@@ -19,6 +19,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import ReactPlayer from "react-player";
+import Speech from "react-speech";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -84,9 +86,13 @@ export default function TutorialPage(){
         setNavValue(newValue);
     }
 
-    const [pausePlay, setPausePlay] = useState(true);
+    const [playing, setPlaying] = useState(false);
     const handlePause = (event) => {
-        setPausePlay(!pausePlay);
+        setPlaying(false);
+    }
+
+    const handlePlay = (event) => {
+        setPlaying(true);
     }
 
     const [descOpen, setOpenDesc] = React.useState(false);
@@ -113,6 +119,39 @@ export default function TutorialPage(){
         setOpenNotes(false);
     };
 
+    // create a video object with url, pharmacist notes, text only list, infusion notes, etc.
+    const videoArray = [
+        "https://www.youtube.com/watch?v=-omGy5hsmMM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=1",
+        "https://www.youtube.com/watch?v=xkKLs2gao34&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=2",
+        "https://www.youtube.com/watch?v=KD9HdDpDXwA&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=3",
+        "https://www.youtube.com/watch?v=Kl9uvkkRJ5g&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=4",
+        "https://www.youtube.com/watch?v=MF9EubHp7bM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=5",
+        "https://www.youtube.com/watch?v=y1VA35aPVZM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=6",
+        "https://www.youtube.com/watch?v=iJtk2s1ru2Q&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=7",
+        "https://www.youtube.com/watch?v=Itpv9XrS0m8&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=8",
+        "https://www.youtube.com/watch?v=h84wymxoBXI&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=9",
+        "https://www.youtube.com/watch?v=-er0hrmeMkI&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=10"
+    ]
+
+    const [videoCounter, setVideoCounter] = useState(videoArray.length - videoArray.length);
+    const [currentVideo, setCurrentVideo] = useState(videoArray[videoCounter]);
+
+    const handleNextVideo = () => {
+        if (videoCounter < videoArray.length-1){
+            let newCount = videoCounter + 1;
+            setVideoCounter(newCount);
+            setCurrentVideo(videoArray[newCount]);
+        }
+    }
+
+    const handlePrevVideo = () => {
+        if (videoCounter > 0){
+            let newCount = videoCounter - 1;
+            setVideoCounter(newCount);
+            setCurrentVideo(videoArray[newCount]);
+        }
+    }
+
     return(
         <Grid container>
             <Grid xs={1}></Grid>
@@ -120,15 +159,17 @@ export default function TutorialPage(){
                 <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
                         <div>
-                            <Typography variant="h5" align="center" className="infusionTitle">Infusion Name: (1/6)</Typography>
+                            <Typography variant="h5" align="center" className="infusionTitle">IV Push: ({videoCounter+1}/{videoArray.length})</Typography>
                         </div>
-                        <div className="videoContainer"></div>
+                        <div className="videoContainer">
+                            <ReactPlayer className="video" url={currentVideo} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
+                        </div>
                     </div>
                     <div className="videoAndDesc">
                         <div className="videoButtonsContainer">
-                            <Button variant="contained" className="videoButtons"><KeyboardArrowLeftIcon/></Button>
-                            <Button variant="contained" className="videoButtons" onClick={handlePause}>{pausePlay === true ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
-                            <Button variant="contained" className="videoButtons"><KeyboardArrowRightIcon/></Button>
+                            <Button disabled={videoCounter === 0} variant="contained" className="videoButtons" onClick={handlePrevVideo}><KeyboardArrowLeftIcon/></Button>
+                            <Button variant="contained" className="videoButtons" onClick={playing === false ? handlePlay : handlePause}>{playing === false ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
+                            <Button disabled={videoCounter === 9} variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
                         </div>
                         <Typography variant="body1" className="description desktopInteraction">Description: </Typography>
                     </div>
@@ -137,7 +178,7 @@ export default function TutorialPage(){
                 <Grid xs={0} md={5} container className="desktopInteraction">
                     <div className={classes.root}>
                         <div className="noteContainer">
-                            <AppBar position="static" className="no teTabs" fullWidth>
+                            <AppBar position="static" className="noteTabs" fullWidth>
                                 <Tabs value={value} onChange={handleChange} centered className="tabsColor" aria-label="simple tabs example">
                                     <Tab wrapped label="Pharmacist Notes" {...a11yProps(0)} />
                                     <Tab wrapped label="Text-Only Step List" {...a11yProps(1)} />
@@ -154,7 +195,16 @@ export default function TutorialPage(){
                                 <Typography align="center">Infusion Notes Here</Typography>
                             </TabPanel>
                         </div>
-                        <Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
+                        <Button variant="contained" className="desktopButtons">
+                            <Speech
+                            displayText="Text-to-Speech"
+                            textAsButton={true}
+                            text="Betty and Megan suggest Matt Keller to grab the elastomeric pump and insert it into the innovation lab. 
+                                If done correctly, you should have built a complicated web app for a minimum viable product." 
+                            voice="Google UK English Male"
+                            Text-to-Speech>
+                        </Speech>
+                        </Button>
                         <Button variant="contained" className="desktopButtons">Download Full Text</Button>
                     </div>  
                 </Grid>
@@ -237,3 +287,5 @@ export default function TutorialPage(){
         </Grid>
     )
 }
+
+//<Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
