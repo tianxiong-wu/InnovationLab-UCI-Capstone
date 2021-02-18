@@ -21,12 +21,12 @@
 	justify-content: center;
 	align-items: center;
 	height: 30px;
-	
+
 	background-color: #00529B;
 	color: white;
 }
 
 .profileItem:hover{
 	background-color: #FFBC62;
-	color: #834B00;	
+	color: #834B00;
 }

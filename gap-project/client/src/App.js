@@ -6,7 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import Nav from './components/nav/nav';
+import PatientNav from './components/patientNav/patientNav';
 import PharmContact from './pages/pharmContact/pharmContact'
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
@@ -37,7 +37,7 @@ import PatientSettings from './pages/patientSettings/settings';
 function App() {
   return (
     <Router>
-      <Nav/>
+      <PatientNav/>
         <Switch>
           <Route path="/faq">
             <FAQPage />
