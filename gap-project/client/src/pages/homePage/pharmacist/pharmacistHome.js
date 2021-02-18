@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     /*root: {
         flexGrow: 1,
     },*/
+    darkBluePaper: {
+      backgroundColor: "#00529B"
+    }
 }));
 /*
 let theme = createMuiTheme();
@@ -89,27 +92,202 @@ export default function PharmacistHome(props){
 
             <Grid container spacing={0} className = "gridContainer">
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Patient Name</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Date of Birth</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle">Patient Name</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">Gender</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle">Date of Birth</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItemTitle">Gender</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Last Check-In</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle">Last Check-In</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Next Check-In</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle">Next Check-In</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Infusion Type</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle">Infusion Type</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Notification Info</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle">Notification Info</Paper>
                 </Grid>
 
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
+                </Grid>
+
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                </Grid>
+                <Grid item xs={1}>
+                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                </Grid>
+                <Grid item xs={2}>
+                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                </Grid>
             </Grid>
        </div>
     )

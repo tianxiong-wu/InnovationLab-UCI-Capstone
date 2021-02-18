@@ -1,12 +1,11 @@
-.greetingContainer, .barContainer, .filterContainer, .searchBarContainer {
-  border: 2px solid black;
-}
+
 
 .greetingContainer {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .nameBar, .patientBar {
@@ -63,12 +62,29 @@
 }
 
 .gridContainer {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 97%;
+}
 
+.gridItemTitle, .gridItem, .gridItem2 {
+  display: flex;
+  justify-content: center;
+}
+
+.gridItemTitle {
+  color: white;
+  background-color: #00529B;
+  padding: 15px 0px 15px 0px;
+  margin-top: 10px;
 }
 
 .gridItem {
-  display: flex;
-  justify-content: center;
+  padding: 10px 0px 10px 0px;
+}
+
+.gridItem2 {
+  background-color: #E6EDF2;
+  padding: 10px 0px 10px 0px;
 }
