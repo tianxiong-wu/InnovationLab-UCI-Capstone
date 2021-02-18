@@ -1,5 +1,3 @@
-
-
 .greetingContainer {
   display: flex;
   justify-content: center;
@@ -61,7 +59,7 @@
   color: #00529B;
 }
 
-.gridContainer {
+#gridContainer {
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 10px;
@@ -73,9 +71,11 @@
   justify-content: center;
 }
 
-.gridItemTitle {
+#patientCol, #dobCol, #genderCol, #lastCheckCol, #nextCheckCol, #infusionCol, #notificationCol {
   color: white;
   background-color: #00529B;
+}
+.gridItemTitle {
   padding: 15px 0px 15px 0px;
   margin-top: 10px;
 }
@@ -84,7 +84,10 @@
   padding: 10px 0px 10px 0px;
 }
 
-.gridItem2 {
+#grayRow {
   background-color: #E6EDF2;
+}
+
+.gridItem2 {
   padding: 10px 0px 10px 0px;
 }

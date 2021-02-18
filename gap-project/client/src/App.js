@@ -8,6 +8,7 @@ import {
 import './App.css';
 import Nav from './components/nav/nav';
 import NavResponsive from './components/navResponsive/navResponsive';
+import NavPharmResponsive from './components/navPharmResponsive/navPharmResponsive';
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
 import PharmacistHome from './pages/homePage/pharmacist/pharmacistHome';
@@ -20,7 +21,7 @@ function App() {
   return (<>
 
   <Router>
-      <NavResponsive/>
+      <NavPharmResponsive/>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -28,9 +29,6 @@ function App() {
         <Switch>
           <Route path="/faq">
             <FAQPage />
-          </Route>
-          <Route path="/Schedule">
-            Schedule
           </Route>
           <Route path="/Tutorials">
             <Tutorials/>

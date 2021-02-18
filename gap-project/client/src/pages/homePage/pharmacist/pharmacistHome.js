@@ -13,54 +13,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },*/
     darkBluePaper: {
-      backgroundColor: "#00529B"
+      background: "#00529B"
     }
 }));
-/*
-let theme = createMuiTheme();
-theme = responsiveFontSizes(theme);
-*/
-
-/*<ThemeProvider theme={theme}>
-    <Grid container justify="center" spacing={3}>
-        <Grid item xs={2}></Grid>
-            <Grid item xs={8}>
-                <Typography variant="h4" className="nextInfusionSummary">Hi {propsName}, your next infusion is on {nextInfusion}</Typography>
-            </Grid>
-            <Grid item xs={2}></Grid>
-            <Grid item xs={8} sm={8} md={4} className="widgetContainer">
-                <div>
-                    <div className="infusionWidget">
-                        <div className="infusionVideoContainer">
-                            <img src="https://picsum.photos/600/400" className="infusionThumbnail"></img>
-                        </div>
-                        <div className="infusionLabel">
-                            <Typography variant="h4">Next Infusion: {nextInfusionName}</Typography>
-                        </div>
-                    </div>
-                    <div className="notifWidget">
-                        <div className="notificationLabel">
-                            <Typography variant="h4">Notifications</Typography>
-                        </div>
-                        <div className="notificationContainer">
-                            <Typography variant="h4">notification component</Typography>
-                        </div>
-                    </div>
-                </div>
-            </Grid>
-            <Grid item xs={8} sm={8} md={4} className="widgetContainer">
-                <div className="scheduleLabel">
-                    <Typography variant="h4">Today's Schedule</Typography>
-                </div>
-                <div className="scheduleWidget">
-                    <Typography variant="h4">Infusion Event</Typography>
-                    <Typography variant="h4">Infusion Event</Typography>
-                    <Typography variant="h4">Infusion Event</Typography>
-                </div>
-            </Grid>
-    </Grid>
-</ThemeProvider>
-*/
 
 
 export default function PharmacistHome(props){
@@ -90,27 +45,27 @@ export default function PharmacistHome(props){
             </div>
 
 
-            <Grid container spacing={0} className = "gridContainer">
+            <Grid container spacing={0} id = "gridContainer">
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Patient Name</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'patientCol'>Patient Name</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Date of Birth</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'dobCol'>Date of Birth</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Gender</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'genderCol'>Gender</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Last Check-In</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'lastCheckCol'>Last Check-In</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Next Check-In</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'nextCheckCol'>Next Check-In</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Infusion Type</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'infusionCol'>Infusion Type</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItemTitle">Notification Info</Paper>
+                    <Paper className={classes.paper} className = "gridItemTitle" id = 'notificationCol'>Notification Info</Paper>
                 </Grid>
 
                 <Grid item xs={2}>
@@ -136,25 +91,25 @@ export default function PharmacistHome(props){
                 </Grid>
 
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
                 </Grid>
 
                 <Grid item xs={2}>
@@ -180,25 +135,25 @@ export default function PharmacistHome(props){
                 </Grid>
 
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
                 </Grid>
 
                 <Grid item xs={2}>
@@ -224,25 +179,25 @@ export default function PharmacistHome(props){
                 </Grid>
 
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
                 </Grid>
 
                 <Grid item xs={2}>
@@ -268,25 +223,25 @@ export default function PharmacistHome(props){
                 </Grid>
 
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Lorem</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">01/01/2001</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
                 </Grid>
                 <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2">Dolor</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">02/02/2002</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">03/03/2003</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Phasellus</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
                 </Grid>
                 <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2">Vestibulum</Paper>
+                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
                 </Grid>
             </Grid>
        </div>
