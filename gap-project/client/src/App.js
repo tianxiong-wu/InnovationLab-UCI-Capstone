@@ -6,8 +6,7 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import Nav from './components/nav/nav';
-import NavResponsive from './components/navResponsive/navResponsive';
+import PatientNav from './components/patientNav/patientNav';
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/profile/profile';
@@ -19,7 +18,7 @@ function App() {
   return (<>
 
   <Router>
-      <NavResponsive/>
+      <PatientNav/>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
