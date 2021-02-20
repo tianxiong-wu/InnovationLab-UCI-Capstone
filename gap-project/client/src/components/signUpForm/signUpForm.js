@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex',
       flexWrap: 'wrap',
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      width: "97%",
+      marginTop: "10vh"
+    },
   }));
 
 
@@ -42,6 +48,8 @@ export default function SignUpForm(props){
 
     const classes = useStyles();
     const [signupLanding, setSignupLanding] = useState(true);
+    const [role, setRole] = useState("");
+    const [roleLanding, setRoleLanding] = useState(false);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [birthdate, setBirthdate] = useState("");
@@ -59,12 +67,23 @@ export default function SignUpForm(props){
       gender: gender,
       email: email,
       phoneNumber: phoneNumber,
-      password: password
+      password: password,
+      role: role
     }
 
     const toggleOne = () => {
       setSignupLanding(false);
+      setRoleLanding(true);
+    }
+
+    const toggleRoleSelect = () => {
+      setRoleLanding(false);
       setSignupFormPageOne(true);
+    }
+
+    const toggleRoleTwo = () => {
+      setSignupFormPageOne(false);
+      setRoleLanding(true);
     }
 
     const toggleTwo = () => {
@@ -99,6 +118,13 @@ export default function SignUpForm(props){
     const handleChange = (event) => {
         setGender(event.target.value);
     }
+
+    const handleRoleChange = (event) => {
+      setRole(event.target.value);
+      if(role !== ""){
+        setRoleLanding(true);
+      }
+    };
 
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value);
@@ -140,6 +166,27 @@ export default function SignUpForm(props){
                 </div>
               </Grid>
               : null}
+              {roleLanding === true ? 
+              <Grid item xs={6}>
+                <div className="formDiv">
+                  <Typography variant="h5" color="primary" className="formTitle">Select Your Account Type</Typography>
+                  <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={role}
+                      onChange={handleRoleChange}
+                      fullWidth
+                    >
+                      <MenuItem value={""}>None</MenuItem>
+                      <MenuItem value={"patient"}>Patient</MenuItem>
+                      <MenuItem value={"pharmacist"}>Pharmacist</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button disabled={role === ""} variant="outlined" className="nextFull" onClick={toggleRoleSelect}>Next</Button>
+                </div>  
+              </Grid> : null}
               {signupFormPageOne === true ? 
                 <Grid item xs={6}>
                   <div className="formDiv">
@@ -171,7 +218,8 @@ export default function SignUpForm(props){
                         <MenuItem value="other">Other</MenuItem>
                       </Select>
                   </FormControl>
-                    <Button disabled={firstName === "" || lastName === "" || birthdate === "" || gender === ""} variant="outlined" className="nextFull" onClick={toggleTwo}>Next</Button>
+                    <Button variant="outlined" className="prev" onClick={toggleRoleTwo}>Back</Button>
+                    <Button disabled={firstName === "" || lastName === "" || birthdate === "" || gender === ""} variant="outlined" className="next" onClick={toggleTwo}>Next</Button>
                   </div>
                 </Grid>
               : null}
