@@ -17,6 +17,7 @@ import Tutorial from './pages/TutorialPage/tutorial';
 import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
 import PatientSettings from './pages/patientSettings/settings';
+import Schedule from './pages/patientSchedule/patientSchedule';
 //import Settings from './pages/settings/settings'
 
 /*
@@ -35,14 +36,18 @@ import PatientSettings from './pages/patientSettings/settings';
 */
 
 /**
-     <Router>
+     
+ */
+function App() {
+  return (
+    <Router>
       <PatientNav/>
         <Switch>
           <Route path="/faq">
             <FAQPage />
           </Route>
-          <Route path="/Schedule">
-            Schedule
+          <Route path="/schedule">
+            <Schedule/>
           </Route>
           <Route path="/Tutorials">
             <Tutorial/>
@@ -56,10 +61,6 @@ import PatientSettings from './pages/patientSettings/settings';
         </Switch>
       <Footer/>
     </Router>
- */
-function App() {
-  return (
-    <LoginSignUp/>
   );
 }
 export default App;
