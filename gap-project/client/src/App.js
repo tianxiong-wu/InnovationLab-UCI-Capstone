@@ -34,9 +34,8 @@ import PatientSettings from './pages/patientSettings/settings';
 </Route>
 */
 
-function App() {
-  return (
-    <Router>
+/**
+     <Router>
       <PatientNav/>
         <Switch>
           <Route path="/faq">
@@ -57,9 +56,10 @@ function App() {
         </Switch>
       <Footer/>
     </Router>
-  
-
-    
+ */
+function App() {
+  return (
+    <LoginSignUp/>
   );
 }
 export default App;
