@@ -14,7 +14,9 @@ import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
 import Footer from './components/footer/footer'
 import PatientSettings from './pages/patientSettings/settings';
-//import Settings from './pages/settings/settings'
+import Settings from './pages/settings/settings';
+import PharmSettings from './pages/pharmSettings/pharmSettings';
+
 
 /*
 <Route path="/faq">
@@ -41,18 +43,7 @@ function App() {
             renders the first one that matches the current URL. */}
 
         <Switch>
-          <Route path="/faq">
-            <FAQPage />
-          </Route>
-          <Route path="/Schedule">
-            Schedule
-          </Route>
-          <Route path="/Tutorials">
-            <Tutorials/>
-          </Route>
-          <Route path="/">
-            <PatientHome/>
-          </Route>
+        <PharmSettings/>
         </Switch>
     </Router>
 
