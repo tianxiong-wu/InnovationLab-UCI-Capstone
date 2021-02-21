@@ -44,11 +44,15 @@ export default function LoginForm(props){
     }
 
     const [loginForm, setLoginForm] = useState(props.loginForm);
+    //add toast
     const toggleTwo = () => {
       axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
         console.log(res);
+      }).catch(err =>{
+        console.log(err);
       })
     }
+  
 
     return(
         <div className={classes.root} >

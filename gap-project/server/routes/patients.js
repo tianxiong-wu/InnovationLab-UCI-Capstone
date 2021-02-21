@@ -169,8 +169,9 @@ router.route('/login').post((req, res, next) => {
         req.logIn(user, (err) =>{
             if (err){
                 console.log('failture')
+                return res.sendStatus(404);
             }else{
-            console.log('success')};
+                return res.sendStatus(200)};
         })
     })(req, res, next);
 })
