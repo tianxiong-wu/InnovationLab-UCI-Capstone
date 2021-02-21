@@ -105,7 +105,7 @@ export default function PatientNav(){
                         <Link className="navItem" to="/Tutorials">Tutorials</Link>
                     </Typography>
                     <Typography variant="h6" className={classes.title}>
-                        <a className="navItem" href="#">Schedule</a>
+                        <a className="navItem" href="/schedule">Schedule</a>
                     </Typography>
                     <Typography variant="h6" className={classes.title}>
                         <Link className="navItem" to="/faq">FAQ</Link>
