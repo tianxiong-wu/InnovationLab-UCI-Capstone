@@ -3,6 +3,7 @@ import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
+import ScheduleEvent from "../../../components/scheduleEvent/scheduleEvent";
 import '../patient/patientHome.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -57,9 +58,9 @@ export default function PatientHome(props){
                                 <Typography variant="h4">Today's Schedule</Typography>
                             </div>
                             <div className="scheduleWidget">
-                                <Typography variant="h4">Infusion Event</Typography>
-                                <Typography variant="h4">Infusion Event</Typography>
-                                <Typography variant="h4">Infusion Event</Typography>
+                                <ScheduleEvent time="12:30PM" name="Antibiotic Infusion"/>
+                                <ScheduleEvent time="4:30PM" name="Antibiotic Infusion"/>
+                                <ScheduleEvent time="8:30PM" name="Antibiotic Infusion"/>
                             </div>
                         </Grid>
                 </Grid>
