@@ -58,6 +58,7 @@ export default function PatientHome(props){
                                 <Typography variant="h4">Today's Schedule</Typography>
                             </div>
                             <div className="scheduleWidget">
+                                <br/>
                                 <ScheduleEvent time="12:30PM" name="Antibiotic Infusion"/>
                                 <ScheduleEvent time="4:30PM" name="Antibiotic Infusion"/>
                                 <ScheduleEvent time="8:30PM" name="Antibiotic Infusion"/>
