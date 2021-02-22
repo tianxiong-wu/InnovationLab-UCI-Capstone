@@ -131,12 +131,12 @@ export default function settings() {
 										</div>
 			          </div>
 
-								<div className = 'aboutUsSection'>
+								<div className = 'aboutUsSection2'>
 										<div className = 'insideTitle'>
 											Displayed Pharmacy Contact Information
 										</div>
 										<div className = 'infoOutline2'>
-											<div className = 'informationBox'>
+											<div className = 'informationBox2'>
 												Pharmacy Phone Number:
 											</div>
 											<div className = 'nameContainer'>
@@ -150,8 +150,8 @@ export default function settings() {
 											</div>
 										</div>
 										<div className = 'infoOutline2'>
-											<div className = 'informationBox'>
-												Pharmacy Phone Number:
+											<div className = 'informationBox2'>
+												Pharmacy Email:
 											</div>
 											<div className = 'nameContainer'>
 												Lorem ipsum dolor

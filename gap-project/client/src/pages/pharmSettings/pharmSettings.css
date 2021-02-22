@@ -81,7 +81,7 @@
 .folderBorder {
   border: 15px solid #00529B;
   width: 100%;
-  height: 82%;
+  height: 85%;
 }
 
 .whiteBorder {
@@ -97,6 +97,17 @@
   border: 2px solid #00529B;
   width: 45%;
   height: 40%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 20px 20px 0px 0px;
+  margin-top: 10px;
+}
+
+.aboutUsSection2 {
+  border: 2px solid #00529B;
+  width: 45%;
+  height: 50%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -149,6 +160,17 @@
     align-items: center;
     flex-wrap: wrap;
     color: #00529B;
+}
+
+.informationBox2 {
+    width: 40%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    color: #00529B;
+    font-size: 0.7em;
 }
 
 .photoBox {
