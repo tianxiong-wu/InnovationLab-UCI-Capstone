@@ -23,6 +23,11 @@
     color: #00529b;
 }
 
+.profileLink{
+    text-decoration: none;
+    color: black;
+}
+
 .burgerItem {
     width:100%;
     display: flex;
