@@ -9,9 +9,8 @@
 .numDate{
     color: white;
     background-color: #00529b;
-    padding: 10%;
     border-radius: 50px;
-    
+    font-size: 1.5rem !important;
 }
 
 .numDate:hover{
@@ -21,6 +20,7 @@
 
 .nameDate{
     color: #00529b;
+    font-size: 1rem !important;
 }
 
 .weekDisplay{
@@ -35,7 +35,7 @@
 }
 
 .arrowIcon{
-    font-size: 3rem;
+    font-size: 1.5rem;
     color: #00529b;
     font-weight: bold;
 }
@@ -63,13 +63,44 @@
 }
 
 .dayStyling{
-    margin-top: 1vh;
+    margin-top: 1vh !important;
+    font-size: 50px !important;
 }
 
 .scheduleComponents{
     background-color: white;
     width: 95%;
-    margin: 2vh auto;
-    height: 70%;
+    margin: 1vh auto;
+    height: 75%;
     border-radius: 50px;
+}
+
+.scheduleItem{
+    width: 90% !important;
+    height: 4rem !important;
+    margin: 2vh auto;
+    box-Shadow: 0 0 0 2px #00529b;
+    display: flex;
+    flex-direction: row;
+    border-radius: 30px;
+}
+
+.infusionTime{
+    background-color: #00529b;
+    color: white;
+    width: 25%;
+    font-size: 1rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    font-weight: bold !important;
+}
+
+.infusionName{
+    color: #00529b;
+    width: 75%;
+    font-size: 1.5rem !important;
+    text-align: center;
+    line-height: 3.5rem;
 }

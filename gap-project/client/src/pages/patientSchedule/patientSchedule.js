@@ -10,6 +10,7 @@ export default function PatientSchedule(){
     const [days, setDays] = useState([]);
     const [render, setRender] = useState(false);
     const [earliest, setEarliest] = useState(days[0]);
+    const [selected, setSelected] = useState("");
 
     let week = [];
     
@@ -23,26 +24,24 @@ export default function PatientSchedule(){
         setRender(true);
     }, []);    
 
-    const [dayOne, setDayOne]= useState(days[0]);
-
     const getCurrentDay = (day) => {
         let numDate = day.substr(-2);
         let newDate = new Date(day);
         switch (newDate.getDay()){
             case 0:
-                return ["Monday", numDate];
+                return ["Mo", numDate];
             case 1:
-                return ["Tuesday", numDate];
+                return ["Tu", numDate];
             case 2: 
-                return ["Wednesday", numDate];
+                return ["We", numDate];
             case 3:
-                return ["Thursday", numDate];
+                return ["Th", numDate];
             case 4:
-                return ["Friday", numDate];
+                return ["Fr", numDate];
             case 5:
-                return ["Saturday", numDate];
+                return ["Sa", numDate];
             case 6:
-                return ["Sunday", numDate];
+                return ["Su", numDate];
         }
     }
 
@@ -109,43 +108,43 @@ export default function PatientSchedule(){
                         <li className="weekDayDisplay arrowIcon" onClick={handlePrevDay}>&#60;</li>
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[0])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[0])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[0])[1]}</Typography>
                                 </div>
                         </li>
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[1])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[1])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[1])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[2])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[2])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[2])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[3])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[3])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[3])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[4])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[4])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[4])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[5])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[5])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[5])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
-                                    <Typography variant="h5" align="center" className="nameDate">{getCurrentDay(days[6])[0]}</Typography>
+                                    <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[6])[0]}</Typography>
                                     <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[6])[1]}</Typography>
                                 </div>
                         </li>                             
@@ -155,6 +154,19 @@ export default function PatientSchedule(){
                 <Grid className="dayContainer">
                     <Typography variant="h3" align="center" className="dayStyling">{currentDay.toLocaleString('en-us', {weekday:'long'})}</Typography>
                     <div className="scheduleComponents">
+                        <br/>
+                        <div className="scheduleItem">
+                            <div className="infusionTime">6:30AM</div>
+                            <div className="infusionName">Antibiotic Infusion</div>
+                        </div>
+                        <div className="scheduleItem">
+                            <div className="infusionTime">2:30PM</div>
+                            <div className="infusionName">Antibiotic Infusion</div>
+                        </div>  
+                        <div className="scheduleItem">
+                            <div className="infusionTime">10:30AM</div>
+                            <div className="infusionName">Antibiotic Infusion</div>
+                        </div>                   
                     </div>
                 </Grid>
             </Grid>
