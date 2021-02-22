@@ -59,7 +59,7 @@
 }
 
 .scheduleWidget {
-    height: 48vh !important;
+    height: 49vh !important;
     -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     -moz-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
     box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
@@ -69,9 +69,11 @@
 
 .scheduleLabel {
     margin-top: 2.5% !important;
+    margin-bottom: -2.5% !important;
     color: white !important;
     background-color: #00529b !important;
     padding: 2% !important;
     border-top-left-radius: 10px !important;
     border-top-right-radius: 10px !important;
 }
+
