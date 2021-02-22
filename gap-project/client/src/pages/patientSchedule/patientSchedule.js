@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import ScheduleEvent from "../../components/scheduleEvent/scheduleEvent";
 import './patientSchedule.css';
 
 
@@ -155,18 +156,9 @@ export default function PatientSchedule(){
                     <Typography variant="h3" align="center" className="dayStyling">{currentDay.toLocaleString('en-us', {weekday:'long'})}</Typography>
                     <div className="scheduleComponents">
                         <br/>
-                        <div className="scheduleItem">
-                            <div className="infusionTime">6:30AM</div>
-                            <div className="infusionName">Antibiotic Infusion</div>
-                        </div>
-                        <div className="scheduleItem">
-                            <div className="infusionTime">2:30PM</div>
-                            <div className="infusionName">Antibiotic Infusion</div>
-                        </div>  
-                        <div className="scheduleItem">
-                            <div className="infusionTime">10:30AM</div>
-                            <div className="infusionName">Antibiotic Infusion</div>
-                        </div>                   
+                            <ScheduleEvent time="2:30PM" name="Antibiotic Infusion"/>
+                            <ScheduleEvent time="2:30PM" name="Antibiotic Infusion"/>
+                            <ScheduleEvent time="2:30PM" name="Antibiotic Infusion"/>
                     </div>
                 </Grid>
             </Grid>
