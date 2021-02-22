@@ -1,0 +1,106 @@
+.gridStyling{
+    margin-top: 3vh;
+}
+
+.dateContainer{
+    width: 6vw;
+}
+
+.numDate{
+    color: white;
+    background-color: #00529b;
+    border-radius: 50px;
+    font-size: 1.5rem !important;
+}
+
+.numDate:hover{
+    color: white;
+    background-color: #E0952F;
+}
+
+.nameDate{
+    color: #00529b;
+    font-size: 1rem !important;
+}
+
+.weekDisplay{
+    display: flex;
+    flex-direction: row;
+}
+
+.weekDayDisplay{
+    text-decoration: none;
+    margin: auto;
+    list-style: none;
+}
+
+.arrowIcon{
+    font-size: 1.5rem;
+    color: #00529b;
+    font-weight: bold;
+}
+
+.monthStyling{
+    color: #00529b;
+    box-Shadow: 0 0 0 2px #00529b;
+    border-radius: 50px;
+    margin-bottom: 2vh;
+}
+
+.carouselStyling{
+    height: 12vh;
+    box-Shadow: 0 0 0 2px #00529b;
+    border-radius: 50px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.dayContainer{
+    background-color: #00529b;
+    color: white;
+    height: 55vh;
+    border-radius: 50px;
+}
+
+.dayStyling{
+    margin-top: 1vh !important;
+    font-size: 50px !important;
+}
+
+.scheduleComponents{
+    background-color: white;
+    width: 95%;
+    margin: 1vh auto;
+    height: 75%;
+    border-radius: 50px;
+}
+
+.scheduleItem{
+    width: 90% !important;
+    height: 4rem !important;
+    margin: 2vh auto;
+    box-Shadow: 0 0 0 2px #00529b;
+    display: flex;
+    flex-direction: row;
+    border-radius: 30px;
+}
+
+.infusionTime{
+    background-color: #00529b;
+    color: white;
+    width: 25%;
+    font-size: 1rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    font-weight: bold !important;
+}
+
+.infusionName{
+    color: #00529b;
+    width: 75%;
+    font-size: 1.5rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+}

@@ -90,7 +90,7 @@ export default function PatientNav(){
                         >
                             <Link className="burgerItem" onClick={handleHamburgerClose} to="/">Home</Link>
                             <Link className="burgerItem" onClick={handleHamburgerClose} to="/Tutorials">Tutorials</Link>
-                            <Link className="burgerItem" onClick={handleHamburgerClose} href="#">Schedule</Link>
+                            <Link className="burgerItem" onClick={handleHamburgerClose} to="/Schedule">Schedule</Link>
                             <Link className="burgerItem" onClick={handleHamburgerClose} to="/faq">FAQ</Link>
                             <Link className="burgerItem" onClick={handleHamburgerClose} to="/contact">Contact</Link>
                         </Menu>
@@ -105,7 +105,7 @@ export default function PatientNav(){
                         <Link className="navItem" to="/Tutorials">Tutorials</Link>
                     </Typography>
                     <Typography variant="h6" className={classes.title}>
-                        <a className="navItem" href="#">Schedule</a>
+                        <Link className="navItem" to="/Schedule">Schedule</Link>
                     </Typography>
                     <Typography variant="h6" className={classes.title}>
                         <Link className="navItem" to="/faq">FAQ</Link>
