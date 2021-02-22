@@ -5,31 +5,31 @@ import MenuIcon from '@material-ui/icons/Menu';
 import EditIcon from '@material-ui/icons/Edit';
 import '../settings/settings.css'
 
-function switchNotification () {
+function switchNotificationPatient () {
 	console.log('hello');
-	document.getElementById('securityContainer').style.display = 'none';
+	document.getElementById('securityContainer-patient').style.display = 'none';
 	document.getElementById('notificationsContainer').style.display = 'flex';
 }
 
-function switchSecurity () {
+function switchSecurityPatient () {
 	console.log('hello');
-	document.getElementById('securityContainer').style.display = 'flex';
+	document.getElementById('securityContainer-patient').style.display = 'flex';
 	document.getElementById('notificationsContainer').style.display = 'none';
 }
 
 export default function settings() {
 	return (
-    <div className = 'settingsContainer'>
-      <div className = 'settingsTitle'>
+    <div className = 'settingsContainer-patient'>
+      <div className = 'settingsTitle-patient'>
         Settings
       </div>
 
-      <div id = 'securityContainer'>
-        <div className = 'titleBar'>
-          <div className = 'securityTitle'onClick = {switchSecurity}>
+      <div id = 'securityContainer-patient'>
+        <div className = 'titleBar-patient'>
+          <div className = 'securityTitle-patient'onClick = {switchSecurityPatient}>
             Security
           </div>
-          <div className = 'notificationTitle' onClick = {switchNotification} >
+          <div className = 'notificationTitle-patient' onClick = {switchNotificationPatient} >
             Notification
           </div>
         </div>
@@ -54,19 +54,19 @@ export default function settings() {
       </div>
 
 			<div id = 'notificationsContainer'>
-						<div className = 'titleBar'>
-		          <div className = 'securityTitle'onClick = {switchSecurity}>
+						<div className = 'titleBar-patient'>
+		          <div className = 'securityTitle-patient'onClick = {switchSecurityPatient}>
 		            Security
 		          </div>
-		          <div className = 'notificationTitle' onClick = {switchNotification} >
+		          <div className = 'notificationTitle-patient' onClick = {switchNotificationPatient} >
 		            Notification
 		          </div>
 		        </div>
 
-						<div className = 'folderBorder'>
-							<div className = 'whiteBorder'>
+						<div className = 'folderBorder-patient'>
+							<div className = 'whiteBorder-patient'>
 			          <div className = 'notificationSection'>
-			              <div className = 'insideTitle'>
+			              <div className = 'insideTitle-patient'>
 			                Phone Number
 			              </div>
 			              <div className = 'notifyMe'>
@@ -84,17 +84,17 @@ export default function settings() {
 											</div>
 			              	<div className = 'noBox'> </div>
 										</div>
-										<div className = 'infoContainer'>
-				              <div className = 'infoBox'>
+										<div className = 'infoContainer-patient'>
+				              <div className = 'infoBox-patient'>
 				                Call me at:
 				              </div>
-											<div className = 'phone_email_Container'>
-					              <div className = 'phone'>
+											<div className = 'phone-patient_email_Container-patient'>
+					              <div className = 'phone-patient'>
 					                (408)123-4567
 					              </div>
-					              <div className = 'editContainer'>
+					              <div className = 'editContainer-patient'>
 					                <EditIcon/>
-													<div className = 'edit'>
+													<div className = 'edit-patient'>
 														Edit
 													</div>
 					              </div>
@@ -102,8 +102,8 @@ export default function settings() {
 										</div>
 			          </div>
 								<div className = 'notificationSection'>
-			              <div className = 'insideTitle'>
-			                Phone Number
+			              <div className = 'insideTitle-patient'>
+			                Email
 			              </div>
 			              <div className = 'notifyMe'>
 			                Notify Me?
@@ -120,17 +120,17 @@ export default function settings() {
 											</div>
 			              	<div className = 'noBox'> </div>
 										</div>
-										<div className = 'infoContainer'>
-				              <div className = 'infoBox'>
+										<div className = 'infoContainer-patient'>
+				              <div className = 'infoBox-patient'>
 				                Email me at:
 				              </div>
-											<div className = 'phone_email_Container'>
-					              <div className = 'email'>
+											<div className = 'phone-patient_email_Container-patient'>
+					              <div className = 'email-patient'>
 					                innovationlab@email.com
 					              </div>
-												<div className = 'editContainer'>
+												<div className = 'editContainer-patient'>
 					                <EditIcon/>
-													<div className = 'edit'>
+													<div className = 'edit-patient'>
 														Edit
 													</div>
 					              </div>
