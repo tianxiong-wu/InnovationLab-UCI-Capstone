@@ -16,9 +16,9 @@ import Tutorials from './pages/Tutorial_List/Tutorial_List';
 import Tutorial from './pages/TutorialPage/tutorial';
 import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
-import PatientSettings from './pages/patientSettings/settings';
+import Settings from './pages/settings/settings';
+import PharmSettings from './pages/pharmSettings/pharmSettings';
 import Schedule from './pages/patientSchedule/patientSchedule';
-
 function App() {
   return (
     <Router>
@@ -45,6 +45,3 @@ function App() {
   );
 }
 export default App;
-/*
-
-*/
