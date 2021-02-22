@@ -36,6 +36,12 @@ function App() {
           <Route path="/contact">
             <PharmContact/>
           </Route>
+          <Route path="/profile">
+            <Profile/>
+          </Route>
+          <Route path="/settings">
+            <Settings/>
+          </Route>
           <Route path="/">
             <PatientHome/>
           </Route>
