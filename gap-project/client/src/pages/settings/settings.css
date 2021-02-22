@@ -3,7 +3,7 @@
   height: 0;
 }
 
-.settingsContainer {
+.settingsContainer-patient {
   /*border: 5px solid #00529B;*/
   display: flex;
   flex-wrap: wrap;
@@ -11,7 +11,7 @@
   justify-content: center;
 }
 
-.settingsTitle {
+.settingsTitle-patient {
   /*border: 5px solid black;*/
   width: 100%;
   display: flex;
@@ -22,7 +22,7 @@
   height: 10%;
 }
 
-#securityContainer, #notificationsContainer{
+#securityContainer-patient, #notificationsContainer{
   width: 80%;
   display: flex;
   justify-content: center;
@@ -36,7 +36,7 @@
   justify-content: space-around;
 }
 
-.titleBar {
+.titleBar-patient {
   /*border: 5px solid black;*/
   width: 100%;
   display: flex;
@@ -45,7 +45,7 @@
   height: 13%;
 }
 
-.securityTitle, .notificationTitle{
+.securityTitle-patient, .notificationTitle-patient{
   /*border: 5px solid black;*/
   border-radius: 25px 25px 0px 0px;
   width: 50%;
@@ -90,13 +90,13 @@
   font-size: 1.5em;
 }
 
-.folderBorder {
+.folderBorder-patient {
   border: 15px solid #00529B;
   width: 100%;
   height: 82%;
 }
 
-.whiteBorder {
+.whiteBorder-patient {
   border: 10px solid white;
   width: 98%;
   height: 94%;
@@ -116,7 +116,7 @@
 
 }
 
-.insideTitle {
+.insideTitle-patient {
   width: 100%;
   height: 20%;
   display: flex;
@@ -156,17 +156,17 @@
   align-content: flex-start;
 }
 
-.infoContainer {
+.infoContainer-patient {
   width: 60%;
 }
 
-.infoBox {
+.infoBox-patient {
   color: #737374;
   height: 30%;
 
 }
 
-.phone_email_Container {
+.phone-patient_email_Container-patient {
   border: 3px solid #00529B;
   display: flex;
   height: 30px;
@@ -175,11 +175,13 @@
   font-size: 0.7em;
 }
 
-.phone, .email {
+.phone-patient, .email-patient {
   width: 80%;
+  color: #00529B;
+  margin-left: 10px;
 }
 
-.editContainer {
+.editContainer-patient {
   width: 20%;
   color: #00529B;
   display: flex;
@@ -188,7 +190,7 @@
   flex-wrap: wrap;
 }
 
-.edit {
+.edit-patient {
   color: #1400FF;
   width: 100%;
   display: flex;
