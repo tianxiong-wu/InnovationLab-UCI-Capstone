@@ -1,0 +1,17 @@
+.cardContainer{
+    width: 85%;
+    margin: -.5vh auto 1.5vh auto;
+}
+
+.cardContents{
+    display: flex;
+    flex-direction: row;
+}
+
+.cardLeft{
+    width: 75%;
+}
+
+.cardRight{
+    width: 25%;
+}

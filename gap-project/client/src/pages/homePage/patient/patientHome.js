@@ -4,6 +4,7 @@ import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import ScheduleEvent from "../../../components/scheduleEvent/scheduleEvent";
+import Notifications from "../../../components/notifications/notifications";
 import '../patient/patientHome.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +49,9 @@ export default function PatientHome(props){
                                         <Typography variant="h4">Notifications</Typography>
                                     </div>
                                     <div className="notificationContainer">
-                                        <Typography variant="h4">notification component</Typography>
+                                        <br/>
+                                        <Notifications title="Infusion A Schedule Change" description="Starting 3/1, take doses every five hours. GOT IT?" />
+                                        <Notifications title="Infusion B Dosage Change" description="Starting 3/24, do infusions only once every two days." />
                                     </div>
                                 </div>
                             </div>
