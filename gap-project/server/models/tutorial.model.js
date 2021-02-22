@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 // schema for url
 const urlSchema = new Schema({
     //video id
-    id: {
+    url: {
         type: String,
     },
     order: {

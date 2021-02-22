@@ -109,3 +109,11 @@
     font-weight: bold !important;
     border-radius: 20px !important;
 }
+
+.nextFull:disabled {
+    background-color: grey !important;
+}
+
+.next:disabled {
+    background-color: grey !important;
+}
