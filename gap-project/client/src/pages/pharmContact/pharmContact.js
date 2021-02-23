@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -9,9 +9,11 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import '../pharmContact/pharmContact.css'
 import ContactImage from '../pharmContact/pharmContact_image2.png'
-
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
+
+
     pageTitle:{
         textAlign: 'center',
         margin: '20px'
@@ -60,11 +62,43 @@ const contactInfo =[
         infoTwo: 'abc123@gmail.com'
     }
 ];
-
     
 export default function Contact() {
     const classes = useStyles();
+    const [pharmName, setPharmName] = useState("");
+    const [pharmAddress, setPharmAddress] = useState({});
+    const [pharmPhone, setPharmPhone] = useState("");
+    const [pharmEmail, setPharmEmail] = useState("");
     
+    useEffect( () => {
+        axios.get('http://localhost:5000/pharmacies/all').then(res => {
+            console.log("success")
+            let address = {'streetName': "", 'city': "", 'state': "", 'zipCode': ""};
+            let phone = "";
+            let email = "";
+            let name = "";
+    
+            for (const [key, val] of Object.entries(res.data)){
+                if (key === 'streetName' || key === 'city' || key === 'state' || key === 'zipCode'){
+                    address[key] = val;
+                }
+                if (key === 'phone'){
+                    phone = val;
+                }
+                if (key === 'email'){
+                    email = val;
+                }
+                if (key === 'name'){
+                    name = val;
+                }
+            }
+            setPharmName(name);
+            setPharmAddress(address);
+            setPharmEmail(email);
+            setPharmPhone(phone);
+        });
+    },[])   
+
     return (
         <Container>
             {/* top half */}
@@ -98,12 +132,12 @@ export default function Contact() {
                             />
                             <CardContent>
                                 <Box className={classes.innerBox}>
-                                    <Typography align='center' >{pharmInfo.subtitleOne}</Typography>
-                                    <Typography align='center' >{pharmInfo.infoOne}</Typography>
+                                    <Typography align='center' >Name: </Typography>
+                                    <Typography align='center' >{pharmName}</Typography>
                                 </Box>
                                 <Box className={classes.innerBox}>
-                                    <Typography align='center' >{pharmInfo.subtitleTwo}</Typography>
-                                    <Typography align='center' >{pharmInfo.infoTwo}</Typography>
+                                    <Typography align='center' >Address:</Typography>
+                                    <Typography align='center' >{`${pharmAddress.streetName},\n${pharmAddress.city}, ${pharmAddress.state} ${pharmAddress.zipCode}`}</Typography>
                                 </Box>
                             </CardContent>
                         </Card>
@@ -120,12 +154,12 @@ export default function Contact() {
                             />
                             <CardContent>
                                 <Box className={classes.innerBox}>
-                                    <Typography align='center' >{contactInfo.subtitleOne}</Typography>
-                                    <Typography align='center' >{contactInfo.infoOne}</Typography>
+                                    <Typography align='center' >Phone Number:</Typography> 
+                                    <Typography align='center' >{pharmPhone}</Typography>
                                 </Box>
                                 <Box className={classes.innerBox}>
-                                    <Typography align='center' >{contactInfo.subtitleTwo}</Typography>
-                                    <Typography align='center' >{contactInfo.infoTwo}</Typography>
+                                    <Typography align='center' >Email:</Typography>
+                                    <Typography align='center' >{pharmEmail}</Typography>
                                 </Box>
                             </CardContent>
                         </Card>
