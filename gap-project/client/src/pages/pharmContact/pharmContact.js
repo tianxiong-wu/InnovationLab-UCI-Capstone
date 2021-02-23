@@ -42,26 +42,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 }));
-
-const pharmInfo = [
-    {
-        title: 'Pharmacy',
-        subtitleOne: 'Name:',
-        infoOne: 'Pharmacy',
-        subtitleTwo: "Location:",
-        infoTwo: '2345 N. RandStreet, \n Tustin Ave, CA 92618'    
-    }
-];
-
-const contactInfo =[
-    {
-        title: 'Contact Information',
-        subtitleOne: 'Phone Number:',
-        infoOne: '123-456-7890',
-        subtitleTwo: 'Email:',
-        infoTwo: 'abc123@gmail.com'
-    }
-];
     
 export default function Contact() {
     const classes = useStyles();
@@ -71,24 +51,25 @@ export default function Contact() {
     const [pharmEmail, setPharmEmail] = useState("");
     
     useEffect( () => {
-        axios.get('http://localhost:5000/pharmacies/all').then(res => {
-            console.log("success")
+        
+
+        axios.get('http://localhost:5000/pharmacy/all').then(res => {
             let address = {'streetName': "", 'city': "", 'state': "", 'zipCode': ""};
             let phone = "";
             let email = "";
             let name = "";
-    
-            for (const [key, val] of Object.entries(res.data)){
+            console.log(res.data);
+            for (const [key, val] of Object.entries(res.data[0])){
                 if (key === 'streetName' || key === 'city' || key === 'state' || key === 'zipCode'){
                     address[key] = val;
                 }
-                if (key === 'phone'){
+                else if (key === 'phone'){
                     phone = val;
                 }
-                if (key === 'email'){
+                else if (key === 'email'){
                     email = val;
                 }
-                if (key === 'name'){
+                else if (key === 'name'){
                     name = val;
                 }
             }
@@ -123,11 +104,10 @@ export default function Contact() {
                 <Grid item xs={2}></Grid>
 
                 <Grid item xs={12} md={4}>
-                    {pharmInfo.map((pharmInfo) => (
                         <Card borderRadius={30}>
                             <CardHeader
                                 className={classes.cardHeader}
-                                title={pharmInfo.title}
+                                title="Pharmacy"
                                 align='center'
                             />
                             <CardContent>
@@ -141,15 +121,13 @@ export default function Contact() {
                                 </Box>
                             </CardContent>
                         </Card>
-                    ))}
                 </Grid>
                     
                 <Grid item xs={12} md={4}>
-                    {contactInfo.map((contactInfo) => (
                         <Card>
                             <CardHeader
                                 className={classes.cardHeader}
-                                title={contactInfo.title}
+                                title="Contact Information"
                                 align='center'
                             />
                             <CardContent>
@@ -163,7 +141,6 @@ export default function Contact() {
                                 </Box>
                             </CardContent>
                         </Card>
-                    ))}
                 </Grid>
 
                 <Grid item xs={2} sm={4} md={2} lg={2} xl={2}></Grid>
