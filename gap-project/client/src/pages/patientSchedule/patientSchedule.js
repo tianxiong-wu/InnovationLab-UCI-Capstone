@@ -14,13 +14,15 @@ export default function PatientSchedule(){
     const [selected, setSelected] = useState("");
 
     let week = [];
-    
     useEffect(() => {
-        for (let i=1; i<=7; i++){
-            let first = currentDay.getDate() - currentDay.getDay() + i;
-            let day = new Date(currentDay.setDate(first)).toISOString().slice(0,10);
-            week.push(day);
+        let curr = new Date(new Date()); // get current date  
+        let first = curr.getDate() - curr.getDay(); // First day is the  day of the month - the day of the week  
+        let firstday = new Date(curr.setDate(first)).toISOString().slice(0,10); 
+        week = [firstday];
+        for (let i=0; i<7; i++){
+            week.push(new Date(curr.setDate(curr.getDate()+1)).toISOString().slice(0,10));
         }
+        console.log(week);
         setDays(week);
         setRender(true);
     }, []);    
@@ -81,9 +83,9 @@ export default function PatientSchedule(){
     const handleNextDay = () => {
         let week = days;
         let newDate = new Date(week[week.length-1]);
-        let nextDay = new Date(newDate.setDate(newDate.getDate()+1)).toISOString().slice(0,10);
-        week.shift();
+        let nextDay = new Date(newDate.getTime()+86400000).toISOString().slice(0,10);
         week.push(nextDay);
+        week.shift();
         setDays(week);
         setEarliest(days[0]);
     }
