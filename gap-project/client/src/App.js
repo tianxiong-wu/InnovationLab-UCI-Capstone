@@ -10,7 +10,7 @@ import PatientNav from './components/patientNav/patientNav';
 import PharmContact from './pages/pharmContact/pharmContact'
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
-import Profile from './pages/profile/profile';
+import Profile from './pages/patientProfile/profile';
 import Error from './pages/404_error/404_error';
 import Tutorials from './pages/Tutorial_List/Tutorial_List';
 import Tutorial from './pages/TutorialPage/tutorial';
