@@ -5,7 +5,6 @@
 }
 
 .leftContainer {
-
   width: 40%;
   margin: 20px;
   height: 70vh;
@@ -22,6 +21,8 @@
 
 .infoContainer{
   height: 40%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .scheduleOutline {
@@ -53,10 +54,15 @@
   border-radius: 25px 25px 0px 0px;
 }
 
-.firstName, .lastName {
-  font-size: 2em;
+.firstName-profile, .lastName-profile, .pharmacy-profile, .email-profile, .phone-profile {
+  width: 100%;
+
 }
 
-.pharmacy, .email, .phone, .tutorialContainer, .scheduleContainer{
+.firstName-profile, .lastName-profile {
+  font-size: 1.5em;
+}
+
+.tutorialContainer, .scheduleContainer{
   font-size: 1.5em;
 }

@@ -10,19 +10,19 @@ export default function profile() {
 		<div className="profileContainer">
       <div className = "leftContainer">
         <div className="infoContainer">
-    			<div className="firstName">
+    			<div className="firstName-profile">
           Jasmine
     			</div>
-          <div className="lastName">
+          <div className="lastName-profile">
           Miller
           </div>
-          <div className="pharmacy">
+          <div className="pharmacy-profile">
           Pharmacy: Left Aid
           </div>
-          <div className="phone">
+          <div className="phone-profile">
           Phone Number: (000)-123-4567
           </div>
-          <div className="email">
+          <div className="email-profile">
           Email: testemail@123.com
           </div>
         </div>
