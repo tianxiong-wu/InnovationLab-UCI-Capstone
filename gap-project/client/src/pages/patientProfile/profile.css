@@ -1,0 +1,22 @@
+.patientProfileInfo{
+    margin: 3vh 0;
+    color: #00529b;
+}
+
+.patientName{
+    margin-bottom: 5vh;
+}
+
+.infusionSummaryContainer{
+    margin-top: 7vh;
+    color: #00529b;
+}
+
+.infusionSummary{
+    box-shadow: 0 0 0 2px #00529b !important;
+    border-radius: 50px;
+    height: 20vh;
+    margin-top: 1vh;
+    padding: 50px;
+    overflow: scroll;
+}
