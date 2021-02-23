@@ -1,3 +1,8 @@
+.siteIcon{
+    width: 30px;
+    height: 30px;
+}
+
 .navStyling{
     background-color: #00529B;
     box-shadow: inset 0px 3px 3px #70ADE3;

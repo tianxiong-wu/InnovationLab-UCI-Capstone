@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import logo from "../../innovation.png";
 import "./patientNav.css"
 import {
     BrowserRouter as Router,
@@ -96,7 +97,7 @@ export default function PatientNav(){
                         </Menu>
                     </div>
                     <IconButton edge="start" id="logoIcon" color="#00529b" aria-label="menu">
-                        Icon
+                        <img src={logo} alt="Logo" className="siteIcon"/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         <Link className="navItem" to="/">Home</Link>
