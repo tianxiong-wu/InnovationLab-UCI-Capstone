@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Grid, Typography, Button} from "@material-ui/core";
 import "./tutorial.css"
 import PropTypes from 'prop-types';
@@ -21,6 +21,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import ReactPlayer from "react-player";
 import Speech from "react-speech";
+import axios from 'axios';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -74,8 +75,20 @@ function TabPanel(props) {
     },
   }));
 
-export default function TutorialPage(){
+export default function TutorialPage(){    
     const classes = useStyles();
+    const [tutorialArray, setTutorialArray] = useState([]);
+    const [videosLoaded, setVideosLoaded] = useState(false);
+
+    useEffect(() => {
+        let tutorialArr = [];
+        axios.get("http://localhost:5000/tutorials/all").then(res => {
+            tutorialArr = res.data[2].tutorial;
+            setTutorialArray(tutorialArr);
+            setVideosLoaded(true);
+        })
+    },[])
+
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -120,27 +133,13 @@ export default function TutorialPage(){
     };
 
     // create a video object with url, pharmacist notes, text only list, infusion notes, etc.
-    const videoArray = [
-        "https://www.youtube.com/watch?v=-omGy5hsmMM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=1",
-        "https://www.youtube.com/watch?v=xkKLs2gao34&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=2",
-        "https://www.youtube.com/watch?v=KD9HdDpDXwA&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=3",
-        "https://www.youtube.com/watch?v=Kl9uvkkRJ5g&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=4",
-        "https://www.youtube.com/watch?v=MF9EubHp7bM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=5",
-        "https://www.youtube.com/watch?v=y1VA35aPVZM&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=6",
-        "https://www.youtube.com/watch?v=iJtk2s1ru2Q&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=7",
-        "https://www.youtube.com/watch?v=Itpv9XrS0m8&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=8",
-        "https://www.youtube.com/watch?v=h84wymxoBXI&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=9",
-        "https://www.youtube.com/watch?v=-er0hrmeMkI&amp;list=PLKpKgq-_PAE_deDWtgdr3mjPJx-G6Bq3i&amp;index=10"
-    ]
 
-    const [videoCounter, setVideoCounter] = useState(videoArray.length - videoArray.length);
-    const [currentVideo, setCurrentVideo] = useState(videoArray[videoCounter]);
+    const [videoCounter, setVideoCounter] = useState(0);
 
     const handleNextVideo = () => {
-        if (videoCounter < videoArray.length-1){
+        if (videoCounter < tutorialArray.length-1){
             let newCount = videoCounter + 1;
             setVideoCounter(newCount);
-            setCurrentVideo(videoArray[newCount]);
         }
     }
 
@@ -148,10 +147,8 @@ export default function TutorialPage(){
         if (videoCounter > 0){
             let newCount = videoCounter - 1;
             setVideoCounter(newCount);
-            setCurrentVideo(videoArray[newCount]);
         }
     }
-
     return(
         <Grid container>
             <Grid xs={1}></Grid>
@@ -159,10 +156,10 @@ export default function TutorialPage(){
                 <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
                         <div>
-                            <Typography variant="h5" align="center" className="infusionTitle">IV Push: ({videoCounter+1}/{videoArray.length})</Typography>
+                            <Typography variant="h5" align="center" className="infusionTitle">IV Push: ({videoCounter+1}/{tutorialArray.length})</Typography>
                         </div>
                         <div className="videoContainer">
-                            <ReactPlayer className="video" url={currentVideo} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
+                            <ReactPlayer className="video" url={videosLoaded===true? tutorialArray[videoCounter]['videoUrl']['url'] : "Loading..."} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
                         </div>
                     </div>
                     <div className="videoAndDesc">
@@ -171,7 +168,7 @@ export default function TutorialPage(){
                             <Button variant="contained" className="videoButtons" onClick={playing === false ? handlePlay : handlePause}>{playing === false ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
                             <Button disabled={videoCounter === 9} variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
                         </div>
-                        <Typography variant="body1" className="description desktopInteraction">Description: </Typography>
+                        <Typography variant="body1" className="description desktopInteraction">Description: {videosLoaded===true? tutorialArray[videoCounter]['description'] : "Loading..."}</Typography>
                     </div>
                 </Grid>
                 <Grid sm={1}></Grid>
@@ -186,13 +183,13 @@ export default function TutorialPage(){
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <Typography align="center">Pharmacist Notes Here</Typography>
+                                <Typography align="center">{videosLoaded===true? tutorialArray[videoCounter]['pharmacistNotes'] : "Loading..."}</Typography>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
-                                <Typography align="center">Step List</Typography>
+                                <Typography align="center"><ul>{videosLoaded===true? tutorialArray[videoCounter]['stepList'].map(step => {return <li className="listItem">{step}</li>}) : "Loading..."}</ul></Typography>
                             </TabPanel>
                             <TabPanel value={value} index={2}>
-                                <Typography align="center">Infusion Notes Here</Typography>
+                                <Typography align="center">{videosLoaded===true? tutorialArray[videoCounter]['infusionNotes'] : "Loading..."}</Typography>
                             </TabPanel>
                         </div>
                         <Button variant="contained" className="desktopButtons">
@@ -232,7 +229,7 @@ export default function TutorialPage(){
                 <DialogTitle id="alert-dialog-slide-title">{"Description"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    Infusion description here
+                    {videosLoaded===true? tutorialArray[videoCounter]['description'] : "Loading..."}
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -253,7 +250,7 @@ export default function TutorialPage(){
                 <DialogTitle id="alert-dialog-slide-title">{"Step List"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    Step List here
+                    <ul>{videosLoaded===true? tutorialArray[videoCounter]['stepList'].map(step => {return <li className="listItem">{step}</li>}) : "Loading..."}</ul>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -274,7 +271,10 @@ export default function TutorialPage(){
                 <DialogTitle id="alert-dialog-slide-title">{"Notes"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    Notes here
+                    <Typography variant="h5" color="primary">Pharmacist Notes:</Typography> 
+                    <Typography variant="body1">{videosLoaded===true? tutorialArray[videoCounter]['pharmacistNotes'] : "Loading..."}</Typography><br/>
+                    <Typography variant="h5" color="primary">Infusion Notes:</Typography>
+                    <Typography variant="body1"> {videosLoaded===true? tutorialArray[videoCounter]['infusionNotes'] : "Loading..."}</Typography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
