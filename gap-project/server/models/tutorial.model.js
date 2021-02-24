@@ -23,14 +23,24 @@ const tutorialSchema = new Schema({
     },
     description: {
         type: String,
-
         trim: true
     },
-    url: {
+    videoUrl: {
         type: [urlSchema],
-
+    },
+    pharmacistNotes: {
+        type: String,
+        trim: true
+    },
+    stepList: {
+        type: [String],
+    },
+    infusionNotes: {
+        type: String,
+        trim: true
     }
-},{
+},
+{
     timestamps: true
 });
 
