@@ -83,7 +83,7 @@ export default function TutorialPage(){
     useEffect(() => {
         let tutorialArr = [];
         axios.get("http://localhost:5000/tutorials/all").then(res => {
-            tutorialArr = res.data[2].tutorial;
+            tutorialArr = res.data[1].tutorial;
             setTutorialArray(tutorialArr);
             setVideosLoaded(true);
         })
@@ -138,6 +138,7 @@ export default function TutorialPage(){
 
     const handleNextVideo = () => {
         if (videoCounter < tutorialArray.length-1){
+            console.log(tutorialArray)
             let newCount = videoCounter + 1;
             setVideoCounter(newCount);
         }
@@ -156,7 +157,7 @@ export default function TutorialPage(){
                 <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
                         <div>
-                            <Typography variant="h5" align="center" className="infusionTitle">IV Push: ({videoCounter+1}/{tutorialArray.length})</Typography>
+                            <Typography variant="h5" align="center" className="infusionTitle">{videosLoaded===true? tutorialArray[videoCounter]['name']:"Loading..."}</Typography>
                         </div>
                         <div className="videoContainer">
                             <ReactPlayer className="video" url={videosLoaded===true? tutorialArray[videoCounter]['videoUrl']['url'] : "Loading..."} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
@@ -196,8 +197,7 @@ export default function TutorialPage(){
                             <Speech
                             displayText="Text-to-Speech"
                             textAsButton={true}
-                            text="Betty and Megan suggest Matt Keller to grab the elastomeric pump and insert it into the innovation lab. 
-                                If done correctly, you should have built a complicated web app for a minimum viable product." 
+                            text={videosLoaded===true? tutorialArray[videoCounter]['description']:"Loading..."} 
                             voice="Google UK English Male"
                             Text-to-Speech>
                         </Speech>

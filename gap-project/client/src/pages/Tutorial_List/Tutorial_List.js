@@ -9,6 +9,7 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -52,65 +53,54 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
         marginRight: 47,
         fontSize: 40,
-        
+    },
+    cardContainer:{
+      width: "100%",
+      height: "100vh",
+      overflowY: 'scroll'
     }
   }));
 
 const Tutorials = ()=>{
     const classes = useStyles();
     const theme = useTheme();
-   const [list, setList] = useState([]);
-   const initList = useCallback(()=>{
+    const [list, setList] = useState([]);
 
-    const tutorials = [{
-        name:'Infusion A',
-        summary:`Lorem ipsum dolor sit amet`,
-        duration:'20 min',
-        img:'https://picsum.photos/seed/picsum/150/150',
-    },{
-        name:'Infusion B',
-        summary:'Summary B',
-        duration:'15 min',
-        img:'https://picsum.photos/seed/picsum/150/150',
-    },{
-        name:'Infusion C',
-        summary:'Summary C',
-        duration:'17 min',
-        img:'https://picsum.photos/seed/picsum/150/150',
-    }]
-    setList(tutorials)
-   },[list]);
-   useEffect(()=>{
-        initList();
-   },[])
+    useEffect(()=>{
+      let tutorialArr = [];
+      axios.get('http://localhost:5000/tutorials/all').then(res => {
+        tutorialArr = res.data;
+        setList(tutorialArr);
+      })
+    },[])
 
 
-   return <>{
+   return <><div className={classes.cardContainer}>{
     list.map((item)=>{
         return <Card className={classes.root}>
         <CardMedia
           className={classes.cover}
-          image={item.img}
-          title="Live from space album cover"
+          image={item['tutorial'][0]['videoUrl']['thumbnail']}
+          title="Infusion Details"
         />
          <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography component="h5" variant="h5">
-              {item.name}
+              {item['name']}
             </Typography>
             <Typography className={classes.summary} variant="subtitle1" >
-             {item.summary}
+             {item['description']}
             </Typography>
             <Typography variant="subtitle1" >
-            Duration: {item.duration}
+            Duration: {item['duration']}
             </Typography>
           </CardContent>
         </div>
         <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
       </Card>
     })
-
-   }</>
+   }
+   </div></>
 }
 
 export default Tutorials;
