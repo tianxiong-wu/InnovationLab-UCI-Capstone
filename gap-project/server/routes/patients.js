@@ -184,7 +184,7 @@ router.route('/login').post((req, res, next) => {
     })(req, res, next);
 })
 
-router.route('logout').get((req, res) => {
+router.route('/logout').get((req, res) => {
     req.logout();
 })
 
