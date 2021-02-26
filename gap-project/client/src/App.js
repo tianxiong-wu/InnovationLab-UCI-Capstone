@@ -33,6 +33,7 @@ function App() {
           <Route path="/Schedule">
             <Schedule/>
           </Route>
+
           <Route path="/Tutorials">
             <Tutorials/>
           </Route>
@@ -54,11 +55,6 @@ function App() {
           <Route path="/pharm/assign">
             <PharmAssign/>
           </Route>
-          
-          <Route path="/">
-            <PatientHome/>
-          </Route>
-
         </Switch>
       <Footer/>
     </Router>
