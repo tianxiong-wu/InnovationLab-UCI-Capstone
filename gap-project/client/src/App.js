@@ -31,7 +31,7 @@ function App() {
             <Schedule/>
           </Route>
           <Route path="/Tutorials">
-            <Tutorial/>
+            <Tutorials/>
           </Route>
           <Route path="/contact">
             <PharmContact/>
@@ -41,6 +41,9 @@ function App() {
           </Route>
           <Route path="/settings">
             <Settings/>
+          </Route>
+          <Route path="/Tutorial/:id">
+            <Tutorial/>
           </Route>
           <Route path="/">
             <PatientHome/>
