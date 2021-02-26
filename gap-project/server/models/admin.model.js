@@ -20,6 +20,10 @@ const adminSchema = new Schema({
     pharmacy: {
         type: pharmacy.schema,
         default: []
+    },
+    role: {
+        type: String,
+        default: 'admin'
     }
 
 });
