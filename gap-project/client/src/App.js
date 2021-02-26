@@ -12,8 +12,7 @@ import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
 import Profile from './pages/patientProfile/profile';
 import Error from './pages/404_error/404_error';
-import Tutorials from './pages/Tutorial_List/Tutorial_List';
-import Tutorial from './pages/patientTutorials/tutorial';
+import Tutorials from './pages/patientTutorials/tutorial';
 import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
 import Settings from './pages/settings/settings';
@@ -42,9 +41,6 @@ function App() {
           <Route path="/settings">
             <Settings/>
           </Route>
-          <Route path="/Tutorial/:id">
-            <Tutorial/>
-          </Route>
           <Route path="/">
             <PatientHome/>
           </Route>
@@ -54,3 +50,8 @@ function App() {
   );
 }
 export default App;
+
+/*
+<Route path="/Tutorial/:id">
+            <Tutorial/>
+          </Route>*/

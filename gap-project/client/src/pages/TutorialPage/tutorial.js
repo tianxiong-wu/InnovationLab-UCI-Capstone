@@ -324,5 +324,3 @@ export default function TutorialPage(props){
         </Grid> 
     )
 }
-
-//<Button variant="contained" className="desktopButtons">Text-to-Speech</Button>
