@@ -15,7 +15,7 @@ router.route('/:id').get((req, res) => {
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
-// get patient list
+// get a patient via id
 router.route('/assignedPatient/:id').get((req, res) =>{
     Pharmacist.findById(req.params.id).where('assignedPatient')
         .then(pharmacist => res.json(pharmacist.assignedPatient))
@@ -23,7 +23,8 @@ router.route('/assignedPatient/:id').get((req, res) =>{
         .catch(err => res.status(500).json('Error: ' + err));
 });
 
-//add pharmacist
+//add pharmacist 
+// change
 router.route('/register').post((req, res) =>{
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;

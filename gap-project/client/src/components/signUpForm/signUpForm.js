@@ -92,7 +92,6 @@ export default function SignUpForm(props){
     }
 
     const toggleThree = () => {
-      console.log(user);
       setSignupFormPageTwo(false);
       setSuccessPage(true);
       

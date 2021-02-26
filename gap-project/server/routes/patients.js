@@ -118,8 +118,7 @@ router.route('/updateCheckin/:id').post((req, res) =>{
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
-//TODO: need to match with registration info and auth API
-//code below for testing
+
 router.route('/register').post((req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -153,14 +152,13 @@ router.route('/register').post((req, res) => {
         console.log(newPatient.password)
         //save
         newPatient.save()
-        .then(() => console.log(newPatient))
         .then(() => res.json(newPatient))
         .catch(err => res.status(400).json('Error: ' + err))
         .catch(err => res.status(500).json('Error: ' + err));
     }))
 });
 
-//TO DO: fix the failure part
+
 router.route('/login').post((req, res, next) => {
     passport.authenticate('local', (err, user, info) =>{
         if (err) throw err;

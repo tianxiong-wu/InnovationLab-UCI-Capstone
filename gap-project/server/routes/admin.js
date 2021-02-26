@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Admin = require('../models/admin.model');
 
+//change
 router.route('/register').post((req, res) =>{
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
