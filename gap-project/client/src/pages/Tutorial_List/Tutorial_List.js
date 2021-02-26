@@ -9,7 +9,16 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import Switch from "@material-ui/core/Switch"
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 import axios from 'axios';
+import Tutorial from '../TutorialPage/tutorial';
+import Grid from "@material-ui/core/Grid";
+import TutorialPage from '../TutorialPage/tutorial';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
       flex: '1 0 auto',
-
       marginTop: 25,
       marginLeft: 3,
     },
@@ -41,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight:0,
     },
     summary: {
-        //marginBottom: 30,
         overflowY: 'hidden',
         height: '80px',
     },
@@ -50,9 +57,9 @@ const useStyles = makeStyles((theme) => ({
       width: 38,
     },
     btn:{
-        margin: 'auto',
-        marginRight: 47,
-        fontSize: 40,
+      margin: 'auto',
+      marginRight: 47,
+      fontSize: 40,
     },
     cardContainer:{
       width: "100%",
@@ -76,28 +83,30 @@ const Tutorials = ()=>{
 
 
    return <><div className={classes.cardContainer}>{
-    list.map((item)=>{
-        return <Card className={classes.root}>
-        <CardMedia
-          className={classes.cover}
-          image={item['tutorial'][0]['videoUrl']['thumbnail']}
-          title="Infusion Details"
-        />
-         <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography component="h5" variant="h5">
-              {item['name']}
-            </Typography>
-            <Typography className={classes.summary} variant="subtitle1" >
-             {item['description']}
-            </Typography>
-            <Typography variant="subtitle1" >
-            Duration: {item['duration']}
-            </Typography>
-          </CardContent>
-        </div>
-        <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
-      </Card>
+    list.map((item, index)=>{
+        return <Grid>
+          <Card className={classes.root}>
+            <CardMedia
+              className={classes.cover}
+              image={item['tutorial'][0]['videoUrl']['thumbnail']}
+              title="Infusion Details"
+            />
+            <div className={classes.details}>
+              <CardContent className={classes.content}>
+                <Typography component="h5" variant="h5">
+                  {item['name']}
+                </Typography>
+                <Typography className={classes.summary} variant="subtitle1" >
+                {item['description']}
+                </Typography>
+                <Typography variant="subtitle1" >
+                Duration: {item['duration']}
+                </Typography>
+              </CardContent>
+            </div>
+            <ArrowForwardIosIcon className={classes.btn}/>
+          </Card>
+        </Grid>
     })
    }
    </div></>

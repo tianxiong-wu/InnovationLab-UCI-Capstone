@@ -7,8 +7,10 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import {Card, CardMedia, CardContent} from '@material-ui/core';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -75,16 +77,20 @@ function TabPanel(props) {
     },
   }));
 
-export default function TutorialPage(){    
+export default function TutorialPage(props){    
     const classes = useStyles();
     const [tutorialArray, setTutorialArray] = useState([]);
+    const [tutorial, setTutorial] = useState({});
     const [videosLoaded, setVideosLoaded] = useState(false);
+    const [viewCard, setViewCard] = useState(true);
+    const [viewTutorial, setViewTutorial] = useState(false);
 
     useEffect(() => {
         let tutorialArr = [];
         axios.get("http://localhost:5000/tutorials/all").then(res => {
-            tutorialArr = res.data[1].tutorial;
+            tutorialArr = res.data[props.num]['tutorial']; 
             setTutorialArray(tutorialArr);
+            setTutorial(res.data[props.num]);
             setVideosLoaded(true);
         })
     },[])
@@ -132,8 +138,6 @@ export default function TutorialPage(){
         setOpenNotes(false);
     };
 
-    // create a video object with url, pharmacist notes, text only list, infusion notes, etc.
-
     const [videoCounter, setVideoCounter] = useState(0);
 
     const handleNextVideo = () => {
@@ -150,14 +154,46 @@ export default function TutorialPage(){
             setVideoCounter(newCount);
         }
     }
+
+    const handleViewTutorial = () => {
+        setViewCard(!viewCard);
+        setViewTutorial(!viewTutorial);
+    }
+
     return(
         <Grid container>
             <Grid xs={1}></Grid>
+            {viewCard === true ?
+            <Grid xs={10} container>
+                <Card className="cardRoot">
+                    <CardMedia
+                        className="cover"
+                        image={videosLoaded===true? tutorial['tutorial'][0]['videoUrl']['thumbnail'] : "Loading..."}
+                        title="Infusion Details"
+                    />
+                    <div className="cardDetails">
+                        <CardContent className="content">
+                            <Typography variant="h5">
+                                {videosLoaded===true? tutorial['name']:"Loading..."}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                {videosLoaded===true? tutorial['description']:"Loading..."}
+                            </Typography>
+                            <Typography variant="subtitle1">
+                                Duration: {videosLoaded===true? tutorial['duration']:"Loading..."}
+                            </Typography>
+                        </CardContent>
+                    </div>
+                    <ArrowForwardIosIcon className="arrowButton" onClick={handleViewTutorial}/>
+                </Card>
+            </Grid> 
+            : null }
+            {viewTutorial === true ?  
             <Grid xs={10} container className="centralContainer">
                 <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
                         <div>
-                            <Typography variant="h5" align="center" className="infusionTitle">{videosLoaded===true? tutorialArray[videoCounter]['name']:"Loading..."}</Typography>
+                            <Typography variant="h5" align="center" className="infusionTitle"><KeyboardArrowLeftIcon className="toggleBackButton" onClick={handleViewTutorial}/>{videosLoaded===true ? tutorialArray[videoCounter]['name']:"Loading..."}</Typography>
                         </div>
                         <div className="videoContainer">
                             <ReactPlayer className="video" url={videosLoaded===true? tutorialArray[videoCounter]['videoUrl']['url'] : "Loading..."} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
@@ -205,8 +241,8 @@ export default function TutorialPage(){
                         <Button variant="contained" className="desktopButtons">Download Full Text</Button>
                     </div>  
                 </Grid>
-            </Grid>
-
+            </Grid> : null}
+            {viewTutorial === true ?
             <BottomNavigation
                 value={navValue}
                 onChange={handleNavChange}
@@ -217,7 +253,8 @@ export default function TutorialPage(){
                 <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenStep} label="Step List"/>
                 <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenNotes} label="Notes"/>    
                 <BottomNavigationAction className="bottomNavItem" label="Download Text"/>        
-            </BottomNavigation> 
+            </BottomNavigation> : null}
+            {viewTutorial === true ? 
             <Dialog
                 open={descOpen}
                 TransitionComponent={Transition}
@@ -237,8 +274,8 @@ export default function TutorialPage(){
                     Close
                 </Button>
                 </DialogActions>
-            </Dialog>
-
+            </Dialog> : null}
+            {viewTutorial === true ?
             <Dialog
                 open={stepOpen}
                 TransitionComponent={Transition}
@@ -258,8 +295,8 @@ export default function TutorialPage(){
                     Close
                 </Button>
                 </DialogActions>
-            </Dialog>
-
+            </Dialog> : null}
+            {viewTutorial === true ? 
             <Dialog
                 open={notesOpen}
                 TransitionComponent={Transition}
@@ -282,9 +319,9 @@ export default function TutorialPage(){
                     Close
                 </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog> : null}
             <Grid xs={1}></Grid>
-        </Grid>
+        </Grid> 
     )
 }
 
