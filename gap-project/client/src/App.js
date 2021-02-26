@@ -19,6 +19,9 @@ import Footer from './components/footer/footer'
 import Settings from './pages/settings/settings';
 import PharmSettings from './pages/pharmSettings/pharmSettings';
 import Schedule from './pages/patientSchedule/patientSchedule';
+import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
+import PharmAssign from './pages/pharmAssignPage/pharmAssign';
+
 function App() {
   return (
     <Router>
@@ -45,9 +48,17 @@ function App() {
           <Route path="/Tutorial/:id">
             <Tutorial/>
           </Route>
+          <Route path="/pharm/tutorial">
+            <PharmTutorials/>
+          </Route>
+          <Route path="/pharm/assign">
+            <PharmAssign/>
+          </Route>
+          
           <Route path="/">
             <PatientHome/>
           </Route>
+
         </Switch>
       <Footer/>
     </Router>
