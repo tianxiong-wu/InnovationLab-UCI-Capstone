@@ -1,3 +1,7 @@
+.profileContainer{
+    height: 100vh;
+}
+
 .patientProfileInfo{
     margin: 3vh 0;
     color: #00529b;
