@@ -102,7 +102,7 @@ export default function PatientSchedule(){
 
     return(
         render === true ? 
-        <Grid container>
+        <Grid container className="outerScheduleContainer">
             <Grid item xs={1}></Grid>
             <Grid container xs={10} justify="center" direction="column" className="gridStyling">
                 <Typography variant="h3" align="center" className="monthStyling">{getCurrentMonth(new Date(days[0]).getMonth())}</Typography>

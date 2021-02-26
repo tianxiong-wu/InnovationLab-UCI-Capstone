@@ -12,8 +12,9 @@ import ContactImage from '../pharmContact/pharmContact_image2.png'
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
-
-
+    root:{
+        height: "100vh"
+    },
     pageTitle:{
         textAlign: 'center',
         margin: '20px'
@@ -81,7 +82,7 @@ export default function Contact() {
     },[])   
 
     return (
-        <Container>
+        <Container className={classes.root}>
             {/* top half */}
 
             <Grid container>

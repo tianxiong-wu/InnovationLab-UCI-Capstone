@@ -10,6 +10,7 @@ import '../patient/patientHome.css'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        height: '100vh'
     },
 }));
 
