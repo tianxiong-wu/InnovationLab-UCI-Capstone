@@ -118,7 +118,17 @@ router.route('/updateCheckin/:id').post((req, res) =>{
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
-
+router.route('/updateRecentCheckin/:id').post((req, res) =>{
+    Patient.findByIdAndUpdate(req.params.id).then(patient => {
+        patient.recentCheckIn = req.body.recentCheckIn;
+        patient.save()
+            .then(() => res.json(patient))
+            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(500).json('Error: ' + err));
+});
 router.route('/register').post((req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
