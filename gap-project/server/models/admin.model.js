@@ -7,14 +7,19 @@ const adminSchema = new Schema({
     firstName: {
         type: String,
     },
+    password: {
+        type: String
+    },
     lastName: {
         type: String,
     },
     pharmacists: {
-        type: [pharmacist.Schema]
+        type: [pharmacist.Schema],
+        default: []
     } ,
     pharmacy: {
-        type: pharmacy.schema
+        type: pharmacy.schema,
+        default: []
     }
 
 });

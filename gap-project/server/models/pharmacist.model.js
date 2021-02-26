@@ -12,6 +12,9 @@ const pharmacistSchema = new Schema({
         type: String,
         trim: true,
     },
+    password: {
+        type: String
+    },
     phoneNumber: {
         type: String,
         trim: true,
