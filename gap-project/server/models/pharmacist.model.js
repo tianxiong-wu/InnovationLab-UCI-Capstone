@@ -27,7 +27,8 @@ const pharmacistSchema = new Schema({
         type: Date,
     },
     assignedPatient: {
-        type: [patient.schema]
+        type: [patient.schema],
+        default: []
     },
     role: {
         type: String,

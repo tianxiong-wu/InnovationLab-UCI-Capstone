@@ -75,10 +75,10 @@ export default function SignUpForm(props){
       firstName: firstName,
       lastName: lastName,
       birthday: birthdate,
+      gender: gender,
       email: email,
       phoneNumber: phoneNumber,
       password: password,
-      assignedPatient: [],
       role: role
     }
 

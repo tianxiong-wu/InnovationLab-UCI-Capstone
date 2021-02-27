@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 // load user model
-const User = require('./models/patient.model');
+const User = require('./models/patient.model','./models/admin.model','./models/pharmacist.model');
+
 
 module.exports = function(passport) {
     passport.use(
@@ -12,6 +13,7 @@ module.exports = function(passport) {
             User.findOne({email: email})
                 .then(user => {
                     if (!user){
+
                         return done(null, false, {message: 'That email is not registered'});
                     }
 
