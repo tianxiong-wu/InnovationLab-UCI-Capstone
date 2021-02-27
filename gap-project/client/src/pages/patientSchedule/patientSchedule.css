@@ -45,6 +45,7 @@
     box-Shadow: 0 0 0 2px #00529b;
     border-radius: 50px;
     margin-bottom: 2vh;
+    margin-top: -10vh !important;
 }
 
 .carouselStyling{
