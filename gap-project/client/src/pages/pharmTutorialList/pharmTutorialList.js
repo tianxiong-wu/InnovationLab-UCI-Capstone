@@ -14,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-block',
     },
     root: {
-        display:'flex',
-        float:'left',
+        display:'inline-block',
+        // float:'left',
         margin:'2.5vw',
         backgroundColor: '#3F51B5',
         width: "45vw",
@@ -26,8 +26,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#00529b',
     },
     details: {
-        display: 'flex',
-        flexDirection: 'column',
+
+        verticalAlign:'top',
+        display: 'inline-block',
         width: '60%',
     },
     content: {
@@ -37,8 +38,10 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 3,
     },
     cover: {
-        width: 150,
+        marginTop:'4%',
+        width: '20%',
         height: 150,
+        display:'inline-block',
         margin: 'auto 31px',
         marginRight: 0,
     },
@@ -52,10 +55,11 @@ const useStyles = makeStyles((theme) => ({
         width: 38,
     },
     btn: {
-        margin: 'auto',
-        marginRight: 47,
+        display:'inline-block',
+        verticalAlign:'top',
         fontSize: 40,
-
+        width:'10%',
+        marginTop:'80px',
     }
 }));
 
@@ -95,6 +99,7 @@ const PharmTutorials = () => {
                                 <Typography variant="subtitle1" >
                                     Duration: {item.duration}
                                 </Typography>
+                                
                             </CardContent>
                         </div>
                         <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
