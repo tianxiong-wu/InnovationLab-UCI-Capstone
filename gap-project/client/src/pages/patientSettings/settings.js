@@ -54,6 +54,7 @@ function TabPanel(props) {
     root: {
       flexGrow: 1,
       backgroundColor: theme.palette.background.paper,
+      height: '100vh'
     },
   }));
 
@@ -93,6 +94,14 @@ export default function PatientSettings(){
         setRepeatPass(newValue);
     }
 
+    const handleNewPhone = (event, newValue) => {
+        setPhone(newValue);
+    }
+
+    const handleNewEmail = (event, newValue) => {
+        setEmail(newValue);
+    }
+
     function updatePatientSettings() {
         alert('you saved your phone number')
     }
@@ -119,7 +128,7 @@ export default function PatientSettings(){
                             defaultValue={currentPass}
                             variant="outlined"
                             className="securityStyling"
-                            onChange={setCurrentPass}
+                            onChange={handleCurrentPass}
                             fullWidth
                             required>
                         </TextField>
@@ -130,7 +139,7 @@ export default function PatientSettings(){
                             defaultValue={newPass}
                             variant="outlined"
                             className="securityStyling"
-                            onChange={setNewPass}                            
+                            onChange={handleNewPass}                            
                             fullWidth
                             required>
                         </TextField>
@@ -141,7 +150,7 @@ export default function PatientSettings(){
                             defaultValue={repeatPass}
                             variant="outlined"
                             className="securityStyling"
-                            onChange={setRepeatPass}
+                            onChange={handleRepeatPass}
                             fullWidth
                             required>
                         </TextField>
@@ -169,6 +178,7 @@ export default function PatientSettings(){
                                             id="outlined-basic"
                                             label="714-123-4567"
                                             defaultValue={phone}
+                                            onChange={handleNewPhone}
                                             variant="outlined"
                                             className="formLabelShift"
                                             fullWidth>
@@ -196,6 +206,7 @@ export default function PatientSettings(){
                                             id="outlined-basic"
                                             label="JMiller@gmail.com"
                                             defaultValue={email}
+                                            onChange={handleNewEmail}
                                             variant="outlined"
                                             className="formLabelShift">
                                         </TextField>
