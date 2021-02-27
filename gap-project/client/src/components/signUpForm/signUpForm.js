@@ -71,6 +71,17 @@ export default function SignUpForm(props){
       role: role
     }
 
+    const pharmacistUser = {
+      firstName: firstName,
+      lastName: lastName,
+      birthday: birthdate,
+      email: email,
+      phoneNumber: phoneNumber,
+      password: password,
+      assignedPatient: [],
+      role: role
+    }
+
     const toggleOne = () => {
       setSignupLanding(false);
       setRoleLanding(true);
@@ -95,9 +106,14 @@ export default function SignUpForm(props){
       setSignupFormPageTwo(false);
       setSuccessPage(true);
       
-      axios.post('http://localhost:5000/patients/register', user).then(res=>{
+      if (role === "patient"){
+      axios.post(`http://localhost:5000/patients/register`, user).then(res=>{
         console.log(res);
-      })
+      })}
+      else if (role === "pharmacist"){
+        axios.post(`http://localhost:5000/pharmacists/register`, pharmacistUser).then(res=>{
+        console.log(res);
+      })}
     }
 
     const toggleFour = () => {
