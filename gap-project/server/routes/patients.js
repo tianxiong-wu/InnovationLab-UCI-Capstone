@@ -179,7 +179,9 @@ router.route('/login').post((req, res, next) => {
                 console.log('failture')
                 return res.sendStatus(404);
             }else{
-                return res.sendStatus(200)};
+                res.send(req.user);
+                console.log(req.user)
+                };
         })
     })(req, res, next);
 })

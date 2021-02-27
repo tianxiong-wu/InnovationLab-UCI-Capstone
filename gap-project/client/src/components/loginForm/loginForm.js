@@ -47,7 +47,7 @@ export default function LoginForm(props){
     //add toast
     const toggleTwo = () => {
       axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
-        console.log(res);
+        console.log(res.data);
       }).catch(err =>{
         console.log(err);
       })
