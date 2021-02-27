@@ -32,6 +32,7 @@ const pharmacyRouter = require('./routes/pharmacy');
 const adminRouter = require('./routes/admin');
 const FAQRouter = require('./routes/FAQ');
 const eventRouter = require('./routes/events');
+const notificationRouter = require('./routes/notification');
 
 
 
@@ -42,6 +43,7 @@ app.use('/pharmacy', pharmacyRouter);
 app.use('/admin', adminRouter);
 app.use('/FAQs', FAQRouter);
 app.use('/events', eventRouter);
+app.use('/notifications', notificationRouter);
 
 
 

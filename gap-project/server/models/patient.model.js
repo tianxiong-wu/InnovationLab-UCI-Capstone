@@ -1,6 +1,7 @@
 const tutorial  = require('./tutorial.model');
 const pharmacist = require('./pharmacist.model');
 const event = require('./event.model');
+const notification = require('./notification.model');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -53,7 +54,7 @@ const patientSchema = new Schema({
         type: String
     },
     notification: {
-        type: Array,
+        type: [notification.schema],
         default: []
     },
     gender: {
