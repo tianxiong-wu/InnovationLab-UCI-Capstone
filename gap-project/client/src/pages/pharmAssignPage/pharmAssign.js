@@ -54,9 +54,13 @@ const useStyles = makeStyles((theme) => ({
     },
     btn: {
         margin: 'auto',
-        fontSize: 20,
-        padding:'0',
-        float:"right"
+        fontSize: 40,
+        padding:'5px',
+        float:"right",
+        backgroundColor: '#00529B',
+        border:  '1px solid white',
+
+
     }
 }));
 
@@ -87,7 +91,7 @@ const TutorialsList = ({list})=>{
                     </Typography>
                 </CardContent>
             </div>
-            <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
+            <ArrowForwardIosIcon className={classes.btn} style={{border:'none'}}></ArrowForwardIosIcon>
         </Card>
     })}</>
 }
@@ -157,7 +161,18 @@ export default function PharmAssign(props) {
                             </div>
                             <div className="">
                                 <div className="notificationLabel">
-                                    <Typography variant="h4">Notificationsc <Button style={{marginLeft:10}} className={classes.btn} variant="contained">-</Button><Button className={classes.btn} variant="contained">+</Button></Typography>
+                                    <Typography variant="h4">Today's Schedule <Button style={{marginLeft:10}} className={classes.btn} variant="contained">
+                                    <svg width="30" height="30" viewBox="0 0 30 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="25" height="6" rx="2" fill="#FFFFFF"/>
+                                    </svg>
+
+                                        </Button><Button className={classes.btn} variant="contained">
+                                    <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect y="8" width="30" height="4" rx="2" fill="#FFFFFF"/>
+                                    <rect x="12" width="30" height="4" rx="2" transform="rotate(90 12 0)" fill="#FFFFFF"/>
+                                    </svg>
+
+                                    </Button></Typography>
                                     
                                 </div>
                                 <div className="notificationContainer">
@@ -168,9 +183,20 @@ export default function PharmAssign(props) {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={8} sm={8} md={5} className="widgetContainer">
+                    <Grid item xs={8} sm={8} md={5} style={{marginLeft:'50px'}} className="widgetContainer">
                         <div className="scheduleLabel">
-                            <Typography variant="h4">Today's Schedule  <Button style={{marginLeft:10}} className={classes.btn} variant="contained">-</Button><Button className={classes.btn} variant="contained">+</Button></Typography>
+                            <Typography variant="h4">Assigned Tutorials <Button style={{marginLeft:10}} className={classes.btn} variant="contained">
+                                    <svg width="30" height="30" viewBox="0 0 30 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="25" height="6" rx="2" fill="#FFFFFF"/>
+                                    </svg>
+
+                                        </Button><Button className={classes.btn} variant="contained">
+                                    <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect y="8" width="30" height="4" rx="2" fill="#FFFFFF"/>
+                                    <rect x="12" width="30" height="4" rx="2" transform="rotate(90 12 0)" fill="#FFFFFF"/>
+                                    </svg>
+
+                                    </Button></Typography>
                         </div>
                         <div className="scheduleWidget">
                             <TutorialsList list={list} classes={classes}></TutorialsList>
