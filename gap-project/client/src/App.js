@@ -21,7 +21,6 @@ import Schedule from './pages/patientSchedule/patientSchedule';
 function App() {
   return (
     <Router>
-     
       <PatientNav/>
         <Switch>
           <Route path="/faq">
