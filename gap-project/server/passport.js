@@ -63,7 +63,13 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser((id, done) => {
-        User.findbyId(id, (err, user) => {
+        User.patient.findbyId(id, (err, user) => {
+            done(err, user);
+        });
+        User.pharmacist.findbyId(id, (err, user) => {
+            done(err, user);
+        });
+        User.admin.findbyId(id, (err, user) => {
             done(err, user);
         });
     });
