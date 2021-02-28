@@ -21,8 +21,19 @@ import Schedule from './pages/patientSchedule/patientSchedule';
 function App() {
   return (
     <Router>
-     
-      <PatientNav/>
+      <LoginSignUp/>
+      
+    </Router>
+  );
+}
+export default App;
+
+/*
+<Route path="/Tutorial/:id">
+            <Tutorial/>
+          </Route>*/
+/**
+ <PatientNav/>
         <Switch>
           <Route path="/faq">
             <FAQPage />
@@ -47,12 +58,4 @@ function App() {
           </Route>
         </Switch>
       <Footer/>
-    </Router>
-  );
-}
-export default App;
-
-/*
-<Route path="/Tutorial/:id">
-            <Tutorial/>
-          </Route>*/
+ */

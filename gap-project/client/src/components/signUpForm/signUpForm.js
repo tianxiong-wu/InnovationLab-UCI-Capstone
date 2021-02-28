@@ -172,9 +172,9 @@ export default function SignUpForm(props){
     return(
       <div className={classes.root}>
           <Grid container justify="center" spacing={3}>
-              <Grid item xs={3}></Grid>
+              <Grid item xs={1} md={3}></Grid>
               {signupLanding === true ? 
-              <Grid item xs={6} className="signupButton">
+              <Grid item xs={10} md={6} className="signupButton">
                 <div className="buttonStyling" onClick={toggleOne}>
                   <Typography variant="h3" className="textStyling textHolder">Sign Up</Typography>
                   <Typography variant="h6" className="textStyling">(with Access Code)</Typography>
@@ -182,7 +182,7 @@ export default function SignUpForm(props){
               </Grid>
               : null}
               {roleLanding === true ? 
-              <Grid item xs={6}>
+              <Grid item xs={10} md={6}>
                 <div className="formDiv">
                   <Typography variant="h5" color="primary" className="formTitle">Select Your Account Type</Typography>
                   <FormControl className={classes.formControl}>
@@ -203,7 +203,7 @@ export default function SignUpForm(props){
                 </div>  
               </Grid> : null}
               {signupFormPageOne === true ? 
-                <Grid item xs={6}>
+                <Grid item xs={10} md={6}>
                   <div className="formDiv">
                     <Typography variant="h5" color="primary" className="formTitle">Create your account</Typography>
                     <TextField className="formStyling formMargin" id="outlined-basic" label="First Name" defaultValue={firstName} variant="outlined" onChange={handleFirstNameChange} required />
@@ -239,7 +239,7 @@ export default function SignUpForm(props){
                 </Grid>
               : null}
               {signupFormPageTwo === true ? 
-                <Grid item xs={6}>
+                <Grid item xs={10} md={6}>
                   <div className="formDiv">
                     <Typography variant="h5" color="primary" className="formTitle">Create your account</Typography>
                     <TextField className="formStyling formMargin" id="outlined-basic" label="Email" variant="outlined" defaultValue={email} onChange = {handleEmailChange} required />
@@ -258,7 +258,7 @@ export default function SignUpForm(props){
                 </Grid>
               : null}
               {successPage === true ? 
-                <Grid item xs={6}>
+                <Grid item xs={10} md={6}>
                   <div className="formDiv">
                     <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
                     <Typography variant="h5" align="center" className="signupSuccessTypography">Congratulations!</Typography>
@@ -270,7 +270,7 @@ export default function SignUpForm(props){
               {loginLanding === true ? 
                 <LoginForm loginLanding={false} loginForm={true}/>
               : null}
-              <Grid item xs={3}></Grid>                 
+              <Grid item xs={1} md={3}></Grid>                 
           </Grid>
       </div>
     )
