@@ -27,7 +27,7 @@ router.route('/add').post((res, req) => {
 
 })
 
-router.route('delete/:id').post((res, req) => {
+router.route('/delete/:id').post((res, req) => {
     Event.findByIdAndDelete(req.params.id)
         .then(() => res.json('deleted'))
         .catch(err => res.status(400).json('Error: ' + err))
