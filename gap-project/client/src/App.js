@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import {
   BrowserRouter as Router,
   Switch,
@@ -18,35 +18,28 @@ import Footer from './components/footer/footer'
 import Settings from './pages/patientSettings/settings';
 import PharmSettings from './pages/pharmSettings/pharmSettings';
 import Schedule from './pages/patientSchedule/patientSchedule';
+import { UserContext } from './UserContext';
 function App() {
+  const [user, setUser] = useState(null);
+  const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
+  
   return (
-    <Router>
-      <PatientNav/>
-        <Switch>
-          <Route path="/faq">
-            <FAQPage />
-          </Route>
-          <Route path="/Schedule">
-            <Schedule/>
-          </Route>
-          <Route path="/Tutorials">
-            <Tutorials/>
-          </Route>
-          <Route path="/contact">
-            <PharmContact/>
-          </Route>
-          <Route path="/profile">
-            <Profile/>
-          </Route>
-          <Route path="/settings">
-            <Settings/>
-          </Route>
-          <Route path="/">
-            <PatientHome/>
-          </Route>
-        </Switch>
-      <Footer/>
-    </Router>
+    <UserContext.Provider value={providerValue}>
+      {user !== null ? 
+        <Router>
+          <PatientNav/>
+            <Switch>
+              <Route path="/faq" component={FAQPage}/>
+              <Route path="/Schedule" component={Schedule}/>
+              <Route path="/Tutorials" component={Tutorials}/>
+              <Route path="/contact" component={PharmContact}/>
+              <Route path="/profile" component={Profile}/>
+              <Route path="/settings" component={Settings}/>
+              <Route path="/" component={PatientHome}/>
+            </Switch>
+          <Footer/>
+        </Router> : <LoginSignUp/>}
+    </UserContext.Provider>
   );
 }
 export default App;

@@ -13,8 +13,13 @@ const urlSchema = new Schema({
     description: {
         type: String,
     },
+    thumbnail: {
+        type: String,
+        default: ""
+    }
  
 });
+
 
 const tutorialSchema = new Schema({
     name: {
@@ -25,20 +30,40 @@ const tutorialSchema = new Schema({
         type: String,
         trim: true
     },
-    videoUrl: {
-        type: [urlSchema],
-    },
     pharmacistNotes: {
         type: String,
         trim: true
     },
-    stepList: {
-        type: [String],
-    },
     infusionNotes: {
         type: String,
         trim: true
+    },
+    video: {
+        type: urlSchema
+    },
+    stepList: {
+        type: [String]
     }
+
+
+});
+
+const tutorialObjectSchema = new Schema({
+    name: {
+        type: String,
+        trim: true
+    },
+    description: {
+        type: String,
+        trim: true
+    },
+    duration: {
+        type: String,
+        trim: true
+    },
+    tutorials: {
+        type: [tutorialSchema],
+    },
 },
 {
     timestamps: true
@@ -46,6 +71,6 @@ const tutorialSchema = new Schema({
 
 
 
-const Tutorial = mongoose.model('Tutorial', tutorialSchema);
+const Tutorial = mongoose.model('Tutorial', tutorialObjectSchema);
 
 module.exports = Tutorial;

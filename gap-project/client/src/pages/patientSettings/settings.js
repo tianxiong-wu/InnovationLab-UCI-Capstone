@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import { UserContext } from "../../UserContext";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -59,6 +60,9 @@ function TabPanel(props) {
   }));
 
 export default function PatientSettings(){
+
+    const {user, setUser} = useContext(UserContext);
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [phone, setPhone] = useState("");
@@ -176,7 +180,7 @@ export default function PatientSettings(){
                                         <FormLabel component="legend" className="formLabel">Set a new phone?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
-                                            label="714-123-4567"
+                                            label={user.phoneNumber}
                                             defaultValue={phone}
                                             onChange={handleNewPhone}
                                             variant="outlined"
@@ -204,7 +208,7 @@ export default function PatientSettings(){
                                         <FormLabel component="legend" className="formLabel">Set a new email?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
-                                            label="JMiller@gmail.com"
+                                            label={user.email}
                                             defaultValue={email}
                                             onChange={handleNewEmail}
                                             variant="outlined"

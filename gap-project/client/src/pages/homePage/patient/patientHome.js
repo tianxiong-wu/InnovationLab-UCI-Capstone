@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../../UserContext";
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
@@ -19,6 +20,7 @@ theme = responsiveFontSizes(theme);
 
 
 export default function PatientHome(props){
+    const {user, setUser} = useContext(UserContext);
 
     let propsName = "Jasmine";
     let nextInfusion = "Thursday, November 19th, 2020 at 6:00PM";
@@ -32,7 +34,7 @@ export default function PatientHome(props){
                 <Grid container justify="center" spacing={3}>
                     <Grid item xs={2}></Grid>
                         <Grid item xs={8}>
-                            <Typography variant="h4" className="nextInfusionSummary">Hi {propsName}, your next infusion is on {nextInfusion}</Typography>
+                            <Typography variant="h4" className="nextInfusionSummary">Hi {user.firstName}, your next infusion is on {nextInfusion}</Typography>
                         </Grid>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
@@ -42,7 +44,7 @@ export default function PatientHome(props){
                                         <img src="https://picsum.photos/600/400" className="infusionThumbnail"></img>
                                     </div>
                                     <div className="infusionLabel">
-                                        <Typography variant="h4">Next Infusion: {nextInfusionName}</Typography>
+                                        <Typography variant="h5">Next Infusion: {user.events[0].title}</Typography>
                                     </div>
                                 </div>
                                 <div className="notifWidget">
@@ -51,8 +53,9 @@ export default function PatientHome(props){
                                     </div>
                                     <div className="notificationContainer">
                                         <br/>
-                                        <Notifications title="Infusion A Schedule Change" description="Starting 3/1, take doses every five hours. GOT IT?" />
-                                        <Notifications title="Infusion B Dosage Change" description="Starting 3/24, do infusions only once every two days." />
+                                        {user.notification.map((item => {
+                                            return <Notifications title={item.title} description={item.description}/>
+                                        }))}
                                     </div>
                                 </div>
                             </div>

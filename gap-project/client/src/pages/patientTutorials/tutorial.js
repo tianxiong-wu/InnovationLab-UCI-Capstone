@@ -1,4 +1,5 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useContext} from "react";
+import { UserContext } from "../../UserContext";
 import {Grid, Typography} from "@material-ui/core";
 import "./tutorial.css";
 import Tutorial from "../TutorialPage/tutorial";
@@ -6,22 +7,22 @@ import axios from 'axios';
 
 export default function PatientTutorials(){
 
+    const {user, setUser} = useContext(UserContext);
+
+
     const [tutorials, setTutorials] = useState([]);
     const [tutorialsClicked, setTutorialsClicked] = useState([]);
     const [tutorialsLoaded, setTutorialsLoaded] = useState(false);
 
     useEffect(() => {
-        let tutorialsArr = [];
+        let tutorialsArr = user.infusionArray;
         let tutorialsBoolArr = [];
-        axios.get('http://localhost:5000/tutorials/all').then(res=>{
-            tutorialsArr = res.data;
-            setTutorials(tutorialsArr);
-            for (let i = 0; i < tutorialsArr.length; i++){
-                tutorialsBoolArr.push(true);
-            }
-            setTutorialsClicked(tutorialsBoolArr);
-            setTutorialsLoaded(true);
-        })
+        setTutorials(tutorialsArr);
+        for (let i = 0; i < tutorialsArr.length; i++){
+            tutorialsBoolArr.push(true);
+        }
+        setTutorialsClicked(tutorialsBoolArr);
+        setTutorialsLoaded(true);
     },[])
 
     const handleTutorialClicked = (index) => {
@@ -35,7 +36,7 @@ export default function PatientTutorials(){
     }
     
     return (
-        <Grid>
+        <Grid className="baseContainer">
             {tutorials.map((item, index) => {
                 return <Tutorial num={index}/>    
             })}
