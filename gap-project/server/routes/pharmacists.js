@@ -34,7 +34,6 @@ router.route('/register').post((req, res) =>{
     const phoneNumber = req.body.phoneNumber;
     const email = req.body.email;
     const birthday = Date.parse(req.body.birthday);
-    const assignedPatient = req.body.assignedPatient;
     const role = req.body.role;
 
     const newPharmacist = new Pharmacist({
@@ -44,7 +43,6 @@ router.route('/register').post((req, res) =>{
         phoneNumber,
         email,
         birthday,
-        assignedPatient,
         role
     });
 
@@ -75,7 +73,8 @@ router.route('/login').post((req, res, next) => {
                 console.log('failture')
                 return res.sendStatus(404);
             }else{
-                return res.sendStatus(200)};
+                res.send(req.user)
+                console.log(req.user)};
         })
     })(req, res, next);
 })

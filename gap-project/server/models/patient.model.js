@@ -73,7 +73,8 @@ const patientSchema = new Schema({
         default: 'both'
     },
     assignedPharmacist: {
-        type: pharmacist.schema
+        type: [pharmacist.schema],
+        default: []
     },
     events: {
         type: [event.schema],
