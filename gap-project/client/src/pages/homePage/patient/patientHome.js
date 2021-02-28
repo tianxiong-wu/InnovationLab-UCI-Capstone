@@ -20,13 +20,55 @@ theme = responsiveFontSizes(theme);
 
 
 export default function PatientHome(props){
-    const {user, setUser} = useContext(UserContext);
-
-    let propsName = "Jasmine";
-    let nextInfusion = "Thursday, November 19th, 2020 at 6:00PM";
-    let nextInfusionName = "Antibiotic";
-
     const classes = useStyles();
+
+    const {user, setUser} = useContext(UserContext);
+    const [nextInfusion, setNextInfusion] = useState("");
+    const [todaysSchedule, setTodaysSchedule] = useState([]);
+
+    var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
+
+    const formatTime = (date) => {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0'+ minutes: minutes;
+        let strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime
+    }
+
+    const getNextInfusion = () => {
+        let infusionDate = new Date(user.events[0].notifyAt);
+        let dayMonthYear = infusionDate.toLocaleDateString("en-US", options);
+        let dateTime = formatTime(infusionDate);
+        return `${dayMonthYear} at ${dateTime}.`
+    }
+
+    const dayMonthYear = (date) => {
+        let dd = String(date.getDate());
+        let mm = String(date.getMonth());
+        let yy = String(date.getFullYear());
+        let dateString = `${mm}/${dd}/${yy}`;
+        return dateString;
+    }
+
+    const getTodaysSchedule = () => {
+        let today = new Date();
+        let scheduleArr = [];
+        for (let i = 0; i < user.events.length; i++){
+            if (dayMonthYear(today) ===  dayMonthYear(new Date(user.events[i].notifyAt))){
+                scheduleArr.push(user.events[i]);
+            }
+        }
+        return scheduleArr;
+    }
+
+    useEffect(() => {
+        setNextInfusion(getNextInfusion);
+        setTodaysSchedule(getTodaysSchedule);
+    }, [])
 
     return(
        <div className={classes.root}>
@@ -66,9 +108,11 @@ export default function PatientHome(props){
                             </div>
                             <div className="scheduleWidget">
                                 <br/>
-                                <ScheduleEvent time="12:30PM" name="Antibiotic Infusion"/>
-                                <ScheduleEvent time="4:30PM" name="Antibiotic Infusion"/>
-                                <ScheduleEvent time="8:30PM" name="Antibiotic Infusion"/>
+                                {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
+                                : todaysSchedule.map((item => {
+                                    console.log(item);
+                                    return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
+                                }))}
                             </div>
                         </Grid>
                 </Grid>
