@@ -9,12 +9,31 @@ import './patientSchedule.css';
 export default function PatientSchedule(){
 
     const {user, setUser} = useContext(UserContext);
-
-    const [currentDay, setCurrentDay] = useState(new Date());
+    const getCurrentDay = (day) => {
+        let numDate = day.substr(-2);
+        let newDate = new Date(day);
+        switch (newDate.getDay()){
+            case 0:
+                return ["Mo", numDate, "Monday"];
+            case 1:
+                return ["Tu", numDate, "Tuesday"];
+            case 2: 
+                return ["We", numDate, "Wednesday"];
+            case 3:
+                return ["Th", numDate, "Thursday"];
+            case 4:
+                return ["Fr", numDate, "Friday"];
+            case 5:
+                return ["Sa", numDate, "Saturday"];
+            case 6:
+                return ["Su", numDate, "Sunday"];
+        }
+    }
+    const [currentDay, setCurrentDay] = useState(getCurrentDay(new Date().toISOString().slice(0,10))[2]);
     const [days, setDays] = useState([]);
     const [render, setRender] = useState(false);
     const [earliest, setEarliest] = useState(days[0]);
-    const [selected, setSelected] = useState("");
+    const [todaysSchedule, setTodaysSchedule] = useState([]);
 
     let week = [];
     useEffect(() => {
@@ -25,31 +44,11 @@ export default function PatientSchedule(){
         for (let i=0; i<7; i++){
             week.push(new Date(curr.setDate(curr.getDate()+1)).toISOString().slice(0,10));
         }
-        console.log(week);
         setDays(week);
         setRender(true);
     }, []);    
 
-    const getCurrentDay = (day) => {
-        let numDate = day.substr(-2);
-        let newDate = new Date(day);
-        switch (newDate.getDay()){
-            case 0:
-                return ["Mo", numDate];
-            case 1:
-                return ["Tu", numDate];
-            case 2: 
-                return ["We", numDate];
-            case 3:
-                return ["Th", numDate];
-            case 4:
-                return ["Fr", numDate];
-            case 5:
-                return ["Sa", numDate];
-            case 6:
-                return ["Su", numDate];
-        }
-    }
+    
 
     const getCurrentMonth = (month) => {
         switch (month) {
@@ -80,8 +79,6 @@ export default function PatientSchedule(){
         }
     }
 
-    // on click month, show modal calendar pick
-
     // left arrow, decrement all current dates by one week
     const handleNextDay = () => {
         let week = days;
@@ -103,6 +100,64 @@ export default function PatientSchedule(){
         setEarliest(days[0]);
     }
 
+    const getDayIndex = (dayID) => {
+        switch (dayID){
+            case "dayOne":
+                return 0;
+            case "dayTwo":
+                return 1;
+            case "dayThree":
+                return 2;
+            case "dayFour":
+                return 3;
+            case "dayFive":
+                return 4;
+            case "daySix":
+                return 5;
+            case "daySeven":
+                return 6;
+        }
+    }
+
+    const dayMonthYear = (date) => {
+        let dd = String(date.getDate());
+        let mm = String(date.getMonth());
+        let yy = String(date.getFullYear());
+        let dateString = `${mm}/${dd}/${yy}`;
+        return dateString;
+    }
+
+    const formatTime = (date) => {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0'+ minutes: minutes;
+        let strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime
+    }
+
+    const getTodaysSchedule = (selected) => {
+        let selectedDate = new Date(selected); //get new date object of a date passed into function
+        let scheduleArr = []; // initialized schedule array
+        for (let i = 0; i < user.events.length; i++){ // iter thru events
+            if (dayMonthYear(selectedDate) ===  dayMonthYear(new Date(user.events[i].notifyAt))){ // compare the selectedDate with date of notifyAt 
+                scheduleArr.push(user.events[i]); //push into schedule array
+            }
+        }
+        return scheduleArr;
+    }
+
+    const handleNewCurrentDay = (event) => {
+        let dayIndex = event.target.id; // get day index even if day changes
+        let dayString = days[getDayIndex(dayIndex)]; // get the current date object
+        setCurrentDay(getCurrentDay(dayString)[2]); // change current date to what was selected
+        console.log(currentDay)
+        setTodaysSchedule(getTodaysSchedule(dayString)); // change the schedule output based on the selectedDay
+        console.log(todaysSchedule);
+    }
+
     return(
         render === true ? 
         <Grid container className="outerScheduleContainer">
@@ -115,43 +170,43 @@ export default function PatientSchedule(){
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[0])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[0])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="dayOne" onClick={handleNewCurrentDay}>{getCurrentDay(days[0])[1]}</Typography>
                                 </div>
                         </li>
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[1])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[1])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="dayTwo" onClick={handleNewCurrentDay}>{getCurrentDay(days[1])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[2])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[2])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="dayThree" onClick={handleNewCurrentDay}>{getCurrentDay(days[2])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[3])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[3])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="dayFour" onClick={handleNewCurrentDay}>{getCurrentDay(days[3])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[4])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[4])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="dayFive" onClick={handleNewCurrentDay}>{getCurrentDay(days[4])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[5])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[5])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="daySix" onClick={handleNewCurrentDay}>{getCurrentDay(days[5])[1]}</Typography>
                                 </div>
                         </li>     
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[6])[0]}</Typography>
-                                    <Typography variant="h5" align="center" className="numDate">{getCurrentDay(days[6])[1]}</Typography>
+                                    <Typography variant="h5" align="center" className="numDate" id="daySeven" onClick={handleNewCurrentDay}>{getCurrentDay(days[6])[1]}</Typography>
                                 </div>
                         </li>                             
                         <li className="weekDayDisplay arrowIcon" onClick={handleNextDay}>&#62;</li>
@@ -161,9 +216,9 @@ export default function PatientSchedule(){
                     <Typography variant="h3" align="center" className="dayStyling">{currentDay.toLocaleString('en-us', {weekday:'long'})}</Typography>
                     <div className="scheduleComponents">
                         <br/>
-                            <ScheduleEvent time="2:30PM" name="Antibiotic Infusion"/>
-                            <ScheduleEvent time="2:30PM" name="Antibiotic Infusion"/>
-                            <ScheduleEvent time="2:30PM" name="Antibiotic Infusion"/>
+                        {todaysSchedule.length === 0 ? <Typography variant="h4" color="primary" align="center">No Infusions Today</Typography> : todaysSchedule.map((item => {
+                            return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
+                        }))}
                     </div>
                 </Grid>
             </Grid>
