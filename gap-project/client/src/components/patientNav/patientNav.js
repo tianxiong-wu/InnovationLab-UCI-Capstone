@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import { UserContext } from "../../UserContext";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientNav(){
     const classes = useStyles();
+    
+    const {user, setUser} = useContext(UserContext);
+
     const [auth, setAuth] = useState(true);
     const [profileAnchor, setProfileAnchor] = React.useState(null);
     const [hamburgerAnchor, setHamburgerAnchor] = React.useState(null);
@@ -140,7 +144,7 @@ export default function PatientNav(){
                                     open={openProfile}
                                     onClose={handleCloseProfile}
                                 >
-                                    <MenuItem className="profileMenu" onClick={handleCloseProfile}>Jasmine Miller</MenuItem>
+                                    <MenuItem className="profileMenu" onClick={handleCloseProfile}>{user.firstName + " " + user.lastName}</MenuItem>
                                     <MenuItem className="profileMenu" onClick={handleCloseProfile}><Link to="/profile" className="profileLink">Profile</Link></MenuItem>
                                     <MenuItem className="profileMenu" onClick={handleCloseProfile}><Link to="/settings" className="profileLink">Settings</Link></MenuItem>
                                     <MenuItem className="profileMenu" onClick={handleCloseProfile}>Log Out</MenuItem>

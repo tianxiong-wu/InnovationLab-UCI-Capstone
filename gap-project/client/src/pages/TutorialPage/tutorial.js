@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import { UserContext } from "../../UserContext";
 import {Grid, Typography, Button} from "@material-ui/core";
 import "./tutorial.css"
 import PropTypes from 'prop-types';
@@ -78,6 +79,9 @@ function TabPanel(props) {
   }));
 
 export default function TutorialPage(props){    
+
+    const {user, setUser} = useContext(UserContext);
+
     const classes = useStyles();
     const [tutorialArray, setTutorialArray] = useState([]);
     const [tutorial, setTutorial] = useState({});

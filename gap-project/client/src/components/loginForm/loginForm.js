@@ -1,6 +1,7 @@
-import React, { useState } from "react"
-import { Button } from '@material-ui/core'
-import { Typography } from "@material-ui/core"
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../UserContext";
+import { Button } from '@material-ui/core';
+import { Typography } from "@material-ui/core";
 import { Divider } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -28,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LoginForm(props){
     const classes = useStyles();
+
+    // Handles login to initialize the userContext 
+    const { user, setUser } = useContext(UserContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -62,6 +66,7 @@ export default function LoginForm(props){
       if(role === "patient"){
       axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
         console.log(res.data);
+        setUser(res.data);
       }).catch(err =>{
         console.log(err);
       })}
@@ -108,8 +113,8 @@ export default function LoginForm(props){
                       <MenuItem value="pharmacist">Pharmacist</MenuItem>
                     </Select>
                   </FormControl>
-                  <TextField className="formStyling formMargin" id="outlined-basic" label="Email" variant="outlined" onChange = {handleEmailChange} required />
-                  <TextField className="formStyling formMargin" type = 'password' id="outlined-basic" label="Password" variant="outlined" onChange = {handlePasswordChange} required />
+                  <TextField className="formStyling formMargin" label="Email" variant="outlined" onChange = {handleEmailChange} required />
+                  <TextField className="formStyling formMargin" type = 'password' label="Password" variant="outlined" onChange = {handlePasswordChange} required />
                   <Button variant="outlined" color="primary" className="nextFullPassword">Forgot Password?</Button>
                   <Button disabled={email === "" || password === "" || role === ""} variant="contained" color="primary" className="nextFull nextFullLogin" onClick={toggleTwo}>Login</Button>
                 </div>
