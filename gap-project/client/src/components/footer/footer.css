@@ -2,7 +2,9 @@
 	.footerContainer{
 		width: 100%;
 		bottom: 0;
-		position: sticky;
+		position: absolute;
+		clear: both;
+
 
 	}
 	

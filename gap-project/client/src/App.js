@@ -18,6 +18,8 @@ import Footer from './components/footer/footer'
 import Settings from './pages/patientSettings/settings';
 import PharmSettings from './pages/pharmSettings/pharmSettings';
 import Schedule from './pages/patientSchedule/patientSchedule';
+import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
+import PharmAssign from './pages/pharmAssignPage/pharmAssign';
 import { UserContext } from './UserContext';
 function App() {
   const [user, setUser] = useState(null);
@@ -43,8 +45,3 @@ function App() {
   );
 }
 export default App;
-
-/*
-<Route path="/Tutorial/:id">
-            <Tutorial/>
-          </Route>*/

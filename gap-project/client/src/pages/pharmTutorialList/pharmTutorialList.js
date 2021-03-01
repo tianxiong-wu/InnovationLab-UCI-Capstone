@@ -3,29 +3,31 @@ import { makeStyles, useTheme, withTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { useHistory } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
+    box:{
+        width :'100%',
+        display: 'inline-block',
+    },
     root: {
-        display: 'flex',
+        display:'inline-block',
+        // float:'left',
+        margin:'2.5vw',
         backgroundColor: '#3F51B5',
-        width: "70%",
+        width: "45vw",
         height: "216px",
-        margin: '0 auto',
         marginTop: '33px',
         borderRadius: 20,
         color: 'white',
         backgroundColor: '#00529b',
     },
     details: {
-        display: 'flex',
-        flexDirection: 'column',
+        verticalAlign:'top',
+        display: 'inline-block',
         width: '60%',
     },
     content: {
@@ -35,8 +37,10 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 3,
     },
     cover: {
-        width: 150,
+        marginTop:'4%',
+        width: '20%',
         height: 150,
+        display:'inline-block',
         margin: 'auto 31px',
         marginRight: 0,
     },
@@ -50,18 +54,19 @@ const useStyles = makeStyles((theme) => ({
         width: 38,
     },
     btn: {
-        margin: 'auto',
-        marginRight: 47,
+        display:'inline-block',
+        verticalAlign:'top',
         fontSize: 40,
-
+        width:'10%',
+        marginTop:'80px',
     }
 }));
 
-const pharmTutorials = () => {
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();
     const [list, setList] = useState([]);
+=======
     //const initList = async () => {
 
     // const tutorials = [{
@@ -97,11 +102,9 @@ const pharmTutorials = () => {
     }
 
 
-    return <>{
+    return <div className={classes.box}>{
         list.map((item) => {
-            return <Grid container spacing={3}>
-                <Grid item xs={6}>
-                    <Card onClick={() => handleChange(item._id)} className={classes.root}>
+            return  <Card onClick={() => handleChange(item._id)} className={classes.root}>
                         <CardMedia
                             className={classes.cover}
                             image={item.img}
@@ -122,11 +125,9 @@ const pharmTutorials = () => {
                         </div>
                         <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
                     </Card>
-                </Grid>
-            </Grid>
         })
 
-    }</>
+    }</div>
 }
 
-export default pharmTutorials;
+export default PharmTutorials;
