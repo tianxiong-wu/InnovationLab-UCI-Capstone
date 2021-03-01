@@ -83,7 +83,7 @@ export default function PatientHome(props){
                             <div>
                                 <div className="infusionWidget">
                                     <div className="infusionVideoContainer">
-                                        <img src="https://picsum.photos/600/400" className="infusionThumbnail"></img>
+                                        <img src={user.infusionArray[0].tutorials[0].video.thumbnail} className="infusionThumbnail"></img>
                                     </div>
                                     <div className="infusionLabel">
                                         <Typography variant="h5">Next Infusion: {user.events[0].title}</Typography>
