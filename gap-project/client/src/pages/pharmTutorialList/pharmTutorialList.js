@@ -61,12 +61,11 @@ const useStyles = makeStyles((theme) => ({
         marginTop:'80px',
     }
 }));
-
+export default function PharmTutorialList(){
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();
     const [list, setList] = useState([]);
-=======
     //const initList = async () => {
 
     // const tutorials = [{
@@ -101,33 +100,30 @@ const useStyles = makeStyles((theme) => ({
         history.push('/Tutorial/' + id);
     }
 
+        return <div className={classes.box}>{
+            list.map((item) => {
+                return  <Card onClick={() => handleChange(item._id)} className={classes.root}>
+                            <CardMedia
+                                className={classes.cover}
+                                image={item.img}
+                                title="Live from space album cover"
+                            />
+                            <div className={classes.details}>
+                                <CardContent className={classes.content}>
+                                    <Typography component="h5" variant="h5">
+                                        {item.name}
+                                    </Typography>
+                                    <Typography className={classes.summary} variant="subtitle1" >
+                                        {item.description}
+                                    </Typography>
+                                    <Typography variant="subtitle1" >
+                                        Duration: {item.duration}
+                                    </Typography>
+                                </CardContent>
+                            </div>
+                            <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
+                        </Card>
+            })
 
-    return <div className={classes.box}>{
-        list.map((item) => {
-            return  <Card onClick={() => handleChange(item._id)} className={classes.root}>
-                        <CardMedia
-                            className={classes.cover}
-                            image={item.img}
-                            title="Live from space album cover"
-                        />
-                        <div className={classes.details}>
-                            <CardContent className={classes.content}>
-                                <Typography component="h5" variant="h5">
-                                    {item.name}
-                                </Typography>
-                                <Typography className={classes.summary} variant="subtitle1" >
-                                    {item.description}
-                                </Typography>
-                                <Typography variant="subtitle1" >
-                                    Duration: {item.duration}
-                                </Typography>
-                            </CardContent>
-                        </div>
-                        <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
-                    </Card>
-        })
-
-    }</div>
+        }</div>
 }
-
-export default PharmTutorials;
