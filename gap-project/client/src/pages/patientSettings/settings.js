@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import { UserContext } from "../../UserContext";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
@@ -54,10 +55,14 @@ function TabPanel(props) {
     root: {
       flexGrow: 1,
       backgroundColor: theme.palette.background.paper,
+      height: '100vh'
     },
   }));
 
 export default function PatientSettings(){
+
+    const {user, setUser} = useContext(UserContext);
+
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const [phone, setPhone] = useState("");
@@ -93,6 +98,14 @@ export default function PatientSettings(){
         setRepeatPass(newValue);
     }
 
+    const handleNewPhone = (event, newValue) => {
+        setPhone(newValue);
+    }
+
+    const handleNewEmail = (event, newValue) => {
+        setEmail(newValue);
+    }
+
     function updatePatientSettings() {
         alert('you saved your phone number')
     }
@@ -119,7 +132,7 @@ export default function PatientSettings(){
                             defaultValue={currentPass}
                             variant="outlined"
                             className="securityStyling"
-                            onChange={setCurrentPass}
+                            onChange={handleCurrentPass}
                             fullWidth
                             required>
                         </TextField>
@@ -130,7 +143,7 @@ export default function PatientSettings(){
                             defaultValue={newPass}
                             variant="outlined"
                             className="securityStyling"
-                            onChange={setNewPass}                            
+                            onChange={handleNewPass}                            
                             fullWidth
                             required>
                         </TextField>
@@ -141,7 +154,7 @@ export default function PatientSettings(){
                             defaultValue={repeatPass}
                             variant="outlined"
                             className="securityStyling"
-                            onChange={setRepeatPass}
+                            onChange={handleRepeatPass}
                             fullWidth
                             required>
                         </TextField>
@@ -167,8 +180,9 @@ export default function PatientSettings(){
                                         <FormLabel component="legend" className="formLabel">Set a new phone?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
-                                            label="714-123-4567"
+                                            label={user.phoneNumber}
                                             defaultValue={phone}
+                                            onChange={handleNewPhone}
                                             variant="outlined"
                                             className="formLabelShift"
                                             fullWidth>
@@ -194,8 +208,9 @@ export default function PatientSettings(){
                                         <FormLabel component="legend" className="formLabel">Set a new email?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
-                                            label="JMiller@gmail.com"
+                                            label={user.email}
                                             defaultValue={email}
+                                            onChange={handleNewEmail}
                                             variant="outlined"
                                             className="formLabelShift">
                                         </TextField>

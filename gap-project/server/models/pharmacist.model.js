@@ -12,6 +12,9 @@ const pharmacistSchema = new Schema({
         type: String,
         trim: true,
     },
+    password: {
+        type: String
+    },
     phoneNumber: {
         type: String,
         trim: true,
@@ -24,7 +27,8 @@ const pharmacistSchema = new Schema({
         type: Date,
     },
     assignedPatient: {
-        type: [patient.schema]
+        type: [patient.schema],
+        default: []
     },
     role: {
         type: String,

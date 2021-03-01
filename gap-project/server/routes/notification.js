@@ -1,34 +1,33 @@
 const router = require('express').Router();
 
-let Event = require('../models/event.model');
+let Notification = require('../models/notification.model');
+
 
 router.route('/all').get((res, req) =>{
-    Event.find()
-        .then(events => res.json(events))
+    Notification.find()
+        .then(notifications => res.json(notifications))
         .catch(err => res.status(500).json('Error: ' + err));
 
 })
 
 router.route('/add').post((res, req) => {
     const title = req.body.title;
-    const start = Date.parse(req.body.start);
-    const end = Date.parse(req.body.end);
     const notifyAt = Date.parse(req.body.notifyAt);
     const description = req.body.description;
 
-    const newEvent = new Event ({
-        title, start, end, notifyAt, description
+    const newNotification = new Notification ({
+        title, notifyAt, description
     });
 
-    newEvent.save()
-        .then(() => res.json(newEvent))
+    newNotification.save()
+        .then(() => res.json(newNotification))
         .catch(err => res.status(400).json('Error: ' + err))
         .catch(err => res.status(500).json('Error: ' + err));
 
 })
 
 router.route('/delete/:id').post((res, req) => {
-    Event.findByIdAndDelete(req.params.id)
+    Notification.findByIdAndDelete(req.params.id)
         .then(() => res.json('deleted'))
         .catch(err => res.status(400).json('Error: ' + err))
         .catch(err => res.status(500).json('Error: ' + err))

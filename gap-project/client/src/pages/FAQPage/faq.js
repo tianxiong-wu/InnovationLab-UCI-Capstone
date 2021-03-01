@@ -39,7 +39,7 @@ export default function FAQ(){
 
 
     return(
-        <Container>
+        <Container className="faqContainer">
             <Typography variant="h4" className="title">How can we help you?</Typography>
             <SearchBar
                 className="searchBar"

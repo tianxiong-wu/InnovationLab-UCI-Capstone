@@ -1,4 +1,7 @@
 @media screen and (min-width: 16em) { 
+    .formLabelShift{
+        overflow-x: hidden;
+    }
     .appBar{
         background-color: #00529b !important;
         padding-bottom: 20px !important;
@@ -165,6 +168,7 @@
 .formLabelShift{
     margin-left: 2vh !important;
     max-width: 90% !important;
+    overflow-x: hidden !important;
 }
 
 .formHalf{

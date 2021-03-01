@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#00529b',
     },
     details: {
-
         verticalAlign:'top',
         display: 'inline-block',
         width: '60%',
@@ -63,11 +62,34 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const PharmTutorials = () => {
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();
     const [list, setList] = useState([]);
+=======
+    //const initList = async () => {
+
+    // const tutorials = [{
+    //   id: 0,
+    //   name: 'Infusion A',
+    //   summary: `Lorem ipsum dolor sit amet`,
+    //   duration: '20 min',
+    //   img: 'https://picsum.photos/seed/picsum/150/150',
+    // }, {
+    //   id: 1,
+    //   name: 'Infusion B'
+    //   summary: 'Summary B',
+    //   duration: '15 min',
+    //   img: 'https://picsum.photos/seed/picsum/150/150',
+    // }, {
+    //   id: 2,
+    //   name: 'Infusion C',
+    //   summary: 'Summary C',
+    //   duration: '17 min',
+    //   img: 'https://picsum.photos/seed/picsum/150/150',
+    // }] 
+
+    //};
     useEffect(async () => {
         const response = await fetch('http://localhost:5000/tutorials/all');
         const tutorials = await response.json();
@@ -99,7 +121,6 @@ const PharmTutorials = () => {
                                 <Typography variant="subtitle1" >
                                     Duration: {item.duration}
                                 </Typography>
-                                
                             </CardContent>
                         </div>
                         <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>

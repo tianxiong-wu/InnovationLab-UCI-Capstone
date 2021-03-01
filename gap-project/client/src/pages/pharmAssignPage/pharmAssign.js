@@ -59,8 +59,9 @@ const useStyles = makeStyles((theme) => ({
         float:"right",
         backgroundColor: '#00529B',
         border:  '1px solid white',
-
-
+        fontSize: 20,
+        padding:'0',
+        float:"right"
     }
 }));
 
@@ -172,8 +173,7 @@ export default function PharmAssign(props) {
                                     <rect x="12" width="30" height="4" rx="2" transform="rotate(90 12 0)" fill="#FFFFFF"/>
                                     </svg>
 
-                                    </Button></Typography>
-                                    
+                                    </Button></Typography>                            
                                 </div>
                                 <div className="notificationContainer">
                                     <ScheduleEvent time="12:30PM" name="Antibiotic Infusion" />

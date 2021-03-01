@@ -1,10 +1,47 @@
 @media screen and (min-width: 16em){
+    .toggleBackButton{
+        float: left !important;
+        margin-left: 20px;
+        margin-right: -20px; 
+    }
+
+    .arrowButton:hover, .toggleBackButton:hover{
+        cursor: pointer;
+    }
+
+    .cardRoot{
+        display: flex;
+        color: white !important;
+        height: 216px;
+        margin: 33px auto 0 auto;
+        border-radius: 20px;
+        color: white;
+        background-color: #00529b !important;
+    }
+    
+    .cardDetails{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .cover{
+        width: 150px;
+        height: 150px;
+        margin: auto 0 auto 31px;
+    }
+    
+    .arrowButton{
+        margin: auto 47px auto auto;
+        font-size: 40px;
+    }
+
     .desktopInteraction{
         display: none !important;
     }
 
     .centralContainer{
         margin-top: 5vh !important;
+        height: 85vh;
     }
     .noteContainer {
         box-Shadow: 0 0 0 2px #00529b !important;
@@ -25,6 +62,7 @@
         display: flex !important;
         flex-direction: row !important;
         width: 100% !important;
+        margin-top: -21.5vh;
     }
 
     .videoButtons{
@@ -73,9 +111,43 @@
         height: 100% !important;
         margin-top: 1vh !important;
     }
+
+    .listItem{
+        list-style: none;
+        margin: 16px 36px 16px 0;
+    }
 }
 
 @media screen and (min-width: 40em){
+
+.cardRoot{
+    display: flex;
+    width: 100%;
+    color: white !important;
+    height: 216px;
+    margin: 33px auto 0 auto;
+    border-radius: 20px;
+    color: white;
+    background-color: #00529b !important;
+}
+
+.cardDetails{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.cover{
+    width: 150px;
+    height: 150px;
+    margin: auto 0 auto 31px;
+}
+
+.arrowButton{
+    margin: auto 47px auto auto;
+    font-size: 40px;
+}
+
 
 .desktopInteraction{
     display: block !important; 
