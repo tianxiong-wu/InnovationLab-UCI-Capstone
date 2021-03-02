@@ -6,8 +6,6 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
-import NavPharmResponsive from './components/navPharmResponsive/navPharmResponsive';
-import PharmacistHome from './pages/homePage/pharmacist/pharmacistHome';
 import PatientNav from './components/patientNav/patientNav';
 import PharmContact from './pages/pharmContact/pharmContact'
 import FAQPage from './pages/FAQPage/faq';
@@ -24,27 +22,7 @@ import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
 import PharmAssign from './pages/pharmAssignPage/pharmAssign';
 import { UserContext } from './UserContext';
 function App() {
-
-  /*  return (<>
-  <Router>
-      <NavPharmResponsive/>
-        <Switch>
-          <Route path="/faq">
-            <FAQPage />
-          </Route>
-          <Route path="/Tutorials">
-            <Tutorials/>
-          </Route>
-          <Route path="/">
-            <PharmacistHome/>
-          </Route>
-        </Switch>
-      <Footer></Footer>
-
-    </Router>
-*/
-  
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
   
   return (
@@ -60,9 +38,13 @@ function App() {
               <Route path="/profile" component={Profile}/>
               <Route path="/settings" component={Settings}/>
               <Route path="/" component={PatientHome}/>
+              <Route path="/Tutorial/:id"><Tutorial/></Route>
+              <Route path="/pharm/tutorial"><PharmTutorials/></Route>
+              <Route path="/pharm/assign"><PharmAssign/></Route>
             </Switch>
           <Footer/>
-        </Router> : <LoginSignUp/>}
+          </Router> 
+          : <LoginSignUp/>}
     </UserContext.Provider>
   );
 }
