@@ -22,7 +22,7 @@ import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
 import PharmAssign from './pages/pharmAssignPage/pharmAssign';
 import { UserContext } from './UserContext';
 function App() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
   
   return (
