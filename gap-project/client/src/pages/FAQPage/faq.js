@@ -39,14 +39,13 @@ export default function FAQ(){
 
 
     return(
-        <Container>
+        <Container className="faqContainer">
             <Typography variant="h4" className="title">How can we help you?</Typography>
             <SearchBar
                 className="searchBar"
                 value={value}
                 type="text"
-                onChange={(value) => handleSearch(value)}
-            >
+                onChange={(value) => handleSearch(value)}>
             </SearchBar>
             <Typography variant="h4" className="titleTwo">Frequently Asked Questions</Typography>
             <Questions questionList={displayQuestions} />

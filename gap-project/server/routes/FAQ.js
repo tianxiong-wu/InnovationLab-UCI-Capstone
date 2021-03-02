@@ -26,6 +26,7 @@ router.route('/delete/:id').post((req, res) =>{
     FAQ.findByIdAndDelete(req.params.id)
         .then(() => res.json('deleted'))
         .catch(err => res.status(400).json('Error: ' + err))
+        .catch(err => res.status(500).json('Error: ' + err))
 });
 
 

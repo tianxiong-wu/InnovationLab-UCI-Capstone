@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
+import { UserContext } from "../../UserContext";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MenuAppBar() {
+
+  const {user, setUser} = useContext(UserContext);
+
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -73,6 +77,7 @@ export default function MenuAppBar() {
             <Link className="navItem"  to="/faq">FAQ</Link>
         </Typography>
         <Typography variant="h6" className={classes.title}>
+
             <Link className="navItem" to = "/contact">Contact</Link>
         </Typography>
           {auth && (
@@ -102,7 +107,7 @@ export default function MenuAppBar() {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem class="profileItem" onClick={handleClose}>Jasmine Miller</MenuItem>
+                <MenuItem class="profileItem" onClick={handleClose}>{user.firstName}</MenuItem>
                 <MenuItem class="profileItem" onClick={handleClose}>Profile</MenuItem>
                 <MenuItem class="profileItem" onClick={handleClose}>Settings</MenuItem>
                 <MenuItem class="profileItem" onClick={handleClose}>Log Out</MenuItem>

@@ -1,0 +1,20 @@
+.infusionTime{
+    background-color: #00529b;
+    color: white;
+    width: 25%;
+    font-size: 1rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    font-weight: bold !important;
+}
+
+.infusionName{
+    color: #00529b;
+    width: 75%;
+    font-size: 1.5rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+}
+

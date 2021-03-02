@@ -1,0 +1,198 @@
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
+.settingsContainer-patient {
+  /*border: 5px solid #00529B;*/
+  display: flex;
+  flex-wrap: wrap;
+  height: 70vh;
+  justify-content: center;
+}
+
+.settingsTitle-patient {
+  /*border: 5px solid black;*/
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #00529B;
+  font-weight: bold;
+  font-size: 2em;
+  height: 10%;
+}
+
+#securityContainer-patient, #notificationsContainer{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 90%;
+  margin-top: 5px;
+}
+
+#notificationsContainer {
+  display: none;
+  justify-content: space-around;
+}
+
+.titleBar-patient {
+  /*border: 5px solid black;*/
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 13%;
+}
+
+.securityTitle-patient, .notificationTitle-patient{
+  /*border: 5px solid black;*/
+  border-radius: 25px 25px 0px 0px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  background-color: #00529B;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.passwordContainer {
+  border: 20px solid #00529B;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 76%;
+}
+
+.password {
+  border: 1px solid #00529B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  color: #00529B;
+  padding: 5px;
+  margin: 10px 0 10px 0;
+  width: 50%;
+}
+
+.saveButton {
+  background-color: #00529B;
+  color: #ffffff;
+  width: 15%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  font-size: 1.5em;
+}
+
+.folderBorder-patient {
+  border: 15px solid #00529B;
+  width: 100%;
+  height: 82%;
+}
+
+.whiteBorder-patient {
+  border: 10px solid white;
+  width: 98%;
+  height: 94%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.notificationSection {
+  border: 2px solid #00529B;
+  width: 45%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-radius: 20px 20px 0px 0px;
+
+}
+
+.insideTitle-patient {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  background-color: #00529B;
+  font-weight: bold;
+  color: white;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.notifyMe {
+  width: 100%;
+  margin-left: 20px;
+  color: #737374;
+}
+
+.yes, .no {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 30%;
+  color: #737374;
+}
+
+.yesBox, .noBox {
+  border: 3px solid #00529B;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+.yesContainer, .noContainer {
+  width: 15%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.infoContainer-patient {
+  width: 60%;
+}
+
+.infoBox-patient {
+  color: #737374;
+  height: 30%;
+
+}
+
+.phone-patient_email_Container-patient {
+  border: 3px solid #00529B;
+  display: flex;
+  height: 30px;
+  border-radius: 10px;
+  align-items: center;
+  font-size: 0.7em;
+}
+
+.phone-patient, .email-patient {
+  width: 80%;
+  color: #00529B;
+  margin-left: 10px;
+}
+
+.editContainer-patient {
+  width: 20%;
+  color: #00529B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.edit-patient {
+  color: #1400FF;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

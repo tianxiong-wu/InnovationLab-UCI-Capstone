@@ -1,31 +1,33 @@
 import logo from './logo.svg';
-
+import React, { useState, useMemo } from "react"
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
 import './App.css';
-import Nav from './components/nav/nav';
-import NavResponsive from './components/navResponsive/navResponsive';
 import NavPharmResponsive from './components/navPharmResponsive/navPharmResponsive';
+import PharmacistHome from './pages/homePage/pharmacist/pharmacistHome';
+import PatientNav from './components/patientNav/patientNav';
+import PharmContact from './pages/pharmContact/pharmContact'
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
-import PharmacistHome from './pages/homePage/pharmacist/pharmacistHome';
-import Profile from './pages/profile/profile';
+import Profile from './pages/patientProfile/profile';
 import Error from './pages/404_error/404_error';
-import Tutorials from './pages/Tutorial_List/Tutorial_List';
+import Tutorials from './pages/patientTutorials/tutorial';
+import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
-
+import Settings from './pages/patientSettings/settings';
+import PharmSettings from './pages/pharmSettings/pharmSettings';
+import Schedule from './pages/patientSchedule/patientSchedule';
+import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
+import PharmAssign from './pages/pharmAssignPage/pharmAssign';
+import { UserContext } from './UserContext';
 function App() {
-  return (<>
 
+  /*  return (<>
   <Router>
       <NavPharmResponsive/>
-
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-
         <Switch>
           <Route path="/faq">
             <FAQPage />
@@ -40,9 +42,28 @@ function App() {
       <Footer></Footer>
 
     </Router>
-
-
-    </>
+*/
+  
+  const [user, setUser] = useState(null);
+  const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
+  
+  return (
+    <UserContext.Provider value={providerValue}>
+      {user !== null ? 
+        <Router>
+          <PatientNav/>
+            <Switch>
+              <Route path="/faq" component={FAQPage}/>
+              <Route path="/Schedule" component={Schedule}/>
+              <Route path="/Tutorials" component={Tutorials}/>
+              <Route path="/contact" component={PharmContact}/>
+              <Route path="/profile" component={Profile}/>
+              <Route path="/settings" component={Settings}/>
+              <Route path="/" component={PatientHome}/>
+            </Switch>
+          <Footer/>
+        </Router> : <LoginSignUp/>}
+    </UserContext.Provider>
   );
 }
 export default App;
