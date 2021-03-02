@@ -49,7 +49,7 @@ function App() {
   
   return (
     <UserContext.Provider value={providerValue}>
-      {user !== null ? 
+      {user !== null && user.role === "patient" ? 
         <Router>
           <PatientNav/>
             <Switch>
@@ -62,7 +62,18 @@ function App() {
               <Route path="/" component={PatientHome}/>
             </Switch>
           <Footer/>
-        </Router> : <LoginSignUp/>}
+        </Router> : user !== null && user.role === "pharmacist" ?
+        <Router>
+          <NavPharmResponsive/>
+          <Switch>
+            <Route path="/faq" component={FAQPage}/>
+            <Route path="/Tutorials" component={PharmTutorials}/>
+            <Route path="/profile" component={Profile}/>
+            <Route path="/settings" component={Settings}/>
+            <Route path="/" component={PharmacistHome}/>
+          </Switch>
+        </Router> :
+        <LoginSignUp/>}
     </UserContext.Provider>
   );
 }

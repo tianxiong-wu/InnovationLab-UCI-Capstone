@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
+import {UserContext} from "../../../UserContext";
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
@@ -6,6 +7,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import '../pharmacist/pharmacistHome.css'
 import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
+import SearchBar from "material-ui-search-bar";
+import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,17 +22,38 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function PharmacistHome(props){
+    const {user, setUser} = useContext(UserContext);
+    const [patients, setPatients] = useState("");
+    const [searchString, setSearchString] = useState("");
 
-    let propsName = "Richard";
-    let numPatients = "52";
+    useEffect(() => {
+        axios.get("http://localhost:5000/patients/all").then(res => {
+            setPatients(res.data);
+        })
+    },[])
+
+    const searchPatients = () => {
+        let search=[];
+        if (searchString === "" || searchString === null){
+            search = patients;
+            return search;
+        }
+        for (let i = 0; i<patients.length; i++){
+            if (`${patients[i].firstName.toLowerCase()} ${patients[i].lastName.toLowerCase()}`.includes(searchString.toLowerCase())){
+                search.push(patients[i])
+            }
+        }
+        console.log(search);
+        return search;
+    }
 
     const classes = useStyles();
 
     return(
        <div className = "pharmacistHomeContainer">
             <div className = "greetingContainer">
-              <div className = "nameBar"> Hi {propsName}, </div>
-              <div className = "patientBar"> You have {numPatients} patients to check up on!</div>
+              <div className = "nameBar"> Hi {user.firstName}, </div>
+              <div className = "patientBar"> You have {patients.length} patients to check up on!</div>
             </div>
 
             <div className = "barContainer">
@@ -39,9 +63,10 @@ export default function PharmacistHome(props){
 
                 </div>
 
-                <div className = "searchBarContainer">
-                <SearchIcon className = "searchIcon"/>
-                </div>
+                <SearchBar
+                    value={searchString}
+                    onChange={(newValue) => setSearchString(newValue)}
+                />
             </div>
 
 
@@ -68,181 +93,31 @@ export default function PharmacistHome(props){
                     <Paper className={classes.paper} className = "gridItemTitle" id = 'notificationCol'>Notification Info</Paper>
                 </Grid>
 
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem">Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
-                </Grid>
-
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Lorem</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>01/01/2001</Paper>
-                </Grid>
-                <Grid item xs={1}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Dolor</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>02/02/2002</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>03/03/2003</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Phasellus</Paper>
-                </Grid>
-                <Grid item xs={2}>
-                    <Paper className={classes.paper} className = "gridItem2" id = 'grayRow'>Vestibulum</Paper>
-                </Grid>
+                {patients.length !== 0 ? searchPatients().map(patient => {
+                    return <Grid container>
+                        <Grid item xs={2}>
+                            <Paper className={classes.paper} className = "gridItem">{`${patient.firstName} ${patient.lastName}`}</Paper>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.birthday).toLocaleDateString()}`}</Paper>
+                        </Grid>
+                        <Grid item xs={1}>
+                            <Paper className={classes.paper} className = "gridItem">{`${patient.gender[0].toUpperCase() + patient.gender.substring(1)}`}</Paper>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.recentCheckIn).toLocaleDateString()}`}</Paper>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.nextCheckIn).toLocaleDateString()}`}</Paper>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
+                        </Grid>
+                        <Grid item xs={2}>
+                            <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
+                        </Grid>
+                    </Grid> 
+                    }) : "Loading"}
             </Grid>
        </div>
     )
