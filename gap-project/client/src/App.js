@@ -6,6 +6,8 @@ import {
   Route,
 } from "react-router-dom";
 import './App.css';
+import NavPharmResponsive from './components/navPharmResponsive/navPharmResponsive';
+import PharmacistHome from './pages/homePage/pharmacist/pharmacistHome';
 import PatientNav from './components/patientNav/patientNav';
 import PharmContact from './pages/pharmContact/pharmContact'
 import FAQPage from './pages/FAQPage/faq';
@@ -22,6 +24,26 @@ import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
 import PharmAssign from './pages/pharmAssignPage/pharmAssign';
 import { UserContext } from './UserContext';
 function App() {
+
+  /*  return (<>
+  <Router>
+      <NavPharmResponsive/>
+        <Switch>
+          <Route path="/faq">
+            <FAQPage />
+          </Route>
+          <Route path="/Tutorials">
+            <Tutorials/>
+          </Route>
+          <Route path="/">
+            <PharmacistHome/>
+          </Route>
+        </Switch>
+      <Footer></Footer>
+
+    </Router>
+*/
+  
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
   

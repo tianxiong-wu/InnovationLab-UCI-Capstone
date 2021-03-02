@@ -1,0 +1,93 @@
+.greetingContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.nameBar, .patientBar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.5em;
+}
+
+.barContainer {
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.filterContainer{
+  border: 2px solid #00529B;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  border-radius: 20px;
+
+}
+
+.sortBox, .filterBox {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.sortBox {
+  background-color: #00529B;
+  color: white;
+  font-weight: bold;
+  border-radius: 20px 0px 0px 20px;
+}
+
+.filterBox {
+  color: #00529B;
+  font-weight: bold;
+  border-radius: 0px 20px 20px 0px;
+}
+
+.searchBarContainer {
+  border: 2px solid #00529B;
+  display: flex;
+  justify-content: flex-end;
+  width: 40%;
+  border-radius: 20px;
+}
+
+.searchIcon {
+  color: #00529B;
+}
+
+#gridContainer {
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  width: 97%;
+}
+
+.gridItemTitle, .gridItem, .gridItem2 {
+  display: flex;
+  justify-content: center;
+}
+
+#patientCol, #dobCol, #genderCol, #lastCheckCol, #nextCheckCol, #infusionCol, #notificationCol {
+  color: white;
+  background-color: #00529B;
+}
+.gridItemTitle {
+  padding: 15px 0px 15px 0px;
+  margin-top: 10px;
+}
+
+.gridItem {
+  padding: 10px 0px 10px 0px;
+}
+
+#grayRow {
+  background-color: #E6EDF2;
+}
+
+.gridItem2 {
+  padding: 10px 0px 10px 0px;
+}
