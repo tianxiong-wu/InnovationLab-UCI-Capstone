@@ -37,10 +37,11 @@ function App() {
               <Route path="/contact" component={PharmContact}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/settings" component={Settings}/>
-              <Route path="/" component={PatientHome}/>
-              <Route path="/Tutorial/:id"><Tutorial/></Route>
+              
               <Route path="/pharm/tutorial"><PharmTutorials/></Route>
               <Route path="/pharm/assign"><PharmAssign/></Route>
+              <Route path="/" component={PatientHome}/>
+             
             </Switch>
           <Footer/>
           </Router> 
