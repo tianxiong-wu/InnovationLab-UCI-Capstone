@@ -18,6 +18,7 @@ import Footer from './components/footer/footer'
 import Settings from './pages/patientSettings/settings';
 import PharmSettings from './pages/pharmSettings/pharmSettings';
 import Schedule from './pages/patientSchedule/patientSchedule';
+import Tutorial from './pages/TutorialPage/tutorial'
 import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
 import PharmAssign from './pages/pharmAssignPage/pharmAssign';
 import { UserContext } from './UserContext';
@@ -37,7 +38,7 @@ function App() {
               <Route path="/contact" component={PharmContact}/>
               <Route path="/profile" component={Profile}/>
               <Route path="/settings" component={Settings}/>
-              
+              <Route path="/tutorial/:id" component={Tutorial}/>
               <Route path="/pharm/tutorial"><PharmTutorials/></Route>
               <Route path="/pharm/assign"><PharmAssign/></Route>
               <Route path="/" component={PatientHome}/>

@@ -193,7 +193,7 @@ const Tutorials = () => {
   
 
   const handleChange = (id)=>{
-    history.push('/Tutorial/' + id);
+    history.push('/tutorial/' + id);
   }
 
 

@@ -6,6 +6,7 @@ import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import ScheduleEvent from "../../../components/scheduleEvent/scheduleEvent";
 import Notifications from "../../../components/notifications/notifications";
+import { useHistory } from 'react-router-dom';
 import '../patient/patientHome.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,7 @@ theme = responsiveFontSizes(theme);
 
 export default function PatientHome(props){
     const classes = useStyles();
-
+    const history = useHistory();
     const {user, setUser} = useContext(UserContext);
     const [nextInfusion, setNextInfusion] = useState("");
     const [todaysSchedule, setTodaysSchedule] = useState([]);
@@ -65,6 +66,11 @@ export default function PatientHome(props){
         return scheduleArr;
     }
 
+    const handleChange = (id)=>{
+        history.push('/tutorial/' + id);
+      }
+    
+
     useEffect(() => {
         setNextInfusion(getNextInfusion);
         setTodaysSchedule(getTodaysSchedule);
@@ -81,7 +87,7 @@ export default function PatientHome(props){
                         <Grid item xs={2}></Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
                             <div>
-                                <div className="infusionWidget">
+                                <div className="infusionWidget" onClick={()=>handleChange(0)}>
                                     <div className="infusionVideoContainer">
                                         <img src={user.infusionArray[0].tutorials[0].video.thumbnail} className="infusionThumbnail"></img>
                                     </div>
