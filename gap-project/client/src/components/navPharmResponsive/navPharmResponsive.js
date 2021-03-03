@@ -137,7 +137,6 @@ export default function PatientNav(){
                                     onClose={handleCloseProfile}
                                 >
                                     <MenuItem className="profileMenu" onClick={handleCloseProfile}>{user.firstName + " " + user.lastName}</MenuItem>
-                                    <MenuItem className="profileMenu" onClick={handleCloseProfile}><Link to="/profile" className="profileLink">Profile</Link></MenuItem>
                                     <MenuItem className="profileMenu" onClick={handleCloseProfile}><Link to="/settings" className="profileLink">Settings</Link></MenuItem>
                                     <MenuItem className="profileMenu" onClick={handleCloseProfile}>Log Out</MenuItem>
                                 </Menu>

@@ -60,6 +60,7 @@ function App() {
               <Route path="/profile" component={Profile}/>
               <Route path="/settings" component={Settings}/>
               <Route path="/" component={PatientHome}/>
+              <Route component = {Error}/>
             </Switch>
           <Footer/>
         </Router> : user !== null && user.role === "pharmacist" ?
@@ -68,9 +69,9 @@ function App() {
           <Switch>
             <Route path="/faq" component={FAQPage}/>
             <Route path="/Tutorials" component={PharmTutorials}/>
-            <Route path="/profile" component={Profile}/>
             <Route path="/settings" component={Settings}/>
             <Route path="/" component={PharmacistHome}/>
+            <Route component = {Error}/>
           </Switch>
         </Router> :
         <LoginSignUp/>}
