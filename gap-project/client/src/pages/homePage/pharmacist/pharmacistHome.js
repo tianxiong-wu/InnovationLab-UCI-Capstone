@@ -8,6 +8,11 @@ import '../pharmacist/pharmacistHome.css'
 import Paper from '@material-ui/core/Paper';
 import SearchIcon from '@material-ui/icons/Search';
 import SearchBar from "material-ui-search-bar";
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 import axios from 'axios';
 
 
@@ -17,7 +22,11 @@ const useStyles = makeStyles((theme) => ({
     },*/
     darkBluePaper: {
       background: "#00529B"
-    }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        width: "100%",
+    },
 }));
 
 
@@ -25,6 +34,7 @@ export default function PharmacistHome(props){
     const {user, setUser} = useContext(UserContext);
     const [patients, setPatients] = useState("");
     const [searchString, setSearchString] = useState("");
+    const [filterSetting, setFilterSetting] = useState("");
 
     useEffect(() => {
         axios.get("http://localhost:5000/patients/all").then(res => {
@@ -47,6 +57,32 @@ export default function PharmacistHome(props){
         return search;
     }
 
+    const handleNewFilter = (event) => {
+        setFilterSetting(event.target.value);
+    }
+
+    const handleFilterPatients = () => {
+        let patientList = searchPatients();
+        if (filterSetting === ""){
+            return patientList;
+        }
+        else if (filterSetting === "firstName"){
+            return patientList.sort((a,b) => a.firstName.localeCompare(b.firstName));
+        }
+        else if (filterSetting === "lastName"){
+            return patientList.sort((a,b) => a.lastName.localeCompare(b.lastName));
+        }
+        else if (filterSetting === "birthday"){
+            return patientList.sort((a,b) => new Date(a.birthday) - new Date(b.birthday));
+        }
+        else if (filterSetting === "lastCheckin"){
+            return patientList.sort((a,b) => new Date(a.recentCheckIn) - new Date(b.recentCheckIn));
+        }
+        else if (filterSetting === "nextCheckin"){
+            return patientList.sort((a,b) => new Date(a.nextCheckIn) - new Date(b.nextCheckIn));
+        }
+    }
+
     const classes = useStyles();
 
     return(
@@ -58,9 +94,24 @@ export default function PharmacistHome(props){
 
             <div className = "barContainer">
                 <div className = "filterContainer">
-                    <div className = "sortBox"> SORT </div>
-                    <div className = "filterBox" id = "patientName"> Patient Name </div>
+                    <div className = "sortBox"> <Typography variant="h6" className="sortText">SORT</Typography> </div>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel >Filter by...</InputLabel>
+                        <Select
+                        labelId="demo-simple-select-label"
+                        value={filterSetting}
+                        onChange={handleNewFilter}
+                        fullWidth
+                        >
+                        <MenuItem value=""> </MenuItem>
+                        <MenuItem value="firstName">First Name</MenuItem>
+                        <MenuItem value="lastName">Last Name</MenuItem>
+                        <MenuItem value="birthday">Birthday</MenuItem>
+                        <MenuItem value="lastCheckin">Last Check-In</MenuItem>
+                        <MenuItem value="nextCheckin">Next Check-In</MenuItem>
 
+                        </Select>
+                    </FormControl>
                 </div>
 
                 <SearchBar
@@ -93,7 +144,7 @@ export default function PharmacistHome(props){
                     <Paper className={classes.paper} className = "gridItemTitle" id = 'notificationCol'>Notification Info</Paper>
                 </Grid>
 
-                {patients.length !== 0 ? searchPatients().map(patient => {
+                {patients.length !== 0 ? handleFilterPatients().map(patient => {
                     return <Grid container>
                         <Grid item xs={2}>
                             <Paper className={classes.paper} className = "gridItem">{`${patient.firstName} ${patient.lastName}`}</Paper>
