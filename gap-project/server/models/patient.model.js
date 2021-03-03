@@ -79,6 +79,10 @@ const patientSchema = new Schema({
     events: {
         type: [event.schema],
         default: []
+    },
+    infusionType: {
+        type: Array,
+        default: []
     }
 }, {
     timestamps: true,

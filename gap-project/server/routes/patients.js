@@ -78,6 +78,18 @@ router.route('/updateInfo/:id').post((req, res) =>{
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
+router.route('/updateInfusionType').post((req, res) => {
+    Patient.findByIdAndUpdate(req.params.id).then(patient => {
+        patient.infusionType = req.body.infusionType;
+
+        patient.save()
+            .then(() => res.json(patient))
+            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(500).json('Error: ' + err));
+})
 // ! - NEED TO REUPLOAD SAME DATA FROM FRONTEND
 // update user infusion info
 router.route('/updateInfusion/:id').post((req, res) =>{
