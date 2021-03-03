@@ -28,7 +28,7 @@ function App() {
   
   return (
     <UserContext.Provider value={providerValue}>
-      {user !== null ? 
+      {user !== null && user.role === "patient" ? 
         <Router>
           <PatientNav/>
             <Switch>
@@ -42,11 +42,21 @@ function App() {
               <Route path="/pharm/tutorial"><PharmTutorials/></Route>
               <Route path="/pharm/assign"><PharmAssign/></Route>
               <Route path="/" component={PatientHome}/>
-             
+              <Route component = {Error}/>
             </Switch>
           <Footer/>
-          </Router> 
-          : <LoginSignUp/>}
+        </Router> : user !== null && user.role === "pharmacist" ?
+        <Router>
+          <NavPharmResponsive/>
+          <Switch>
+            <Route path="/faq" component={FAQPage}/>
+            <Route path="/Tutorials" component={PharmTutorials}/>
+            <Route path="/settings" component={Settings}/>
+            <Route path="/" component={PharmacistHome}/>
+            <Route component = {Error}/>
+          </Switch>
+        </Router> :
+        <LoginSignUp/>}
     </UserContext.Provider>
   );
 }

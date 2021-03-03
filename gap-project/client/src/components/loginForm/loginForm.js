@@ -35,7 +35,7 @@ export default function LoginForm(props){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [role, setRole] = useState("");
+    const [role, setRole] = useState("patient");
 
     const loginInfo = {
       email: email,
@@ -63,22 +63,25 @@ export default function LoginForm(props){
     const [loginForm, setLoginForm] = useState(props.loginForm);
     //add toast
     const toggleTwo = () => {
-      if(role === "patient"){
-      axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
-        console.log(res.data);
-        setUser(res.data);
-      }).catch(err =>{
-        console.log(err);
-      })}
-      else if (role === "pharmacist") {
-        axios.post('http://localhost:5000/pharmacists/login', loginInfo).then(res => {
-        console.log(res.data);
-      }).catch(err =>{
-        console.log(err);
-      })
+      switch (role){
+        case "patient":
+          console.log("patient route")
+          axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
+            setUser(res.data);
+          }).catch(err =>{
+            console.log(err);
+          })
+          break;
+        case "pharmacist":
+          console.log("pharm route")
+          axios.post('http://localhost:5000/pharmacists/login', loginInfo).then(res => {
+            setUser(res.data);
+            }).catch(err =>{
+            console.log(err);
+          })
+          break;
       }
     }
-
   
 
     return(
@@ -97,22 +100,6 @@ export default function LoginForm(props){
                 <Grid item xs={10} md={6}>
                 <div className="formDiv">
                   <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
-                  <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Account Type</InputLabel>
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={role}
-                      onChange={handleRoleChange}
-                      label="Role Select"
-                    >
-                      <MenuItem value="">
-                        <em>Select a role...</em>
-                      </MenuItem>
-                      <MenuItem value="patient">Patient</MenuItem>
-                      <MenuItem value="pharmacist">Pharmacist</MenuItem>
-                    </Select>
-                  </FormControl>
                   <TextField className="formStyling formMargin" label="Email" variant="outlined" onChange = {handleEmailChange} required />
                   <TextField className="formStyling formMargin" type = 'password' label="Password" variant="outlined" onChange = {handlePasswordChange} required />
                   <Button variant="outlined" color="primary" className="nextFullPassword">Forgot Password?</Button>

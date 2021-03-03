@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
+import { UserContext } from "../../UserContext";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,166 +10,140 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
-import '../navPharmResponsive/navPharmResponsive.css';
+import logo from "../../innovation.png";
+import "../patientNav/patientNav.css"
 import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from "react-router-dom";
+    BrowserRouter as Router,
+    Route,
+    Link
+  } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  m: {
-    marginTop: 50,
-  }
+    root: {
+        flexGrow: 1,
+    },
+    title:{
+        flexGrow: 1,
+    }
 }));
 
-export default function MenuAppBar() {
-  const classes = useStyles();
-  const [auth, setAuth] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [anchorE2, setAnchorE2] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const open2 = Boolean(anchorE2);
+export default function PatientNav(){
+    const classes = useStyles();
+    
+    const {user, setUser} = useContext(UserContext);
 
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
+    const [auth, setAuth] = useState(true);
+    const [profileAnchor, setProfileAnchor] = React.useState(null);
+    const [hamburgerAnchor, setHamburgerAnchor] = React.useState(null);
+    const openProfile = Boolean(profileAnchor);
+    const openHamburger = Boolean(hamburgerAnchor);
+    const [hbIcon, setHbIcon] = React.useState(true);
+    const [closeIcon, setCloseIcon]= React.useState(false);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleProfile = (event) => {
+        setProfileAnchor(event.currentTarget);
+    };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleCloseProfile = () => {
+        setProfileAnchor(null);
+    };
 
-  const handleHamburger = (event) => {
-    setAnchorE2(event.currentTarget);
-    document.getElementById("hamburger").style.display = "none";
-    document.getElementById("close").style.display = "block";
-  }
+    const handleHamburger = (event) => {
+        setHamburgerAnchor(event.currentTarget);
+        setHbIcon(false);
+        setCloseIcon(true);
+    };
 
-  const handleHamburgerClose = () => {
-    setAnchorE2(null);
-    document.getElementById("close").style.display = "none";
-    document.getElementById("hamburger").style.display = "block";
-  };
+    const handleHamburgerClose = () => {
+        setHamburgerAnchor(null);
+        setHbIcon(true);
+        setCloseIcon(false);
 
-// replace all the <a> tags with <Link> to use react routing once the other pages are built.
-// add a react conditional rendering: if not logged in, only show the logo on the nav bar.
-// currently developed for desktop pov. Add css media queries to show a different nav format
-// if the size of the window is larger than a mobile size.
+    }
 
-  return (
 
-    <div className={classes.root}>
-
-      <AppBar position="static">
-        <Toolbar className="navStyling">
-        <div>
-          <IconButton
-            aria-label="hamburger list of pages"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            onClick={handleHamburger}
-            color="inherit"
-          >
-            <MenuIcon id = "hamburger"/>
-            <CloseIcon id = "close"/>
-          </IconButton>
-          <Menu
-            className={classes.m}
-            id="menu-hamburger"
-            anchorEl={anchorE2}
-
-            keepMounted
-
-            open={open2}
-            onClose={handleHamburgerClose}
-            PaperProps={{
-             style: {
-                  width: "95%",
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  left: 0,
-                  right: 0,
-                }
-              }}
-              marginThreshold={0}
-          >
-            <Link className="burgerItem" onClick={handleHamburgerClose} to="/">Patients</Link>
-            <Link className="burgerItem" onClick={handleHamburgerClose} to="/Tutorials">Tutorials</Link>
-            <Link className="burgerItem" onClick={handleHamburgerClose} to="/faq">FAQ</Link>
-
-          </Menu>
+    return (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar className="navStyling">
+                    <div>
+                        <IconButton
+                            aria-label="hamburger list of pages"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleHamburger}
+                            color="inherit">
+                                {hbIcon === true ? <MenuIcon className="hamburger"/> : null}
+                                {closeIcon === true ? <CloseIcon className="close"/> : null}
+                        </IconButton>
+                        <Menu
+                            id="menu-hamburger"
+                            anchorEl={hamburgerAnchor}
+                            keepMounted
+                            open={openHamburger}
+                            onClose={handleHamburgerClose}
+                            PaperProps={{
+                                style: {
+                                     width: "100%",
+                                     maxWidth: "100%",
+                                     maxHeight: "100%",
+                                     left: 0,
+                                     right: 0,
+                                   }
+                                 }}
+                                 marginThreshold={0}
+                        >
+                            <Link className="burgerItem" onClick={handleHamburgerClose} to="/">Patients</Link>
+                            <Link className="burgerItem" onClick={handleHamburgerClose} to="/Tutorials">Tutorials</Link>
+                            <Link className="burgerItem" onClick={handleHamburgerClose} to="/faq">FAQ</Link>
+                        </Menu>
+                    </div>
+                    <IconButton edge="start" id="logoIcon" color="#00529b" aria-label="menu">
+                        <img src={logo} alt="Logo" className="siteIcon"/>
+                    </IconButton>
+                    <Typography variant="h6" className={classes.title}>
+                        <Link className="navItem" to="/">Patients</Link>
+                    </Typography>
+                    <Typography variant="h6" className={classes.title}>
+                        <Link className="navItem" to="/Tutorials">Tutorials</Link>
+                    </Typography>
+                    <Typography variant="h6" className={classes.title}>
+                        <Link className="navItem" to="/faq">FAQ</Link>
+                    </Typography>
+                        {auth && (
+                           <div>
+                               <IconButton
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleProfile}
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={profileAnchor}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                        }}
+                                        keepMounted
+                                        transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={openProfile}
+                                    onClose={handleCloseProfile}
+                                >
+                                    <MenuItem className="profileMenu" onClick={handleCloseProfile}>{user.firstName + " " + user.lastName}</MenuItem>
+                                    <MenuItem className="profileMenu" onClick={handleCloseProfile}><Link to="/settings" className="profileLink">Settings</Link></MenuItem>
+                                    <MenuItem className="profileMenu" onClick={handleCloseProfile}>Log Out</MenuItem>
+                                </Menu>
+                           </div> 
+                        )}
+                </Toolbar>
+            </AppBar>
         </div>
-        <IconButton edge="start" className={classes.menuButton} id = "logoIcon" color="#00529b" aria-label="menu">
-            Icon
-        </IconButton>
-        <Typography variant="h6" className={classes.title}>
-            <Link className="navItem" to="/">Patients</Link>
-        </Typography>
-        <Typography variant="h6" className={classes.title}>
-            <Link className="navItem" to="/Tutorials">Tutorials</Link>
-        </Typography>
-
-        <Typography variant="h6" className={classes.title}>
-            <Link className="navItem"  to="/faq">FAQ</Link>
-        </Typography>
-          {auth && (
-            <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                className={classes.m}
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem class="profileItem" onClick={handleClose}>Richard Miller</MenuItem>
-                <MenuItem class="profileItem" onClick={handleClose}>Settings</MenuItem>
-                <MenuItem class="profileItem" onClick={handleClose}>Log Out</MenuItem>
-              </Menu>
-            </div>
-          )}
-
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+    )
 }
-
-/**
-       <FormGroup>
-        <FormControlLabel
-          control={<Switch checked={auth} onChange={handleChange} aria-label="login switch" />}
-          label={auth ? 'Logout' : 'Login'}
-        />
-      </FormGroup>
- */
