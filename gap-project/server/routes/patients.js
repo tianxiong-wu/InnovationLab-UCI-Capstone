@@ -78,7 +78,7 @@ router.route('/updateInfo/:id').post((req, res) =>{
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
-router.route('/updateEvents').post((req, res) => {
+router.route('/updateEvents/:id').post((req, res) => {
     Patient.findByIdAndUpdate(req.params.id).then(patient => {
         patient.events = req.body.events;
 
@@ -91,7 +91,7 @@ router.route('/updateEvents').post((req, res) => {
     .catch(err => res.status(500).json('Error: ' + err));
 })
 
-router.route('/updateInfusionType').post((req, res) => {
+router.route('/updateInfusionType/:id').post((req, res) => {
     Patient.findByIdAndUpdate(req.params.id).then(patient => {
         patient.infusionType = req.body.infusionType;
 
