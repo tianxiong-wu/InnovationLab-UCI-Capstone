@@ -13,6 +13,8 @@
   font-size: 1.5em;
 }
 
+
+
 .sortText{
   margin-top: 1.5vh !important;
 }
@@ -88,10 +90,35 @@
   padding: 10px 0px 10px 0px;
 }
 
+.gridItem:hover{
+  background-color: goldenrod !important;
+  color: white !important;
+  cursor: pointer;
+}
+
 #grayRow {
   background-color: #E6EDF2;
 }
 
 .gridItem2 {
   padding: 10px 0px 10px 0px;
+}
+
+
+.buttonLinkStyling{
+  background-color: #00529B !important;
+}
+
+.buttonLinkStyling:disabled{
+  background-color: grey !important;
+  color: white !important;
+}
+
+.buttonLinkStyling:hover{
+  background-color: goldenrod !important;
+}
+
+.linkStyling{
+  text-decoration: none;
+  color: white;
 }

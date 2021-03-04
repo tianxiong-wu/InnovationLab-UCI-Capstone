@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useContext } from "react"
 import {UserContext} from "../../../UserContext";
-import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
+import {PatientContext} from "../../../PatientContext";
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
 import '../pharmacist/pharmacistHome.css'
 import Paper from '@material-ui/core/Paper';
-import SearchIcon from '@material-ui/icons/Search';
 import SearchBar from "material-ui-search-bar";
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Button from "@material-ui/core/Button";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom";
 import axios from 'axios';
 
 
@@ -32,9 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PharmacistHome(props){
     const {user, setUser} = useContext(UserContext);
+    const {patient, setPatient} = useContext(PatientContext);
     const [patients, setPatients] = useState("");
     const [searchString, setSearchString] = useState("");
     const [filterSetting, setFilterSetting] = useState("");
+    const [pharmAssign, setPharmAssign] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:5000/patients/all").then(res => {
@@ -59,6 +66,18 @@ export default function PharmacistHome(props){
 
     const handleNewFilter = (event) => {
         setFilterSetting(event.target.value);
+    }
+
+    const handlePharmAssign = (event) => {
+        let patientId = event.target.ariaLabel;
+        let patientName = event.target.innerHTML;
+        for (let i = 0; i<patients.length; i++){
+            if (patients[i]._id === patientId){
+                setPatient(patients[i]);
+            }
+        }
+        //setPharmAssign(patientName);
+        console.log(patient);        
     }
 
     const handleFilterPatients = () => {
@@ -86,7 +105,7 @@ export default function PharmacistHome(props){
     const classes = useStyles();
 
     return(
-       <div className = "pharmacistHomeContainer">
+        <div className = "pharmacistHomeContainer">
             <div className = "greetingContainer">
               <div className = "nameBar"> Hi {user.firstName}, </div>
               <div className = "patientBar"> You have {patients.length} patients to check up on!</div>
@@ -96,31 +115,31 @@ export default function PharmacistHome(props){
                 <div className = "filterContainer">
                     <div className = "sortBox"> <Typography variant="h6" className="sortText">SORT</Typography> </div>
                     <FormControl className={classes.formControl}>
-                        <InputLabel >Filter by...</InputLabel>
+                        <InputLabel>Filter by...</InputLabel>
                         <Select
                         labelId="demo-simple-select-label"
                         value={filterSetting}
                         onChange={handleNewFilter}
                         fullWidth
                         >
-                        <MenuItem value=""> </MenuItem>
                         <MenuItem value="firstName">First Name</MenuItem>
                         <MenuItem value="lastName">Last Name</MenuItem>
                         <MenuItem value="birthday">Birthday</MenuItem>
                         <MenuItem value="lastCheckin">Last Check-In</MenuItem>
                         <MenuItem value="nextCheckin">Next Check-In</MenuItem>
-
                         </Select>
                     </FormControl>
                 </div>
-
+                <div>
+                    <InputLabel><Typography variant="subtitle2">Patient Name: {patient === null ? "" : patient.firstName}</Typography></InputLabel>
+                    <Button disabled={patient === null} variant="contained" size="small" className="buttonLinkStyling"><Link to="/pharmAssign" className="linkStyling">View Profile</Link></Button>
+                </div>
+                
                 <SearchBar
                     value={searchString}
                     onChange={(newValue) => setSearchString(newValue)}
                 />
             </div>
-
-
             <Grid container spacing={0} id = "gridContainer">
                 <Grid item xs={2}>
                     <Paper className={classes.paper} className = "gridItemTitle" id = 'patientCol'>Patient Name</Paper>
@@ -144,10 +163,10 @@ export default function PharmacistHome(props){
                     <Paper className={classes.paper} className = "gridItemTitle" id = 'notificationCol'>Notification Info</Paper>
                 </Grid>
 
-                {patients.length !== 0 ? handleFilterPatients().map(patient => {
+                {patients.length !== 0 ? handleFilterPatients().map((patient, index) => {
                     return <Grid container>
                         <Grid item xs={2}>
-                            <Paper className={classes.paper} className = "gridItem">{`${patient.firstName} ${patient.lastName}`}</Paper>
+                            <Paper className={classes.paper} className = "gridItem" onClick={handlePharmAssign} aria-label={patient._id}>{`${patient.firstName} ${patient.lastName}`}</Paper>
                         </Grid>
                         <Grid item xs={1}>
                             <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.birthday).toLocaleDateString()}`}</Paper>
@@ -173,3 +192,7 @@ export default function PharmacistHome(props){
        </div>
     )
 }
+
+/**
+ <Link to="/pharmAssign" className="linkStyling"></Link>
+ */
