@@ -12,6 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 import './pharmAssign.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -20,14 +21,14 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         backgroundColor: '#3F51B5',
         width: "90%",
-        height: "150px",
+        height: "200px",
         margin: '0 auto',
         marginTop: '33px',
         borderRadius: 20,
         color: 'white',
         backgroundColor: '#00529b',
         textAlign: 'left',
-        fontSize: '14px'
+        fontSize: '14px',
     },
     details: {
         display: 'flex',
@@ -36,13 +37,12 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         flex: '1 0 auto',
-
         marginTop: 5,
         marginLeft: 3,
     },
     cover: {
-        width: 50,
-        height: 50,
+        width: 100,
+        height: 100,
         margin: 'auto 31px',
         marginRight: 0,
     },
@@ -54,31 +54,20 @@ const useStyles = makeStyles((theme) => ({
         height: 38,
         width: 38,
     },
-    btn: {
-        margin: 'auto',
-        fontSize: 40,
-        padding:'5px',
-        float:"right",
-        backgroundColor: '#00529B',
-        border:  '1px solid white',
-        fontSize: 20,
-        padding:'0',
-        float:"right"
-    }
 }));
 
 
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 
-/*const TutorialsList = ({list})=>{
-    
+const TutorialsList = ()=>{
+    const {patient, setPatient} = useContext(PatientContext);
     const classes = useStyles();
-   return <>{list.map((item) => {
+   return <>{patient !== null ? patient.infusionArray.map((item) => {
         return <Card className={classes.box}>
             <CardMedia
                 className={classes.cover}
-                image={item.img}
+                image={item.tutorials[0].video.thumbnail}
                 title="Live from space album cover"
             />
             <div className={classes.details}>
@@ -94,12 +83,10 @@ theme = responsiveFontSizes(theme);
                     </Typography>
                 </CardContent>
             </div>
-            <ArrowForwardIosIcon className={classes.btn} style={{border:'none'}}></ArrowForwardIosIcon>
+            <ArrowForwardIosIcon className="arrowIcon" style={{border:'none'}}></ArrowForwardIosIcon>
         </Card>
-    })}</>
-}*/
-
-
+    }):"Loading..."}</>
+}
 /*const AddTutorialsList = ({list})=>{
     
     const classes = useStyles();
@@ -130,21 +117,47 @@ theme = responsiveFontSizes(theme);
 
 
 
-export default function PharmAssign(props) {
+export default function PharmAssign() {
     const classes = useStyles();
     const {user, setUser} = useContext(UserContext);
     const {patient, setPatient} = useContext(PatientContext);
-    const theme = useTheme();
-    const [list, setList] = useState([]);
-/*
-    useEffect(async () => {
-        const response = await fetch('http://localhost:5000/tutorials/all');
-        const tutorials = await response.json();
-        setList(tutorials)
-    }, [])
-*/
+    const [todaysSchedule, setTodaysSchedule] = useState([]);
 
+    const theme = useTheme();
+
+    const formatTime = (date) => {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0'+ minutes: minutes;
+        let strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime
+    }
+
+    const dayMonthYear = (date) => {
+        let dd = String(date.getDate());
+        let mm = String(date.getMonth());
+        let yy = String(date.getFullYear());
+        let dateString = `${mm}/${dd}/${yy}`;
+        return dateString;
+    }
+    
+    const getTodaysSchedule = () => {
+        let today = new Date();
+        let scheduleArr = [];
+        for (let i = 0; i < patient.events.length; i++){
+            if (dayMonthYear(today) ===  dayMonthYear(new Date(patient.events[i].notifyAt))){
+                scheduleArr.push(patient.events[i]);
+            }
+        }
+        return scheduleArr;
+    }
+    
+    
     useEffect(() => {
+        setTodaysSchedule(getTodaysSchedule);
     },[])
 
     return (
@@ -154,10 +167,10 @@ export default function PharmAssign(props) {
                     <Grid item xs={8} sm={8} md={5} className="">
                         <div>
                             <div style={{ textAlign: "left", height: '30vh' }}>
+                                <br />
                                 <Typography variant="h2">{patient !== null ? `${patient.firstName} ${patient.lastName}` : "No User Selected"}</Typography>
                                 <br />
                                 <br />
-                                <Typography variant="h5">Next Infusion: boop</Typography>
                                 <br />
                                 <Typography variant="h6">Phone: {patient !== null ? `(${patient.phoneNumber.slice(0,3)}) ${patient.phoneNumber.slice(3,6)}-${patient.phoneNumber.slice(6)}` : "Loading..."}</Typography>
                                 <Typography variant="h6">Email: {patient !== null ? patient.email : "Loading..."}</Typography>
@@ -165,44 +178,30 @@ export default function PharmAssign(props) {
                             </div>
                             <div className="">
                                 <div className="notificationLabel">
-                                    <Typography variant="h4">Today's Schedule <Button style={{marginLeft:10}} className={classes.btn} variant="contained">
-                                    <svg width="30" height="30" viewBox="0 0 30 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="25" height="6" rx="2" fill="#FFFFFF"/>
-                                    </svg>
-
-                                        </Button><Button className={classes.btn} variant="contained">
-                                    <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect y="8" width="30" height="4" rx="2" fill="#FFFFFF"/>
-                                    <rect x="12" width="30" height="4" rx="2" transform="rotate(90 12 0)" fill="#FFFFFF"/>
-                                    </svg>
-
-                                    </Button></Typography>                            
+                                    <Typography variant="h4">
+                                        Today's Schedule <Button variant="outlined" className="addMinusBtns"><AddIcon/></Button>
+                                        <Button variant="outlined" className="addMinusBtns"><RemoveIcon/></Button>
+                                    </Typography>                                
                                 </div>
                                 <div className="notificationContainer">
-                                    <ScheduleEvent time="12:30PM" name="Antibiotic Infusion" />
-                                    <ScheduleEvent time="4:30PM" name="Antibiotic Infusion" />
-                                    <ScheduleEvent time="8:30PM" name="Antibiotic Infusion" />
+                                {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
+                                : todaysSchedule.map((item => {
+                                    console.log(item);
+                                    return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
+                                }))}
                                 </div>
                             </div>
                         </div>
                     </Grid>
                     <Grid item xs={8} sm={8} md={5} style={{marginLeft:'50px'}} className="widgetContainer">
                         <div className="scheduleLabel">
-                            <Typography variant="h4">Assigned Tutorials <Button style={{marginLeft:10}} className={classes.btn} variant="contained">
-                                    <svg width="30" height="30" viewBox="0 0 30 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="25" height="6" rx="2" fill="#FFFFFF"/>
-                                    </svg>
-
-                                        </Button><Button className={classes.btn} variant="contained">
-                                    <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect y="8" width="30" height="4" rx="2" fill="#FFFFFF"/>
-                                    <rect x="12" width="30" height="4" rx="2" transform="rotate(90 12 0)" fill="#FFFFFF"/>
-                                    </svg>
-
-                                    </Button></Typography>
+                            <Typography variant="h4">
+                                Assigned Tutorials<Button variant="outlined" className="addMinusBtns"><AddIcon/></Button>
+                                <Button variant="outlined" className="addMinusBtns"><RemoveIcon/></Button>
+                            </Typography>  
                         </div>
                         <div className="scheduleWidget">
-                            {/*<TutorialsList list={list} classes={classes}></TutorialsList>*/}
+                            {<TutorialsList classes={classes}></TutorialsList>}
                         </div>
                     </Grid>
                 </Grid>
