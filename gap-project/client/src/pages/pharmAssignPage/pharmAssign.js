@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react";
+import {UserContext} from "../../UserContext";
+import {PatientContext} from "../../PatientContext";
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
@@ -69,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 
-const TutorialsList = ({list})=>{
+/*const TutorialsList = ({list})=>{
     
     const classes = useStyles();
    return <>{list.map((item) => {
@@ -95,10 +97,10 @@ const TutorialsList = ({list})=>{
             <ArrowForwardIosIcon className={classes.btn} style={{border:'none'}}></ArrowForwardIosIcon>
         </Card>
     })}</>
-}
+}*/
 
 
-const AddTutorialsList = ({list})=>{
+/*const AddTutorialsList = ({list})=>{
     
     const classes = useStyles();
    return <>{list.map((item) => {
@@ -124,40 +126,41 @@ const AddTutorialsList = ({list})=>{
             <AddIcon className={classes.btn}></AddIcon>
         </Card>
     })}</>
-}
+}*/
 
 
 
 export default function PharmAssign(props) {
-
-    let nextInfusionName = "Antibiotic";
-
     const classes = useStyles();
+    const {user, setUser} = useContext(UserContext);
+    const {patient, setPatient} = useContext(PatientContext);
     const theme = useTheme();
-
     const [list, setList] = useState([]);
-
+/*
     useEffect(async () => {
         const response = await fetch('http://localhost:5000/tutorials/all');
         const tutorials = await response.json();
         setList(tutorials)
     }, [])
+*/
+
+    useEffect(() => {
+    },[])
 
     return (
         <div className={classes.root}>
             <ThemeProvider theme={theme}>
                 <Grid container justify="center" spacing={0}>
-
-
                     <Grid item xs={8} sm={8} md={5} className="">
                         <div>
                             <div style={{ textAlign: "left", height: '30vh' }}>
-                                <Typography variant="h2">Name {nextInfusionName}</Typography>
+                                <Typography variant="h2">{patient !== null ? `${patient.firstName} ${patient.lastName}` : "No User Selected"}</Typography>
                                 <br />
                                 <br />
-                                <Typography variant="h5">Next Infusion: {nextInfusionName}</Typography>
+                                <Typography variant="h5">Next Infusion: boop</Typography>
                                 <br />
-                                <Typography variant="h6">Next Infusion: {nextInfusionName}</Typography>
+                                <Typography variant="h6">Phone: {patient !== null ? `(${patient.phoneNumber.slice(0,3)}) ${patient.phoneNumber.slice(3,6)}-${patient.phoneNumber.slice(6)}` : "Loading..."}</Typography>
+                                <Typography variant="h6">Email: {patient !== null ? patient.email : "Loading..."}</Typography>
 
                             </div>
                             <div className="">
@@ -199,7 +202,7 @@ export default function PharmAssign(props) {
                                     </Button></Typography>
                         </div>
                         <div className="scheduleWidget">
-                            <TutorialsList list={list} classes={classes}></TutorialsList>
+                            {/*<TutorialsList list={list} classes={classes}></TutorialsList>*/}
                         </div>
                     </Grid>
                 </Grid>
