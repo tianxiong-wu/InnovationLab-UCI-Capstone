@@ -27,7 +27,7 @@ import {
     KeyboardTimePicker,
     KeyboardDatePicker,
   } from '@material-ui/pickers';
-
+import axios from 'axios';
 import './pharmAssign.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -181,7 +181,17 @@ export default function PharmAssign() {
     }
 
     const handleAddPatientEvent = () => {
-        // axios put an event object
+        const event = {
+            title: eventTitle,
+            start: eventNotifyAt,
+            end: eventNotifyAt,
+            notifyAt: eventNotifyAt,
+            description: eventDescription
+        }
+        axios.post('http://localhost:5000/events/add', event).then(res => {
+            console.log(res);
+        })
+        handleEventForm();
     }
 
     const handleAddPatientTutorial = () => {
@@ -265,7 +275,7 @@ export default function PharmAssign() {
                                     <Button onClick={handleEventForm} color="primary">
                                         Close
                                     </Button>
-                                    <Button onClick={handleEventForm} variant="contained" color="primary">
+                                    <Button onClick={handleAddPatientEvent} variant="contained" color="primary">
                                         Submit
                                     </Button>
                                     </DialogActions>
@@ -289,33 +299,3 @@ export default function PharmAssign() {
         </div>
     )
 }
-
-/*const AddTutorialsList = ({list})=>{
-    
-    const classes = useStyles();
-   return <>{list.map((item) => {
-        return <Card className={classes.box}>
-            <CardMedia
-                className={classes.cover}
-                image={item.img}
-                title="Live from space album cover"
-            />
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h6" variant="h6">
-                        {item.name}
-                    </Typography>
-                    <Typography className={classes.summary} variant="subtitle1" >
-                        {item.description}
-                    </Typography>
-                    <Typography variant="subtitle1" >
-                        Duration: {item.duration}
-                    </Typography>
-                </CardContent>
-            </div>
-            <AddIcon className={classes.btn}></AddIcon>
-        </Card>
-    })}</>
-}*/
-
-
