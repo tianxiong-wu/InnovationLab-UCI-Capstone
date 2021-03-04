@@ -119,6 +119,7 @@ export default function PharmAssign() {
     const [eventDescription, setEventDescription] = useState("");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
+    const [patientEvents, setPatientEvents] = useState([]);
 
     const theme = useTheme();
 
@@ -188,9 +189,12 @@ export default function PharmAssign() {
             notifyAt: eventNotifyAt,
             description: eventDescription
         }
-        axios.post('http://localhost:5000/events/add', event).then(res => {
+        let patientEventsArr = patientEvents;
+        patientEventsArr.push(event);
+        axios.post(`http://localhost:5000/patients/updateEvents/${patient._id}`, patientEventsArr).then(res => {
             console.log(res);
         })
+        console.log(patientEventsArr);
         handleEventForm();
     }
 
@@ -201,6 +205,8 @@ export default function PharmAssign() {
     
     useEffect(() => {
         setTodaysSchedule(getTodaysSchedule);
+        setPatientEvents(patient.events);
+        console.log(patientEvents);
     },[])
 
     return (
@@ -229,7 +235,6 @@ export default function PharmAssign() {
                                 <div className="notificationContainer">
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
                                 : todaysSchedule.map((item => {
-                                    console.log(item);
                                     return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
                                 }))}
                                 </div>
