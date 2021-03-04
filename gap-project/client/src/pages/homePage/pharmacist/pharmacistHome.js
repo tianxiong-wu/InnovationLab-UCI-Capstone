@@ -97,6 +97,17 @@ export default function PharmacistHome(props){
         }
     }
 
+    const infusionStringArr = (arr) => {
+        let str = "";
+        arr.map((item,index) => {
+            if (index === arr-1){
+                str += item;
+            }
+            str += item + ", ";
+    })
+    return str.slice(0, str.length-2);
+}
+
     const classes = useStyles();
 
     return(
@@ -126,7 +137,7 @@ export default function PharmacistHome(props){
                     </FormControl>
                 </div>
                 <div>
-                    <InputLabel><Typography variant="subtitle2">Patient Name: {patient === null ? "" : patient.firstName}</Typography></InputLabel>
+                    <InputLabel><Typography variant="subtitle2">Patient Name: {patient === null ? "" : `${patient.firstName} ${patient.lastName}`}</Typography></InputLabel>
                     <Button disabled={patient === null} variant="contained" size="small" className="buttonLinkStyling"><Link to="/pharmAssign" className="linkStyling">View Profile</Link></Button>
                 </div>
                 
@@ -176,10 +187,10 @@ export default function PharmacistHome(props){
                             <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.nextCheckIn).toLocaleDateString()}`}</Paper>
                         </Grid>
                         <Grid item xs={2}>
-                            <Paper className={classes.paper} className = "gridItem">Phasellus</Paper>
+                            <Paper className={classes.paper} className = "gridItem">{infusionStringArr(patient.infusionType)}</Paper>
                         </Grid>
                         <Grid item xs={2}>
-                            <Paper className={classes.paper} className = "gridItem">Vestibulum</Paper>
+                            <Paper className={classes.paper} className = "gridItem">{patient.notificationType === "both" ? "Phone and Email" : `${patient.notificationType[0].toUpperCase() + patient.notificationType.substring(1)}`}</Paper>
                         </Grid>
                     </Grid> 
                     }) : "Loading"}

@@ -1,7 +1,5 @@
 import logo from './logo.svg';
 import React, { useState, useMemo } from "react"
-import NavPharmResponsive from "./components/navPharmResponsive/navPharmResponsive";
-import PharmacistHome from "./pages/homePage/pharmacist/pharmacistHome";
 import {
   BrowserRouter as Router,
   Switch,
