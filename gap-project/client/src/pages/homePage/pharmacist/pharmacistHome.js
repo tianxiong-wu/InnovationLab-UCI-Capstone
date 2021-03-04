@@ -106,7 +106,7 @@ export default function PharmacistHome(props){
             str += item + ", ";
     })
     return str.slice(0, str.length-2);
-}
+    }
 
     const classes = useStyles();
 

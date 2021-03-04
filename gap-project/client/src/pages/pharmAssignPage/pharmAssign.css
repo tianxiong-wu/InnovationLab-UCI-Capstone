@@ -88,3 +88,20 @@
     text-align: left;
 }
 
+.addMinusBtns {
+    color: white !important;
+    border-color: white !important;
+    margin: 2px !important;
+    float: right !important;
+}
+
+.addMinusBtns:hover{
+    background-color: white !important;
+    color: #00529b !important;
+}
+
+.arrowIcon{
+    margin-top: 10vh !important;
+    margin-left: 2vh !important;
+    color: white !important; 
+}
