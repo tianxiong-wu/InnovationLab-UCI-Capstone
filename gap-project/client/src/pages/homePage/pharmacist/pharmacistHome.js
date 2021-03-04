@@ -41,7 +41,6 @@ export default function PharmacistHome(props){
     const [patients, setPatients] = useState("");
     const [searchString, setSearchString] = useState("");
     const [filterSetting, setFilterSetting] = useState("");
-    const [pharmAssign, setPharmAssign] = useState([]);
 
     useEffect(() => {
         axios.get("http://localhost:5000/patients/all").then(res => {
@@ -60,7 +59,6 @@ export default function PharmacistHome(props){
                 search.push(patients[i])
             }
         }
-        console.log(search);
         return search;
     }
 
@@ -70,14 +68,11 @@ export default function PharmacistHome(props){
 
     const handlePharmAssign = (event) => {
         let patientId = event.target.ariaLabel;
-        let patientName = event.target.innerHTML;
         for (let i = 0; i<patients.length; i++){
             if (patients[i]._id === patientId){
                 setPatient(patients[i]);
             }
-        }
-        //setPharmAssign(patientName);
-        console.log(patient);        
+        }       
     }
 
     const handleFilterPatients = () => {
@@ -192,7 +187,3 @@ export default function PharmacistHome(props){
        </div>
     )
 }
-
-/**
- <Link to="/pharmAssign" className="linkStyling"></Link>
- */
