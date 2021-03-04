@@ -13,6 +13,21 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import TextField from "@material-ui/core/TextField";
+import 'date-fns';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+  } from '@material-ui/pickers';
+
 import './pharmAssign.css'
 
 const useStyles = makeStyles((theme) => ({
@@ -87,41 +102,23 @@ const TutorialsList = ()=>{
         </Card>
     }):"Loading..."}</>
 }
-/*const AddTutorialsList = ({list})=>{
-    
-    const classes = useStyles();
-   return <>{list.map((item) => {
-        return <Card className={classes.box}>
-            <CardMedia
-                className={classes.cover}
-                image={item.img}
-                title="Live from space album cover"
-            />
-            <div className={classes.details}>
-                <CardContent className={classes.content}>
-                    <Typography component="h6" variant="h6">
-                        {item.name}
-                    </Typography>
-                    <Typography className={classes.summary} variant="subtitle1" >
-                        {item.description}
-                    </Typography>
-                    <Typography variant="subtitle1" >
-                        Duration: {item.duration}
-                    </Typography>
-                </CardContent>
-            </div>
-            <AddIcon className={classes.btn}></AddIcon>
-        </Card>
-    })}</>
-}*/
 
-
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 export default function PharmAssign() {
     const classes = useStyles();
-    const {user, setUser} = useContext(UserContext);
-    const {patient, setPatient} = useContext(PatientContext);
-    const [todaysSchedule, setTodaysSchedule] = useState([]);
+    const {user, setUser} = useContext(UserContext); // pharmacist account context
+    const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
+    const [todaysSchedule, setTodaysSchedule] = useState([]); // today's schedule for the patient
+    const [openEventForm, setOpenEventForm] = useState(false);
+    const [openTutorialForm, setOpenTutorialForm] = useState(false);
+    const [eventTitle, setEventTitle] = useState("");
+    const [eventNotifyAt, setEventNotifyAt] = useState("");
+    const [eventDescription, setEventDescription] = useState("");
+    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedTime, setSelectedTime] = useState(new Date());
 
     const theme = useTheme();
 
@@ -154,6 +151,42 @@ export default function PharmAssign() {
         }
         return scheduleArr;
     }
+
+    /*
+    * Event handlers for event object state
+    */
+    const handleTitleChange = (event) => {
+        setEventTitle(event.target.value);
+    }
+    const handleNotifyAtChange = (event) => {
+        setEventNotifyAt(event.target.value);
+    }
+    const handleDescriptionChange = (event) => {
+        setEventDescription(event.target.value);
+    }
+    const handleSelectedDate = (date) => {
+        setSelectedDate(date);
+    }
+    const handleSelectedTime = (date) => {
+        setSelectedTime(date);
+    }
+
+
+    const handleEventForm = () => {
+        setOpenEventForm(!openEventForm);
+    }
+
+    const handleTutorialForm = () => {
+        setOpenTutorialForm(!openTutorialForm);
+    }
+
+    const handleAddPatientEvent = () => {
+        // axios put an event object
+    }
+
+    const handleAddPatientTutorial = () => {
+        // axios put a tutorial object
+    }
     
     
     useEffect(() => {
@@ -179,7 +212,7 @@ export default function PharmAssign() {
                             <div className="">
                                 <div className="notificationLabel">
                                     <Typography variant="h4">
-                                        Today's Schedule <Button variant="outlined" className="addMinusBtns"><AddIcon/></Button>
+                                        Today's Schedule <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
                                         <Button variant="outlined" className="addMinusBtns"><RemoveIcon/></Button>
                                     </Typography>                                
                                 </div>
@@ -190,13 +223,60 @@ export default function PharmAssign() {
                                     return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
                                 }))}
                                 </div>
+                                <Dialog
+                                    open={openEventForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleEventForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description"
+                                >
+                                    <DialogTitle>Add Notification Event Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <TextField label="Title" variant="outlined" onChange = {handleTitleChange} fullWidth required />
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDatePicker
+                                                margin="normal"
+                                                id="date-picker-dialog"
+                                                label="Date picker dialog"
+                                                format="MM/dd/yyyy"
+                                                value={selectedDate}
+                                                fullWidth
+                                                onChange={handleSelectedDate}
+                                                KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                }}/>
+                                            <KeyboardTimePicker
+                                            margin="normal"
+                                            id="time-picker"
+                                            label="Time picker"
+                                            value={selectedTime}
+                                            fullWidth
+                                            onChange={handleSelectedTime}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change time',
+                                            }}/>
+                                        </MuiPickersUtilsProvider>
+                                        <TextField label="Description" variant="outlined" onChange = {handleDescriptionChange} fullWidth required />
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleEventForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleEventForm} variant="contained" color="primary">
+                                        Submit
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                     </Grid>
                     <Grid item xs={8} sm={8} md={5} style={{marginLeft:'50px'}} className="widgetContainer">
                         <div className="scheduleLabel">
                             <Typography variant="h4">
-                                Assigned Tutorials<Button variant="outlined" className="addMinusBtns"><AddIcon/></Button>
+                                Assigned Tutorials<Button variant="outlined" className="addMinusBtns" onClick={handleTutorialForm}><AddIcon/></Button>
                                 <Button variant="outlined" className="addMinusBtns"><RemoveIcon/></Button>
                             </Typography>  
                         </div>
@@ -209,3 +289,33 @@ export default function PharmAssign() {
         </div>
     )
 }
+
+/*const AddTutorialsList = ({list})=>{
+    
+    const classes = useStyles();
+   return <>{list.map((item) => {
+        return <Card className={classes.box}>
+            <CardMedia
+                className={classes.cover}
+                image={item.img}
+                title="Live from space album cover"
+            />
+            <div className={classes.details}>
+                <CardContent className={classes.content}>
+                    <Typography component="h6" variant="h6">
+                        {item.name}
+                    </Typography>
+                    <Typography className={classes.summary} variant="subtitle1" >
+                        {item.description}
+                    </Typography>
+                    <Typography variant="subtitle1" >
+                        Duration: {item.duration}
+                    </Typography>
+                </CardContent>
+            </div>
+            <AddIcon className={classes.btn}></AddIcon>
+        </Card>
+    })}</>
+}*/
+
+
