@@ -115,7 +115,7 @@ export default function PharmAssign() {
     const [openEventForm, setOpenEventForm] = useState(false);
     const [openTutorialForm, setOpenTutorialForm] = useState(false);
     const [eventTitle, setEventTitle] = useState("");
-    const [eventNotifyAt, setEventNotifyAt] = useState("");
+    const [eventNotifyAt, setEventNotifyAt] = useState(new Date);
     const [eventDescription, setEventDescription] = useState("");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
