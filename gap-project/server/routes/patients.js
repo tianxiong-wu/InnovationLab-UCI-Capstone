@@ -78,6 +78,19 @@ router.route('/updateInfo/:id').post((req, res) =>{
     .catch(err => res.status(500).json('Error: ' + err));
 });
 
+router.route('/updateEvents').post((req, res) => {
+    Patient.findByIdAndUpdate(req.params.id).then(patient => {
+        patient.events = req.body.events;
+
+        patient.save()
+            .then(() => res.json(patient))
+            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err))
+    .catch(err => res.status(500).json('Error: ' + err));
+})
+
 router.route('/updateInfusionType').post((req, res) => {
     Patient.findByIdAndUpdate(req.params.id).then(patient => {
         patient.infusionType = req.body.infusionType;
