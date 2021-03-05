@@ -23,11 +23,9 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Select from '@material-ui/core/Select';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -37,6 +35,7 @@ import {
   } from '@material-ui/pickers';
 import axios from 'axios';
 import './pharmAssign.css'
+import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
     root: { flexGrow: 1, },
@@ -141,9 +140,9 @@ export default function PharmAssign() {
         {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
         "stepList": "", 
         "video": 
-            {"url": "", "order":"1", "description":"", "thumbnail":""}
-        },
-    ]);
+            {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
+        },]);
+    const [gridBools, setGridBools] = useState(["false"])
 
     const theme = useTheme();
 
@@ -205,11 +204,14 @@ export default function PharmAssign() {
         setEventId(event.target.value);
     }
     const handleChangeInput = (index, event) => {
+        console.log(index, event);
         const values = [...tutorialPlaylist];
-        values[index][event.target.name] = event.target.value;
+        if (event.target.name === "url" || event.target.name === "videoDescription"){
+            values[index]["video"][event.target.name] = event.target.value
+        }
+        else {values[index][event.target.name] = event.target.value;}
         setTutorialPlaylist(values);
     }
-
 
     const handleEventForm = () => {
         setOpenEventForm(!openEventForm);
@@ -247,7 +249,6 @@ export default function PharmAssign() {
         })
         handleEventForm();
     }
-
     const handleDeletePatientEvent = () => {
         let patientEventsArr = patient.events;
         const event = {"events": []}
@@ -265,6 +266,28 @@ export default function PharmAssign() {
         // axios put a tutorial object
     }
     
+    const handleAddTutorialField = () => {
+        setTutorialPlaylist([...tutorialPlaylist, 
+            {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
+            "stepList": "", 
+            "video": 
+                {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
+            },])
+        console.log(tutorialPlaylist);
+    }
+
+    const handleRemoveFields = (index) => {
+        console.log(index);
+        const values  = [...tutorialPlaylist];
+        values.splice(index, 1);
+        setTutorialPlaylist(values);
+    }
+
+    const toggleGridBools = (index) => {
+        const values = [...gridBools];
+        values[index] = !values[index];
+        setGridBools(values);
+    }
     
     useEffect(() => {
         setTodaysSchedule(getTodaysSchedule);
@@ -438,15 +461,25 @@ export default function PharmAssign() {
                                     <DialogContent>
                                     <DialogContentText>
                                     {tutorialPlaylist.map((video, index) => {
-                                            return <div>
-                                                <TextField fullWidth name="name" label="Name of Tutorial Playlist" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField fullWidth name="description" label="Playlist Description" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField fullWidth name="pharmacistNotes" label="Pharmacist Commentary" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
-                                            </div> 
+                                            return <Grid container>
+                                            {gridBools[index] === false ? <Grid xs={11}>
+                                                <Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography>
+                                                <TextField required fullWidth name="name" label="Name of Video" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField required fullWidth name="description" label="Tutorial Summary" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField required fullWidth name="pharmacistNotes" label="Pharmacist Commentary" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField required fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField required fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField required fullWidth name="url" label="Single Youtube Video URL" variant="outlined" value={video.video.url} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField required fullWidth name="videoDescription" label="Description of video" variant="outlined" value={video.video.description} onChange={event => handleChangeInput(index, event)}/>
+                                            </Grid> : <Grid xs={11}><Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography></Grid>}
+                                            {gridBools[index] === false ? <Grid xs={1}><Button onClick={() => toggleGridBools(index)}><ExpandMoreIcon/></Button></Grid> :
+                                            <Grid xs={1}>
+                                                <Button onClick={() => toggleGridBools(index)}><KeyboardArrowRightIcon/></Button>
+                                                <Button disabled={tutorialPlaylist.length === 1} onClick={() => handleRemoveFields(index)}><RemoveIcon/></Button>
+                                                <Button onClick={handleAddTutorialField}><AddIcon/></Button>
+                                            </Grid>}
+                                            </Grid>
                                         })}
-
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>

@@ -109,3 +109,7 @@
 .selectInput{
     width: 100% !important;
 }
+
+.videoInput{
+    width: 50% !important;
+}
