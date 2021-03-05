@@ -20,6 +20,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import TextField from "@material-ui/core/TextField";
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Select from '@material-ui/core/Select';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -112,14 +120,30 @@ export default function PharmAssign() {
     const {user, setUser} = useContext(UserContext); // pharmacist account context
     const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
     const [todaysSchedule, setTodaysSchedule] = useState([]); // today's schedule for the patient
+    // Dialog States
     const [openEventForm, setOpenEventForm] = useState(false);
     const [openTutorialForm, setOpenTutorialForm] = useState(false);
+    const [openTutorialFormTwo, setOpenTutorialFormTwo] = useState(false);
+    const [openDeleteEventForm, setOpenDeleteEventForm] = useState(false);
+    // Delete Event States
+    const [eventId, setEventId] = useState("");
+    // Add Event States
     const [eventTitle, setEventTitle] = useState("");
-    const [eventNotifyAt, setEventNotifyAt] = useState(new Date);
     const [eventDescription, setEventDescription] = useState("");
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [patientEvents, setPatientEvents] = useState([]);
+    // Tutorial States
+    const [tutorialName, setTutorialName] = useState("");
+    const [tutorialDescription, setTutorialDescription] = useState("");
+    const [tutorialDuration, setTutorialDuration] = useState("");
+    const [tutorialPlaylist, setTutorialPlaylist] = useState([
+        {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
+        "stepList": "", 
+        "video": 
+            {"url": "", "order":"1", "description":"", "thumbnail":""}
+        },
+    ]);
 
     const theme = useTheme();
 
@@ -133,15 +157,13 @@ export default function PharmAssign() {
         let strTime = hours + ':' + minutes + ' ' + ampm;
         return strTime
     }
-
     const dayMonthYear = (date) => {
         let dd = String(date.getDate());
-        let mm = String(date.getMonth());
+        let mm = String(date.getMonth()+1);
         let yy = String(date.getFullYear());
         let dateString = `${mm}/${dd}/${yy}`;
         return dateString;
     }
-    
     const getTodaysSchedule = () => {
         let today = new Date();
         let scheduleArr = [];
@@ -159,43 +181,84 @@ export default function PharmAssign() {
     const handleTitleChange = (event) => {
         setEventTitle(event.target.value);
     }
-    const handleNotifyAtChange = (event) => {
-        setEventNotifyAt(event.target.value);
-    }
     const handleDescriptionChange = (event) => {
         setEventDescription(event.target.value);
     }
     const handleSelectedDate = (date) => {
+        console.log(date)
+        console.log(date.getDate())
         setSelectedDate(date);
     }
     const handleSelectedTime = (date) => {
         setSelectedTime(date);
+    }
+    const handleTutorialName = (event) => {
+        setTutorialName(event.target.value);
+    }
+    const handleTutorialDescription = (event) => {
+        setTutorialDescription(event.target.value);
+    }
+    const handleTutorialDuration = (event) => {
+        setTutorialDuration(event.target.value);
+    }
+    const handleNewEventId = (event) => {
+        setEventId(event.target.value);
+    }
+    const handleChangeInput = (index, event) => {
+        const values = [...tutorialPlaylist];
+        values[index][event.target.name] = event.target.value;
+        setTutorialPlaylist(values);
     }
 
 
     const handleEventForm = () => {
         setOpenEventForm(!openEventForm);
     }
-
     const handleTutorialForm = () => {
         setOpenTutorialForm(!openTutorialForm);
     }
-
+    const handleTutorialFormTwo = () => {
+        setOpenTutorialForm(!openTutorialForm);
+        setOpenTutorialFormTwo(!openTutorialFormTwo);
+    }
+    const handleDeleteEventForm = () => {
+        setOpenDeleteEventForm(!openDeleteEventForm);
+    }
     const handleAddPatientEvent = () => {
+        let dateObj = (`${dayMonthYear(selectedDate)} ${selectedTime.toLocaleTimeString(navigator.language, {
+            hour: '2-digit',
+            minute:'2-digit'
+          })}`);
+        let patientEventsArr = patient.events;  
         const event = {
-            title: eventTitle,
-            start: eventNotifyAt,
-            end: eventNotifyAt,
-            notifyAt: eventNotifyAt,
-            description: eventDescription
-        }
-        let patientEventsArr = patientEvents;
-        patientEventsArr.push(event);
-        axios.post(`http://localhost:5000/patients/updateEvents/${patient._id}`, patientEventsArr).then(res => {
-            console.log(res);
+            "events": [
+                {
+                title: eventTitle,
+                start: dateObj,
+                end: dateObj,
+                notifyAt: dateObj,
+                description: eventDescription
+                }
+            ]}
+        patientEventsArr.map(item => {
+            event["events"].unshift(item);
+        })  
+        axios.post(`http://localhost:5000/patients/updateEvents/${patient._id}`, event).then(res => {
         })
-        console.log(patientEventsArr);
         handleEventForm();
+    }
+
+    const handleDeletePatientEvent = () => {
+        let patientEventsArr = patient.events;
+        const event = {"events": []}
+        patientEventsArr.map(item => {
+            if (item._id !== eventId){
+                event["events"].push(item);
+            }
+        })
+        axios.post(`http://localhost:5000/patients/updateEvents/${patient._id}`, event).then(res => {
+        })
+        handleDeleteEventForm();
     }
 
     const handleAddPatientTutorial = () => {
@@ -205,8 +268,12 @@ export default function PharmAssign() {
     
     useEffect(() => {
         setTodaysSchedule(getTodaysSchedule);
-        setPatientEvents(patient.events);
-        console.log(patientEvents);
+        if (patient.hasOwnProperty('events')){
+            setPatientEvents(patient.events);
+        }
+        else {
+            setPatientEvents([]);
+        }
     },[])
 
     return (
@@ -229,7 +296,7 @@ export default function PharmAssign() {
                                 <div className="notificationLabel">
                                     <Typography variant="h4">
                                         Today's Schedule <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
-                                        <Button variant="outlined" className="addMinusBtns"><RemoveIcon/></Button>
+                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button>
                                     </Typography>                                
                                 </div>
                                 <div className="notificationContainer">
@@ -254,7 +321,7 @@ export default function PharmAssign() {
                                             <KeyboardDatePicker
                                                 margin="normal"
                                                 id="date-picker-dialog"
-                                                label="Date picker dialog"
+                                                label="Select a Date"
                                                 format="MM/dd/yyyy"
                                                 value={selectedDate}
                                                 fullWidth
@@ -265,7 +332,7 @@ export default function PharmAssign() {
                                             <KeyboardTimePicker
                                             margin="normal"
                                             id="time-picker"
-                                            label="Time picker"
+                                            label="Select a Time"
                                             value={selectedTime}
                                             fullWidth
                                             onChange={handleSelectedTime}
@@ -285,6 +352,43 @@ export default function PharmAssign() {
                                     </Button>
                                     </DialogActions>
                                 </Dialog>
+                                <Dialog
+                                    open={openDeleteEventForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleDeleteEventForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description"
+                                >
+                                    <DialogTitle>Delete Notification Event Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                    <FormControl className="selectInput">
+                                        <InputLabel>Select an event...</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        value={eventId}
+                                        onChange={handleNewEventId}
+                                        >
+                                        {patientEvents.length !== 0 ? patientEvents.map((event) => {
+                                            return <MenuItem value={event._id}>{`${event.title} at ${dayMonthYear(new Date(event.notifyAt))} ${new Date(event.notifyAt).toLocaleTimeString(navigator.language, {
+                                                hour: '2-digit',
+                                                minute:'2-digit'
+                                              })}`}</MenuItem>
+                                        }): "No Events Found"}
+                                        </Select>
+                                    </FormControl>
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleDeleteEventForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleDeletePatientEvent} variant="contained" color="primary">
+                                        Delete
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                             </div>
                         </div>
                     </Grid>
@@ -297,6 +401,63 @@ export default function PharmAssign() {
                         </div>
                         <div className="scheduleWidget">
                             {<TutorialsList classes={classes}></TutorialsList>}
+                            <Dialog
+                                    open={openTutorialForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleTutorialForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description"
+                            >
+                                <DialogTitle>Add Tutorial Form - Tutorial Info</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <TextField name="tutorialName" label="Tutorial Name" variant="outlined" value={tutorialName} onChange={handleTutorialName} fullWidth required />
+                                        <TextField name="tutorialDescription" label="Tutorial Description" variant="outlined" value={tutorialDescription} onChange={handleTutorialDescription} fullWidth required />
+                                        <TextField name="tutorialDuration" label="Tutorial Duration" variant="outlined" value={tutorialDuration} onChange={handleTutorialDuration} fullWidth required />
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleTutorialForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleTutorialFormTwo} variant="contained" color="primary">
+                                        Next
+                                    </Button>
+                                    </DialogActions>
+                            </Dialog>
+                            <Dialog
+                                    open={openTutorialFormTwo}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleTutorialFormTwo}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description"
+                            >
+                                <DialogTitle>Add Tutorial Form - Tutorial Info</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                    {tutorialPlaylist.map((video, index) => {
+                                            return <div>
+                                                <TextField fullWidth name="name" label="Name of Tutorial Playlist" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField fullWidth name="description" label="Playlist Description" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField fullWidth name="pharmacistNotes" label="Pharmacist Commentary" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
+                                            </div> 
+                                        })}
+
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleTutorialFormTwo} color="primary">
+                                        Back
+                                    </Button>
+                                    <Button onClick={handleAddPatientTutorial} variant="contained" color="primary">
+                                        Submit
+                                    </Button>
+                                    </DialogActions>
+                            </Dialog>
                         </div>
                     </Grid>
                 </Grid>
@@ -304,3 +465,6 @@ export default function PharmAssign() {
         </div>
     )
 }
+/**
+
+ */

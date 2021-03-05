@@ -105,3 +105,7 @@
     margin-left: 2vh !important;
     color: white !important; 
 }
+
+.selectInput{
+    width: 100% !important;
+}
