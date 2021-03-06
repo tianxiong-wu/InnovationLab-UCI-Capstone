@@ -35,7 +35,6 @@ import {
   } from '@material-ui/pickers';
 import axios from 'axios';
 import './pharmAssign.css'
-import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
     root: { flexGrow: 1, },
