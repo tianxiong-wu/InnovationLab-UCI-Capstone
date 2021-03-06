@@ -43,7 +43,8 @@ const patientSchema = new Schema({
     },
     role: {
         type: String,
-        default: 'patient'
+        default: 'patient',
+        emun: ['patient', 'pharmacist', 'admin']
     },
     infusionArray: {
         type: [infusionSchema],

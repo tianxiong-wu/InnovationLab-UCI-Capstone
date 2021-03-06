@@ -32,7 +32,8 @@ const pharmacistSchema = new Schema({
     },
     role: {
         type: String,
-        default: 'pharmacist'
+        default: 'pharmacist',
+        emun: ['patient', 'pharmacist', 'admin']
     }
 },{
     timestamps: true
