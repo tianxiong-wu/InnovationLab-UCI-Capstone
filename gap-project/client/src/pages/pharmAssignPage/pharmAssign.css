@@ -105,3 +105,12 @@
     margin-left: 2vh !important;
     color: white !important; 
 }
+
+.selectInput{
+    width: 100% !important;
+}
+
+.videoInput{
+    width: 100% !important;
+    margin: .5vh 0 !important;
+}

@@ -10,7 +10,7 @@ const urlSchema = new Schema({
     order: {
         type: Number,
     },
-    description: {
+    videoDescription: {
         type: String,
     },
     thumbnail: {
