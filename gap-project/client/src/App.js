@@ -56,9 +56,7 @@ function App() {
               <Route path="/faq" component={FAQPage}/>
               <Route path="/Tutorials" component={PharmTutorials}/>
               <Route path="/settings" component={Settings}/>
-              <Route path="/pharmAssign">
-                <PharmAssign/>
-              </Route>
+              <Route path="/pharmAssign" component={PharmAssign}/>
               <Route path="/" component={PharmacistHome}/>
               <Route component = {Error}/>
             </Switch>
