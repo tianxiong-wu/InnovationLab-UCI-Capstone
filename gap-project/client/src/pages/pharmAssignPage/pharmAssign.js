@@ -35,7 +35,6 @@ import {
   } from '@material-ui/pickers';
 import axios from 'axios';
 import './pharmAssign.css'
-import ExpandMore from "@material-ui/icons/ExpandMore";
 
 const useStyles = makeStyles((theme) => ({
     root: { flexGrow: 1, },
@@ -147,6 +146,9 @@ export default function PharmAssign() {
             {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
         },]);
     const [gridBools, setGridBools] = useState(["false"])
+    const [selectedTutorial, setSelectedTutorial] = useState("");
+    const [deleteTutorialForm, setDeleteTutorialForm] = useState(false);
+    const [patientTutorials, setPatientTutorials] = useState([]);
 
     const theme = useTheme();
 
@@ -310,10 +312,33 @@ export default function PharmAssign() {
             values["infusionArray"][0]["tutorials"][i]["video"]["order"] = i;
             values["infusionArray"][0]["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["infusionArray"][0]["tutorials"][i]["video"]["url"]);
         }
-        console.log(values);
+
+        const prevTutorials = patient.infusionArray;
+        prevTutorials.map((tutorial) => {
+            values["infusionArray"].push(tutorial);
+        })
         axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values).then(res => {
             console.log(res);
         });
+        setOpenTutorialFormTwo(!openTutorialFormTwo);
+    }
+    const handleDeleteTutorialForm = () => {
+        setDeleteTutorialForm(!deleteTutorialForm);
+    }
+    const handleDeletePatientTutorial = () => {
+        let patientTutorialsArr = patient.infusionArray;
+        const values = {"infusionArray": []}
+        patientTutorialsArr.map(item => {
+            if (item._id !== selectedTutorial){
+                values["infusionArray"].push(item);
+            }
+        })
+        axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values);
+        handleDeleteTutorialForm();
+    }
+
+    const handleNewTutorialId = (event) => {
+        setSelectedTutorial(event.target.value);
     }
 
     useEffect(() => {
@@ -323,6 +348,12 @@ export default function PharmAssign() {
         }
         else {
             setPatientEvents([]);
+        }
+        if (patient.hasOwnProperty('infusionArray')){
+            setPatientTutorials(patient.infusionArray)
+        }
+        else {
+            setPatientTutorials([]);
         }
     },[])
 
@@ -446,7 +477,7 @@ export default function PharmAssign() {
                         <div className="scheduleLabel">
                             <Typography variant="h4">
                                 Assigned Tutorials<Button variant="outlined" className="addMinusBtns" onClick={handleTutorialForm}><AddIcon/></Button>
-                                <Button variant="outlined" className="addMinusBtns"><RemoveIcon/></Button>
+                                <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteTutorialForm}><RemoveIcon/></Button>
                             </Typography>  
                         </div>
                         <div className="scheduleWidget">
@@ -518,6 +549,40 @@ export default function PharmAssign() {
                                     </Button>
                                     </DialogActions>
                             </Dialog>
+                            <Dialog
+                                    open={deleteTutorialForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleDeleteTutorialForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description"
+                                >
+                                    <DialogTitle>Delete Tutorial Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                    <FormControl className="selectInput">
+                                        <InputLabel>Select a tutorial...</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        value={selectedTutorial}
+                                        onChange={handleNewTutorialId}
+                                        >
+                                        {patientTutorials.length !== 0 ? patientTutorials.map((tutorial) => {
+                                            return <MenuItem value={tutorial._id}>{`${tutorial.name}; ${tutorial.description}`}</MenuItem>
+                                        }): "No Tutorials Found"}
+                                        </Select>
+                                    </FormControl>
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleDeleteTutorialForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleDeletePatientTutorial} variant="contained" color="primary">
+                                        Delete
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                         </div>
                     </Grid>
                 </Grid>
