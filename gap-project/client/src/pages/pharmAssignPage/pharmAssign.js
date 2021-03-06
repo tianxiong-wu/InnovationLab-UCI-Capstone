@@ -137,7 +137,11 @@ export default function PharmAssign() {
     const [tutorialDescription, setTutorialDescription] = useState("");
     const [tutorialDuration, setTutorialDuration] = useState("");
     const [tutorialPlaylist, setTutorialPlaylist] = useState([
-        {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
+        {
+        "name": "", 
+        "description": "", 
+        "pharmacistNotes": "", 
+        "infusionNotes": "", 
         "stepList": "", 
         "video": 
             {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
@@ -294,17 +298,17 @@ export default function PharmAssign() {
     }
 
     const handleAddPatientTutorial = () => {
-        const values = { "Tutorial": [{
+        const values = { "infusionArray": [{
             name: tutorialName,
             description: tutorialDescription,
             duration: tutorialDuration,
             tutorials: [...tutorialPlaylist]
             }]
         };
-        for (let i = 0; i < values["Tutorial"][0]["tutorials"].length; i++){
-            values["Tutorial"][0]["tutorials"][i]["stepList"] = values["Tutorial"][0]["tutorials"][i]["stepList"].split(';');
-            values["Tutorial"][0]["tutorials"][i]["video"]["order"] = i;
-            values["Tutorial"][0]["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["Tutorial"][0]["tutorials"][i]["video"]["url"]);
+        for (let i = 0; i < values["infusionArray"][0]["tutorials"].length; i++){
+            values["infusionArray"][0]["tutorials"][i]["stepList"] = values["infusionArray"][0]["tutorials"][i]["stepList"].split(';');
+            values["infusionArray"][0]["tutorials"][i]["video"]["order"] = i;
+            values["infusionArray"][0]["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["infusionArray"][0]["tutorials"][i]["video"]["url"]);
         }
         console.log(values);
         axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values).then(res => {
