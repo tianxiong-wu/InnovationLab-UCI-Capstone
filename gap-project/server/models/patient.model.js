@@ -5,14 +5,6 @@ const notification = require('./notification.model');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const infusionSchema = new Schema({
-    infusion: {
-        type: tutorial.schema,
-    },
-    note: {
-        type: String,
-    }
-});
 // patient
 const patientSchema = new Schema({
 
@@ -47,7 +39,7 @@ const patientSchema = new Schema({
         emun: ['patient', 'pharmacist', 'admin']
     },
     infusionArray: {
-        type: [infusionSchema],
+        type: [tutorial.schema],
         default: []
 
     },
