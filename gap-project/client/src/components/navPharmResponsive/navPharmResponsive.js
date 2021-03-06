@@ -12,6 +12,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import logo from "../../innovation.png";
 import "../patientNav/patientNav.css"
+import axios from 'axios';
 import {
     BrowserRouter as Router,
     Route,
@@ -58,7 +59,12 @@ export default function PatientNav(){
         setHamburgerAnchor(null);
         setHbIcon(true);
         setCloseIcon(false);
+    }
 
+    const handleLogout = () => {
+        //axios.get('http://localhost:5000/pharmacists/logout').then(res => {
+          //  console.log(res);
+        //})
     }
 
 
@@ -138,7 +144,7 @@ export default function PatientNav(){
                                 >
                                     <MenuItem className="profileMenu" >{user.firstName + " " + user.lastName}</MenuItem>
                                     <MenuItem className="profileMenu" ><Link to="/settings" className="profileLink">Settings</Link></MenuItem>
-                                    <MenuItem className="profileMenu" >Log Out</MenuItem>
+                                    <MenuItem className="profileMenu" onClick={handleLogout}>Log Out</MenuItem>
                                 </Menu>
                            </div> 
                         )}
