@@ -25,6 +25,8 @@ import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
 import PharmAssign from './pages/pharmAssignPage/pharmAssign';
 import { UserContext } from './UserContext';
 import { PatientContext } from './PatientContext';
+import LoginForm from './components/loginForm/loginForm';
+import SignUpForm from './components/signUpForm/signUpForm';
 function App() {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
@@ -62,7 +64,14 @@ function App() {
             </Switch>
           </Router>
         </PatientContext.Provider> :
-        <LoginSignUp/>}
+        <Router>
+          <LoginSignUp/>
+          <Switch>
+            <Route path = "/Login" component={LoginForm}/>
+            <Route path = "/Signup" component={SignUpForm}/>
+          </Switch>
+        </Router>
+        }
     </UserContext.Provider>
   );
 }

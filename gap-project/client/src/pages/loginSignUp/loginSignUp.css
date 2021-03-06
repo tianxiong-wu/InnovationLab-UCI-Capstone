@@ -1,0 +1,19 @@
+.buttonStyling {
+    width: 70% !important;
+    margin: 10vh auto !important;
+}
+
+.buttonStyling:hover {
+    color: white !important;
+    background-color: goldenrod !important;
+    cursor: pointer !important;
+    transition: 0.2s;
+}   
+
+.authStyling {
+    text-decoration: none;
+    color: white;
+    font-size: 4rem;
+    line-height: 25vh;
+}
+

@@ -8,6 +8,11 @@ import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 import LoginForm from "../loginForm/loginForm"
 import "../signUpForm/signUpForm.css"
 import axios from "axios";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -49,7 +54,7 @@ export default function SignUpForm(props){
     const classes = useStyles();
     const [signupLanding, setSignupLanding] = useState(true);
     const [role, setRole] = useState("");
-    const [roleLanding, setRoleLanding] = useState(false);
+    const [roleLanding, setRoleLanding] = useState(true);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [birthdate, setBirthdate] = useState("");
@@ -123,7 +128,6 @@ export default function SignUpForm(props){
 
     const toggleFive = () => {
       setSuccessPage(false);
-      setLoginLanding(true);
     }
 
     const [signupFormPageOne, setSignupFormPageOne] = useState(false);
@@ -173,14 +177,6 @@ export default function SignUpForm(props){
       <div className={classes.root}>
           <Grid container justify="center" spacing={3}>
               <Grid item xs={1} md={3}></Grid>
-              {signupLanding === true ? 
-              <Grid item xs={10} md={6} className="signupButton">
-                <div className="buttonStyling" onClick={toggleOne}>
-                  <Typography variant="h3" className="textStyling textHolder">Sign Up</Typography>
-                  <Typography variant="h6" className="textStyling">(with Access Code)</Typography>
-                </div>
-              </Grid>
-              : null}
               {roleLanding === true ? 
               <Grid item xs={10} md={6}>
                 <div className="formDiv">
@@ -264,7 +260,7 @@ export default function SignUpForm(props){
                     <Typography variant="h5" align="center" className="signupSuccessTypography">Congratulations!</Typography>
                     <Typography variant="h5" align="center">Your account is ready</Typography>
                   </div>
-                <Button variant="outlined" className="nextFull" onClick={toggleFive}>Login</Button>
+                <Link to="/Login" className="loginLink" onClick={toggleFive}><Button className="nextFull">Login</Button></Link>
                 </Grid>
               : null }
               {loginLanding === true ? 
