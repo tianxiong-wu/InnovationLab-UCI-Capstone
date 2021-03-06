@@ -204,7 +204,6 @@ export default function PharmAssign() {
         setEventId(event.target.value);
     }
     const handleChangeInput = (index, event) => {
-        console.log(index, event);
         const values = [...tutorialPlaylist];
         if (event.target.name === "url" || event.target.name === "videoDescription"){
             values[index]["video"][event.target.name] = event.target.value
@@ -262,10 +261,16 @@ export default function PharmAssign() {
         handleDeleteEventForm();
     }
 
-    const handleAddPatientTutorial = () => {
-        // axios put a tutorial object
+    const parseThumbnail = (url) => {
+        let https = url.slice(0, 8); // https://
+        let site = `img.youtube.com/vi/`; // img.youtube.com/vi/
+        let keyStartIndex = url.length-11;
+        let videoKey = url.slice(keyStartIndex); // 11 char key
+        let thumbnailRes = '/maxresdefault.jpg';
+
+        return `${https}${site}${videoKey}${thumbnailRes}`;
     }
-    
+
     const handleAddTutorialField = () => {
         setTutorialPlaylist([...tutorialPlaylist, 
             {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
@@ -273,12 +278,11 @@ export default function PharmAssign() {
             "video": 
                 {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
             },])
-        console.log(tutorialPlaylist);
     }
 
     const handleRemoveFields = (index) => {
         console.log(index);
-        const values  = [...tutorialPlaylist];
+        const values = [...tutorialPlaylist];
         values.splice(index, 1);
         setTutorialPlaylist(values);
     }
@@ -288,7 +292,26 @@ export default function PharmAssign() {
         values[index] = !values[index];
         setGridBools(values);
     }
-    
+
+    const handleAddPatientTutorial = () => {
+        const values = { "Tutorial": [{
+            name: tutorialName,
+            description: tutorialDescription,
+            duration: tutorialDuration,
+            tutorials: [...tutorialPlaylist]
+            }]
+        };
+        for (let i = 0; i < values["Tutorial"][0]["tutorials"].length; i++){
+            values["Tutorial"][0]["tutorials"][i]["stepList"] = values["Tutorial"][0]["tutorials"][i]["stepList"].split(';');
+            values["Tutorial"][0]["tutorials"][i]["video"]["order"] = i;
+            values["Tutorial"][0]["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["Tutorial"][0]["tutorials"][i]["video"]["url"]);
+        }
+        console.log(values);
+        axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values).then(res => {
+            console.log(res);
+        });
+    }
+
     useEffect(() => {
         setTodaysSchedule(getTodaysSchedule);
         if (patient.hasOwnProperty('events')){
@@ -464,13 +487,13 @@ export default function PharmAssign() {
                                             return <Grid container>
                                             {gridBools[index] === false ? <Grid xs={11}>
                                                 <Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography>
-                                                <TextField required fullWidth name="name" label="Name of Video" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField required fullWidth name="description" label="Tutorial Summary" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField required fullWidth name="pharmacistNotes" label="Pharmacist Commentary" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField required fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField required fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField required fullWidth name="url" label="Single Youtube Video URL" variant="outlined" value={video.video.url} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField required fullWidth name="videoDescription" label="Description of video" variant="outlined" value={video.video.description} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="name" label="Name of Video" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="description" label="Video description" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="pharmacistNotes" label="Pharmacist Notes" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="url" label="Single Youtube Video URL" variant="outlined" value={video.video.url} onChange={event => handleChangeInput(index, event)}/>
+                                                <TextField className="videoInput" required fullWidth name="videoDescription" label="Description of video" variant="outlined" value={video.video.description} onChange={event => handleChangeInput(index, event)}/>
                                             </Grid> : <Grid xs={11}><Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography></Grid>}
                                             {gridBools[index] === false ? <Grid xs={1}><Button onClick={() => toggleGridBools(index)}><ExpandMoreIcon/></Button></Grid> :
                                             <Grid xs={1}>

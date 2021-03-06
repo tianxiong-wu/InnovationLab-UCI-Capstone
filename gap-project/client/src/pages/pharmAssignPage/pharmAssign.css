@@ -111,5 +111,6 @@
 }
 
 .videoInput{
-    width: 50% !important;
+    width: 100% !important;
+    margin: .5vh 0 !important;
 }
