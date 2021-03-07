@@ -62,9 +62,7 @@ export default function PatientNav(){
     }
 
     const handleLogout = () => {
-        //axios.get('http://localhost:5000/pharmacists/logout').then(res => {
-          //  console.log(res);
-        //})
+        setUser(null);
     }
 
 

@@ -13,11 +13,6 @@ export default function footerBar() {
 				<a className="footerLink" href="#">Live Help</a>
 				</Typography>
 			</div>
-			<div className="contactBar">
-				<Typography variant="h6">
-				<a className="footerLink" href="#">Pharmacy Contact Info</a>
-				</Typography>
-			</div>
 		</div>
 	);
 }
