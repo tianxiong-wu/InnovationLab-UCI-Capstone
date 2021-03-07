@@ -117,3 +117,8 @@
 .next:disabled {
     background-color: grey !important;
 }
+
+.loginLink {
+    text-decoration: none !important;
+    color: white;
+}

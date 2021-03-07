@@ -88,25 +88,15 @@ export default function LoginForm(props){
         <div className={classes.root} >
           <Grid container justify="center" spacing={3}>
             <Grid item xs={1} md={3}></Grid>
-              {loginLanding === true ? 
-              <Grid item xs={10} md={6} className="signupButton">
-                <div className="buttonStyling" onClick={toggleOne}>
-                  <Typography variant="h3" className="textStyling textHolder">Login</Typography>
-                  <Typography variant="h6" className="textStyling">(with Existing Account)</Typography>
-                </div>
-              </Grid>
-              : null}
-              {loginForm === true ? 
-                <Grid item xs={10} md={6}>
-                <div className="formDiv">
-                  <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
-                  <TextField className="formStyling formMargin" label="Email" variant="outlined" onChange = {handleEmailChange} required />
-                  <TextField className="formStyling formMargin" type = 'password' label="Password" variant="outlined" onChange = {handlePasswordChange} required />
-                  <Button variant="outlined" color="primary" className="nextFullPassword">Forgot Password?</Button>
-                  <Button disabled={email === "" || password === "" || role === ""} variant="contained" color="primary" className="nextFull nextFullLogin" onClick={toggleTwo}>Login</Button>
-                </div>
-              </Grid>
-              : null}
+            <Grid item xs={10} md={6}>
+            <div className="formDiv">
+              <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
+              <TextField className="formStyling formMargin" label="Email" variant="outlined" onChange = {handleEmailChange} required />
+              <TextField className="formStyling formMargin" type = 'password' label="Password" variant="outlined" onChange = {handlePasswordChange} required />
+              <Button variant="outlined" color="primary" className="nextFullPassword">Forgot Password?</Button>
+              <Button disabled={email === "" || password === "" || role === ""} variant="contained" color="primary" className="nextFull nextFullLogin" onClick={toggleTwo}>Login</Button>
+            </div>
+          </Grid>
               <Grid item xs={1} md={3}></Grid>                 
           </Grid>
         </div>
