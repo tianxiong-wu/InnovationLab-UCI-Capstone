@@ -26,18 +26,13 @@
 .weekDisplay{
     display: flex;
     flex-direction: row;
+    margin-top: -5vh;
 }
 
 .weekDayDisplay{
     text-decoration: none;
     margin: auto;
     list-style: none;
-}
-
-.arrowIcon{
-    font-size: 1.5rem;
-    color: #00529b;
-    font-weight: bold;
 }
 
 .monthStyling{
@@ -84,4 +79,11 @@
     display: flex;
     flex-direction: row;
     border-radius: 30px;
+}
+
+.arrowIcon{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00529b !important;
+    margin-bottom: 65px !important;
 }
