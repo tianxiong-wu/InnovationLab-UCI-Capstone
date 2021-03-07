@@ -26,7 +26,8 @@
 .weekDisplay{
     display: flex;
     flex-direction: row;
-    margin-top: -5vh;
+    margin-top: -6vh;
+    margin-left: -5vh;
 }
 
 .weekDayDisplay{
@@ -84,6 +85,8 @@
 .arrowIcon{
     font-size: 1.5rem;
     font-weight: bold;
-    color: #00529b !important;
-    margin-bottom: 65px !important;
+    background-color: #00529b !important;
+    margin-bottom: 60px !important;
+    padding: 5px;
+    border-radius: 50px;
 }

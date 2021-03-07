@@ -46,6 +46,7 @@ export default function PatientSchedule(){
         }
         setDays(week);
         setRender(true);
+        setTodaysSchedule(getTodaysSchedule(new Date()));
     }, []);    
 
     
@@ -153,9 +154,7 @@ export default function PatientSchedule(){
         let dayIndex = event.target.id; // get day index even if day changes
         let dayString = days[getDayIndex(dayIndex)]; // get the current date object
         setCurrentDay(getCurrentDay(dayString)[2]); // change current date to what was selected
-        console.log(currentDay)
         setTodaysSchedule(getTodaysSchedule(dayString)); // change the schedule output based on the selectedDay
-        console.log(todaysSchedule);
     }
 
     return(
@@ -166,7 +165,9 @@ export default function PatientSchedule(){
                 <Typography variant="h3" align="center" className="monthStyling">{getCurrentMonth(new Date(days[0]).getMonth())}</Typography>
                 <Grid className="carouselStyling" direction="row">
                     <ul className="weekDisplay">
-                        <li className="weekDayDisplay arrowIcon" onClick={handlePrevDay}>&#60;</li>
+                    <li className="weekDayDisplay " >
+                            <div onClick={handlePrevDay} className="arrowIcon">&#60;</div>
+                    </li>                        
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[0])[0]}</Typography>
@@ -209,7 +210,9 @@ export default function PatientSchedule(){
                                     <Typography variant="h5" align="center" className="numDate" id="daySeven" onClick={handleNewCurrentDay}>{getCurrentDay(days[6])[1]}</Typography>
                                 </div>
                         </li>                             
-                        <li className="weekDayDisplay arrowIcon" onClick={handleNextDay}>&#62;</li>
+                        <li className="weekDayDisplay" >
+                            <div onClick={handleNextDay} className="arrowIcon">&#62;</div>
+                        </li>
                     </ul>
                 </Grid>
                 <Grid className="dayContainer">
