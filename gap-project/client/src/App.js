@@ -27,6 +27,7 @@ import { UserContext } from './UserContext';
 import { PatientContext } from './PatientContext';
 import LoginForm from './components/loginForm/loginForm';
 import SignUpForm from './components/signUpForm/signUpForm';
+import AuthNav from './components/authNav/authNav';
 function App() {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
@@ -65,10 +66,12 @@ function App() {
           </Router>
         </PatientContext.Provider> :
         <Router>
+          <AuthNav/>
           <LoginSignUp/>
           <Switch>
             <Route path = "/Login" component={LoginForm}/>
             <Route path = "/Signup" component={SignUpForm}/>
+            <Route path = "/loginSignup" component ={LoginSignUp}/>
           </Switch>
         </Router>
         }

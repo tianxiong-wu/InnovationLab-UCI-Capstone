@@ -1,0 +1,81 @@
+.navStyling{
+    margin: 0 0% !important;
+      background-color: #00529B;
+      box-shadow: inset 0px 3px 3px #70ADE3;
+      text-align: center;
+  }
+  
+  .navItem{
+      text-decoration: none;
+      color: white;
+  }
+  
+  .navItem:hover{
+      background-color: #FFBC62;
+      color: #834B00;
+  }
+  
+  .profileItem{
+      width: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 30px;
+  
+      background-color: #00529B;
+      color: white;
+  }
+  
+  .profileItem:hover{
+      background-color: #FFBC62;
+      color: #834B00;
+  }
+  
+  .burgerItem {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: #00529B;
+    color: white;
+    border: 1px solid #397EBC;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  
+  
+  @media only screen and (min-width: 601px) {
+    .navItem {
+      display: block;
+    }
+  
+    #hamburger, #close {
+      display: none;
+    }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .navStyling{
+      display: flex;
+      justify-content: center;
+  }
+  
+  #logoIcon {
+  /*not sure if we want to center the icon, but couldn't get it to work easily so may need to revisit*/
+  }
+  
+    .navItem {
+      display: none;
+    }
+  
+    #hamburger {
+      display: block;
+    }
+  
+    #close {
+      display: none;
+    }
+  
+  }
+  
