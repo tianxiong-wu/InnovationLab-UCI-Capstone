@@ -82,7 +82,7 @@ export default function PatientHome(props){
                 <Grid container justify="center" spacing={3}>
                     <Grid item xs={2}></Grid>
                         <Grid item xs={8}>
-                            <Typography variant="h4" className="nextInfusionSummary">Hi {user.firstName}, your next infusion is on {nextInfusion}</Typography>
+                            <Typography variant="h5" className="nextInfusionSummary">Hi {user.firstName}, your next infusion is on {nextInfusion}</Typography>
                         </Grid>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
@@ -92,7 +92,7 @@ export default function PatientHome(props){
                                         <img src={user.infusionArray[0].tutorials[0].video.thumbnail} className="infusionThumbnail"></img>
                                     </div>
                                     <div className="infusionLabel">
-                                        <Typography variant="h5">Next Infusion: {user.events[0].title}</Typography>
+                                        <Typography variant="h5">Next Infusion: {user.infusionArray[0].name}</Typography>
                                     </div>
                                 </div>
                                 <div className="notifWidget">
@@ -110,7 +110,7 @@ export default function PatientHome(props){
                         </Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
                             <div className="scheduleLabel">
-                                <Typography variant="h4">Today's Schedule</Typography>
+                                <Typography variant="h4" align="center">Today's Schedule</Typography>
                             </div>
                             <div className="scheduleWidget">
                                 <br/>
