@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../UserContext";
+import {TutorialContext} from "../../TutorialContext";
 import {Grid, Typography, Button} from "@material-ui/core";
 import "./tutorial.css"
 import PropTypes from 'prop-types';
@@ -81,22 +82,12 @@ function TabPanel(props) {
 export default function TutorialPage(props){    
 
     const {user, setUser} = useContext(UserContext);
+    const {tutorial, setTutorial} = useContext(TutorialContext);
 
     const classes = useStyles();
-    const [tutorialArray, setTutorialArray] = useState([]);
-    const [tutorial, setTutorial] = useState({});
-    const [videosLoaded, setVideosLoaded] = useState(false);
-    const [viewCard, setViewCard] = useState(true);
-    const [viewTutorial, setViewTutorial] = useState(false);
 
     useEffect(() => {
-        let tutorialArr = [];
-        axios.get("http://localhost:5000/tutorials/all").then(res => {
-            tutorialArr = res.data[props.num]['tutorial']; 
-            setTutorialArray(tutorialArr);
-            setTutorial(res.data[props.num]);
-            setVideosLoaded(true);
-        })
+        console.log(tutorial);
     },[])
 
     const [value, setValue] = useState(0);
@@ -145,8 +136,10 @@ export default function TutorialPage(props){
     const [videoCounter, setVideoCounter] = useState(0);
 
     const handleNextVideo = () => {
-        if (videoCounter < tutorialArray.length-1){
-            console.log(tutorialArray)
+        console.log(tutorial.tutorials);
+        console.log(tutorial.tutorials[videoCounter]);
+        console.log(tutorial.tutorials[videoCounter + 1].video.url);
+        if (videoCounter < tutorial.tutorials.length-1){
             let newCount = videoCounter + 1;
             setVideoCounter(newCount);
         }
@@ -159,57 +152,26 @@ export default function TutorialPage(props){
         }
     }
 
-    const handleViewTutorial = () => {
-        setViewCard(!viewCard);
-        setViewTutorial(!viewTutorial);
-    }
-
     return(
         <Grid container>
             <Grid xs={1}></Grid>
-            {viewCard === true ?
-            <Grid xs={10} container>
-                <Card className="cardRoot">
-                    <CardMedia
-                        className="cover"
-                        image={videosLoaded===true? tutorial['tutorial'][0]['videoUrl']['thumbnail'] : "Loading..."}
-                        title="Infusion Details"
-                    />
-                    <div className="cardDetails">
-                        <CardContent className="content">
-                            <Typography variant="h5">
-                                {videosLoaded===true? tutorial['name']:"Loading..."}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                {videosLoaded===true? tutorial['description']:"Loading..."}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                Duration: {videosLoaded===true? tutorial['duration']:"Loading..."}
-                            </Typography>
-                        </CardContent>
-                    </div>
-                    <ArrowForwardIosIcon className="arrowButton" onClick={handleViewTutorial}/>
-                </Card>
-            </Grid> 
-            : null }
-            {viewTutorial === true ?  
             <Grid xs={10} container className="centralContainer">
                 <Grid xs={0} md={6} container>
                     <div className="infusionContainer">
                         <div>
-                            <Typography variant="h5" align="center" className="infusionTitle"><KeyboardArrowLeftIcon className="toggleBackButton" onClick={handleViewTutorial}/>{videosLoaded===true ? tutorialArray[videoCounter]['name']:"Loading..."}</Typography>
+                            <Typography variant="h5" align="center" className="infusionTitle">{tutorial.tutorials[videoCounter].name}</Typography>
                         </div>
                         <div className="videoContainer">
-                            <ReactPlayer className="video" url={videosLoaded===true? tutorialArray[videoCounter]['videoUrl']['url'] : "Loading..."} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
+                            <ReactPlayer className="video" url={tutorial.tutorials[videoCounter].video.url} playing={playing} onPlay={handlePlay} onPause={handlePause}/>
                         </div>
                     </div>
                     <div className="videoAndDesc">
                         <div className="videoButtonsContainer">
                             <Button disabled={videoCounter === 0} variant="contained" className="videoButtons" onClick={handlePrevVideo}><KeyboardArrowLeftIcon/></Button>
                             <Button variant="contained" className="videoButtons" onClick={playing === false ? handlePlay : handlePause}>{playing === false ? <PlayArrowIcon/> : <PauseIcon/>}</Button>
-                            <Button disabled={videoCounter === 9} variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
+                            <Button disabled={videoCounter === tutorial.tutorials.length-1} variant="contained" className="videoButtons" onClick={handleNextVideo}><KeyboardArrowRightIcon/></Button>
                         </div>
-                        <Typography variant="body1" className="description desktopInteraction">Description: {videosLoaded===true? tutorialArray[videoCounter]['description'] : "Loading..."}</Typography>
+                        <Typography variant="body1" className="description desktopInteraction">Description: {tutorial.tutorials[videoCounter]['description']}</Typography>
                     </div>
                 </Grid>
                 <Grid sm={1}></Grid>
@@ -224,20 +186,20 @@ export default function TutorialPage(props){
                                 </Tabs>
                             </AppBar>
                             <TabPanel value={value} index={0}>
-                                <Typography align="center">{videosLoaded===true? tutorialArray[videoCounter]['pharmacistNotes'] : "Loading..."}</Typography>
+                                <Typography align="center">{tutorial.tutorials[videoCounter]['pharmacistNotes']}</Typography>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
-                                <Typography align="center"><ul>{videosLoaded===true? tutorialArray[videoCounter]['stepList'].map(step => {return <li className="listItem">{step}</li>}) : "Loading..."}</ul></Typography>
+                                <Typography align="center"><ul>{tutorial.tutorials[videoCounter]['stepList'].map(step => {return <li className="listItem">{step}</li>})}</ul></Typography>
                             </TabPanel>
                             <TabPanel value={value} index={2}>
-                                <Typography align="center">{videosLoaded===true? tutorialArray[videoCounter]['infusionNotes'] : "Loading..."}</Typography>
+                                <Typography align="center">{tutorial.tutorials[videoCounter]['infusionNotes']}</Typography>
                             </TabPanel>
                         </div>
                         <Button variant="contained" className="desktopButtons">
                             <Speech
                             displayText="Text-to-Speech"
                             textAsButton={true}
-                            text={videosLoaded===true? tutorialArray[videoCounter]['description']:"Loading..."} 
+                            text={tutorial.tutorials[videoCounter]['description']} 
                             voice="Google UK English Male"
                             Text-to-Speech>
                         </Speech>
@@ -245,8 +207,7 @@ export default function TutorialPage(props){
                         <Button variant="contained" className="desktopButtons">Download Full Text</Button>
                     </div>  
                 </Grid>
-            </Grid> : null}
-            {viewTutorial === true ?
+            </Grid>
             <BottomNavigation
                 value={navValue}
                 onChange={handleNavChange}
@@ -257,8 +218,7 @@ export default function TutorialPage(props){
                 <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenStep} label="Step List"/>
                 <BottomNavigationAction className="bottomNavItem" onClick={handleClickOpenNotes} label="Notes"/>    
                 <BottomNavigationAction className="bottomNavItem" label="Download Text"/>        
-            </BottomNavigation> : null}
-            {viewTutorial === true ? 
+            </BottomNavigation>
             <Dialog
                 open={descOpen}
                 TransitionComponent={Transition}
@@ -270,7 +230,7 @@ export default function TutorialPage(props){
                 <DialogTitle id="alert-dialog-slide-title">{"Description"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    {videosLoaded===true? tutorialArray[videoCounter]['description'] : "Loading..."}
+                    {tutorial.tutorials[videoCounter]['description']}
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -278,8 +238,7 @@ export default function TutorialPage(props){
                     Close
                 </Button>
                 </DialogActions>
-            </Dialog> : null}
-            {viewTutorial === true ?
+            </Dialog>
             <Dialog
                 open={stepOpen}
                 TransitionComponent={Transition}
@@ -291,7 +250,7 @@ export default function TutorialPage(props){
                 <DialogTitle id="alert-dialog-slide-title">{"Step List"}</DialogTitle>
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    <ul>{videosLoaded===true? tutorialArray[videoCounter]['stepList'].map(step => {return <li className="listItem">{step}</li>}) : "Loading..."}</ul>
+                    <ul>{tutorial.tutorials[videoCounter]['stepList'].map(step => {return <li className="listItem">{step}</li>})}</ul>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -299,8 +258,7 @@ export default function TutorialPage(props){
                     Close
                 </Button>
                 </DialogActions>
-            </Dialog> : null}
-            {viewTutorial === true ? 
+            </Dialog>
             <Dialog
                 open={notesOpen}
                 TransitionComponent={Transition}
@@ -313,9 +271,9 @@ export default function TutorialPage(props){
                 <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
                     <Typography variant="h5" color="primary">Pharmacist Notes:</Typography> 
-                    <Typography variant="body1">{videosLoaded===true? tutorialArray[videoCounter]['pharmacistNotes'] : "Loading..."}</Typography><br/>
+                    <Typography variant="body1">{tutorial.tutorials[videoCounter]['pharmacistNotes']}</Typography><br/>
                     <Typography variant="h5" color="primary">Infusion Notes:</Typography>
-                    <Typography variant="body1"> {videosLoaded===true? tutorialArray[videoCounter]['infusionNotes'] : "Loading..."}</Typography>
+                    <Typography variant="body1"> {tutorial.tutorials[videoCounter]['infusionNotes']}</Typography>
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -323,7 +281,7 @@ export default function TutorialPage(props){
                     Close
                 </Button>
                 </DialogActions>
-            </Dialog> : null}
+            </Dialog>
             <Grid xs={1}></Grid>
         </Grid> 
     )
