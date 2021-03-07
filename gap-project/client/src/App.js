@@ -17,6 +17,7 @@ import Error from './pages/404_error/404_error';
 import Tutorials from './pages/patientTutorials/tutorial';
 import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
+import PharmFooter from './components/pharmFooter/footer';
 import Settings from './pages/patientSettings/settings';
 import PharmSettings from './pages/pharmSettings/pharmSettings';
 import Schedule from './pages/patientSchedule/patientSchedule';
@@ -63,6 +64,7 @@ function App() {
               <Route path="/" component={PharmacistHome}/>
               <Route component = {Error}/>
             </Switch>
+            <PharmFooter/>
           </Router>
         </PatientContext.Provider> :
         <Router>
