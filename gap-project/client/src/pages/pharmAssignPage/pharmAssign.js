@@ -222,6 +222,26 @@ export default function PharmAssign() {
         //setOpenCheckinForm(!openCheckinForm); 
         console.log(nextCheckObj);
     }
+    // Patient Infusion Type States
+    const [infusionType, setInfusionType] = useState("");
+    const [openTypeForm, setOpenTypeForm] = useState(false);
+
+    const handleInfusionType = (event) => {
+        setInfusionType(event.target.value);
+    }
+    const handleOpenTypeForm = () => {
+        setOpenTypeForm(!openTypeForm);
+    }
+
+    const handleUpdateType = () => {
+        console.log(infusionType);
+        console.log(infusionType.split(';'));
+        const value = { "infusionType": infusionType.split(';')}
+        axios.post(`http://localhost:5000/patients/updateInfusionType/${patient._id}`, value).then(res => {
+            console.log(res);
+        })
+        setOpenTypeForm(!openTypeForm);
+    }
     // Patient Info States
     const [infoSelection, setInfoSelection] = useState("Schedule");
     const handleInfoSelection = (event) => {
@@ -406,6 +426,7 @@ export default function PharmAssign() {
                                                 <MenuItem value="Schedule">Schedule</MenuItem>
                                                 <MenuItem value="Notifications">Notifications</MenuItem>
                                                 <MenuItem value="Checkins">Check Ins</MenuItem>
+                                                <MenuItem value="Infusion Type">Infusion Type</MenuItem>
                                             </Select>
                                         </FormControl> 
                                         {infoSelection === "Schedule"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
@@ -413,6 +434,7 @@ export default function PharmAssign() {
                                         {infoSelection === "Notifications"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleAddNotificationForm}><AddIcon/></Button>
                                         <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteNotificationForm}><RemoveIcon/></Button></span> : null}
                                         {infoSelection === "Checkins"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleCheckinForm}>Update Check-in Date</Button></span> : null}
+                                        {infoSelection === "Infusion Type"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleOpenTypeForm}>Update Infusion Type</Button></span> : null}
                                 </div>
                                 {infoSelection === "Schedule" ? <div className="assignNotificationContainer">
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
@@ -436,6 +458,11 @@ export default function PharmAssign() {
                                         minute:'2-digit'
                                     })}`}</Typography> : <Typography className="recentCheckin" variant="h5" align="center" color="primary">No future checkup has been set.</Typography>}
                                     {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">Please schedule their next check in.</Typography> : null} 
+                                </div> : null}
+                                {infoSelection === "Infusion Type" ? <div className="assignNotificationContainer">
+                                    {patient.hasOwnProperty('infusionType') ? patient.infusionType.map(type => {
+                                        return <Typography className="recentCheckin" variant="h5" align="center" color="primary">{type}</Typography>
+                                    }) : <Typography className="recentCheckin" variant="h5" align="center" color="primary">No Type Set.</Typography>}
                                 </div> : null}
                                 <Dialog
                                     open={openAddNotification}
@@ -487,6 +514,28 @@ export default function PharmAssign() {
                                     </Button>
                                     <Button onClick={handleDeleteNotifications} variant="contained" color="secondary">
                                         Delete
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
+                                <Dialog
+                                    open={openTypeForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleOpenTypeForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Update Infusion Type Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <TextField label="Infusion Type Separated by ;" variant="outlined" onChange={handleInfusionType} fullWidth/>
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleOpenTypeForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleUpdateType} variant="contained" color="primary">
+                                        Update
                                     </Button>
                                     </DialogActions>
                                 </Dialog>
