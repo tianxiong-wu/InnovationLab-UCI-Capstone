@@ -93,6 +93,7 @@ export default function PharmTutorialList(){
         const response = await fetch('http://localhost:5000/tutorials/all');
         const tutorials = await response.json();
         setList(tutorials)
+        console.log(list);
     }, [])
 
 

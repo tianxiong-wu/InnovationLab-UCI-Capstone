@@ -21,7 +21,11 @@ const eventSchema = new Schema({
     description: {
         type: String,
         default: ''
+    },
+    tutorialId: {
+        type: String,
     }
+
 });
 
 const events = mongoose.model('events', eventSchema);

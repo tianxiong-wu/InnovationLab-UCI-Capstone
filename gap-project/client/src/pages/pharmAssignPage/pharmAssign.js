@@ -118,6 +118,8 @@ export default function PharmAssign() {
     const {user, setUser} = useContext(UserContext); // pharmacist account context
     const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
     const [todaysSchedule, setTodaysSchedule] = useState([]); // today's schedule for the patient
+    const [tutorialArchive, setTutorialArchive] = useState([]);
+    const [selectedArchive, setSelectedArchive] = useState(null);
     // Dialog States
     const [openEventForm, setOpenEventForm] = useState(false);
     const [openTutorialForm, setOpenTutorialForm] = useState(false);
@@ -341,6 +343,10 @@ export default function PharmAssign() {
         setSelectedTutorial(event.target.value);
     }
 
+    const handleNewArchive = (event) => {
+        setSelectedArchive(event.target.value);
+    }
+
     useEffect(() => {
         setTodaysSchedule(getTodaysSchedule);
         if (patient.hasOwnProperty('events')){
@@ -355,6 +361,9 @@ export default function PharmAssign() {
         else {
             setPatientTutorials([]);
         }
+        axios.get('http://localhost:5000/tutorials/all').then(res => {
+            setTutorialArchive(res.data);
+        })
     },[])
 
     return (
@@ -376,7 +385,8 @@ export default function PharmAssign() {
                             <div className="">
                                 <div className="assignNotificationLabel">
                                     <Typography variant="h4">
-                                        Today's Schedule <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
+                                        Today's Schedule 
+                                        <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
                                         <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button>
                                     </Typography>                                
                                 </div>
@@ -422,6 +432,18 @@ export default function PharmAssign() {
                                             }}/>
                                         </MuiPickersUtilsProvider>
                                         <TextField label="Description" variant="outlined" onChange = {handleDescriptionChange} fullWidth required />
+                                        <FormControl className="selectInput">
+                                            <InputLabel>Select a tutorial for this event...</InputLabel>
+                                            <Select
+                                            labelId="demo-simple-select-label"
+                                            value={selectedArchive}
+                                            onChange={handleNewArchive}
+                                            >
+                                            {tutorialArchive.length === 0 ? "No Tutorials Found" : tutorialArchive.map((tutorial) => {
+                                                return <MenuItem value={tutorial._id}>{tutorial.name}</MenuItem>
+                                            })}
+                                            </Select>
+                                        </FormControl>
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
