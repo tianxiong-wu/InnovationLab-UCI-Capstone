@@ -193,11 +193,11 @@ export default function PharmAssign() {
     const handleCheckinForm = () => {
         setOpenCheckinForm(!openCheckinForm);
     }
-    const handleNewCheckinDate = (event) => {
-        setNewCheckinDate(event.target.value);
+    const handleNewCheckinDate = (date) => {
+        setNewCheckinDate(date);
     }
-    const handleNewCheckinTime = (event) => {
-        setNewCheckinTime(event.target.value);
+    const handleNewCheckinTime = (date) => {
+        setNewCheckinTime(date);
     }
     const handleUpdateCheck = (event) => {
         setUpdateRecentCheck(event.target.value);
@@ -207,7 +207,20 @@ export default function PharmAssign() {
             hour: '2-digit',
             minute:'2-digit'
           })}`);
-        console.log(dateObj);
+        let nextCheckObj = {"nextCheckIn": new Date(dateObj)}
+        if (updateRecentCheck === "yes"){
+            let newRecentCheck = patient.nextCheckIn;
+            let recentCheckObj = { "recentCheckIn" : new Date(newRecentCheck) }
+            console.log(recentCheckObj);
+            axios.post(`http://localhost:5000/patients/updateRecentCheckin/${patient._id}`, recentCheckObj).then(res => {
+                console.log(res);
+            });
+        }
+        axios.post(`http://localhost:5000/patients/updateCheckin/${patient._id}`, nextCheckObj).then(res => {
+            console.log(res);
+        });
+        //setOpenCheckinForm(!openCheckinForm); 
+        console.log(nextCheckObj);
     }
     // Patient Info States
     const [infoSelection, setInfoSelection] = useState("Schedule");
@@ -255,8 +268,6 @@ export default function PharmAssign() {
         setEventDescription(event.target.value);
     }
     const handleSelectedDate = (date) => {
-        console.log(date)
-        console.log(date.getDate())
         setSelectedDate(date);
     }
     const handleSelectedTime = (date) => {
@@ -419,12 +430,12 @@ export default function PharmAssign() {
                                     {patient.hasOwnProperty('recentCheckIn') ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">{`Recently checked: ${dayMonthYear(new Date(patient.recentCheckIn))} ${new Date(patient.recentCheckIn).toLocaleTimeString(navigator.language, {
                                         hour: '2-digit',
                                         minute:'2-digit'
-                                    })}`}</Typography> : <Typography variant="h5" align="center" color="primary">Patient has not been visited yet.</Typography>}
+                                    })}`}</Typography> : <Typography className="recentCheckin" variant="h5" align="center" color="primary">Patient has not been visited yet.</Typography>}
                                     {patient.hasOwnProperty('nextCheckIn') ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">{`Next check-in is: ${dayMonthYear(new Date(patient.nextCheckIn))} ${new Date(patient.nextCheckIn).toLocaleTimeString(navigator.language, {
                                         hour: '2-digit',
                                         minute:'2-digit'
-                                    })}`}</Typography> : <Typography variant="h5" align="center" color="primary">No future checkup has been set.</Typography>}
-                                    {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? <Typography variant="h5" align="center" color="primary">Please schedule their next check in.</Typography> : null} 
+                                    })}`}</Typography> : <Typography className="recentCheckin" variant="h5" align="center" color="primary">No future checkup has been set.</Typography>}
+                                    {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">Please schedule their next check in.</Typography> : null} 
                                 </div> : null}
                                 <Dialog
                                     open={openAddNotification}
