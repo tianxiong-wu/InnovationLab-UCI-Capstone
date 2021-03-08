@@ -67,7 +67,7 @@
     border-radius: 10px !important;
     margin-bottom: 1% !important;
     overflow-y: scroll;
-    margin-right: 20px;
+    margin-right: 0px;
 }
 
 .assignScheduleWidget::-webkit-scrollbar {

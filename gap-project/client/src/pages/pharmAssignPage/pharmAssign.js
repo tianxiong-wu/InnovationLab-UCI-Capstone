@@ -35,6 +35,7 @@ import {
   } from '@material-ui/pickers';
 import axios from 'axios';
 import './pharmAssign.css'
+import { set } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
     root: { flexGrow: 1, },
@@ -133,24 +134,11 @@ export default function PharmAssign() {
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [patientEvents, setPatientEvents] = useState([]);
     // Tutorial States
-    const [tutorialName, setTutorialName] = useState("");
-    const [tutorialDescription, setTutorialDescription] = useState("");
-    const [tutorialDuration, setTutorialDuration] = useState("");
-    const [tutorialPlaylist, setTutorialPlaylist] = useState([
-        {
-        "name": "", 
-        "description": "", 
-        "pharmacistNotes": "", 
-        "infusionNotes": "", 
-        "stepList": "", 
-        "video": 
-            {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
-        },]);
-    const [gridBools, setGridBools] = useState(["false"])
     const [selectedTutorial, setSelectedTutorial] = useState("");
     const [deleteTutorialForm, setDeleteTutorialForm] = useState(false);
     const [patientTutorials, setPatientTutorials] = useState([]);
-
+    const [addTutorial, setAddTutorial] = useState("");
+    const [availableTutorials, setAvailableTutorials] = useState([]);
     const theme = useTheme();
 
     const formatTime = (date) => {
@@ -198,25 +186,8 @@ export default function PharmAssign() {
     const handleSelectedTime = (date) => {
         setSelectedTime(date);
     }
-    const handleTutorialName = (event) => {
-        setTutorialName(event.target.value);
-    }
-    const handleTutorialDescription = (event) => {
-        setTutorialDescription(event.target.value);
-    }
-    const handleTutorialDuration = (event) => {
-        setTutorialDuration(event.target.value);
-    }
     const handleNewEventId = (event) => {
         setEventId(event.target.value);
-    }
-    const handleChangeInput = (index, event) => {
-        const values = [...tutorialPlaylist];
-        if (event.target.name === "url" || event.target.name === "videoDescription"){
-            values[index]["video"][event.target.name] = event.target.value
-        }
-        else {values[index][event.target.name] = event.target.value;}
-        setTutorialPlaylist(values);
     }
 
     const handleEventForm = () => {
@@ -225,10 +196,7 @@ export default function PharmAssign() {
     const handleTutorialForm = () => {
         setOpenTutorialForm(!openTutorialForm);
     }
-    const handleTutorialFormTwo = () => {
-        setOpenTutorialForm(!openTutorialForm);
-        setOpenTutorialFormTwo(!openTutorialFormTwo);
-    }
+
     const handleDeleteEventForm = () => {
         setOpenDeleteEventForm(!openDeleteEventForm);
     }
@@ -269,59 +237,16 @@ export default function PharmAssign() {
         handleDeleteEventForm();
     }
 
-    const parseThumbnail = (url) => {
-        let https = url.slice(0, 8); // https://
-        let site = `img.youtube.com/vi/`; // img.youtube.com/vi/
-        let keyStartIndex = url.length-11;
-        let videoKey = url.slice(keyStartIndex); // 11 char key
-        let thumbnailRes = '/maxresdefault.jpg';
-
-        return `${https}${site}${videoKey}${thumbnailRes}`;
-    }
-
-    const handleAddTutorialField = () => {
-        setTutorialPlaylist([...tutorialPlaylist, 
-            {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
-            "stepList": "", 
-            "video": 
-                {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
-            },])
-    }
-
-    const handleRemoveFields = (index) => {
-        console.log(index);
-        const values = [...tutorialPlaylist];
-        values.splice(index, 1);
-        setTutorialPlaylist(values);
-    }
-
-    const toggleGridBools = (index) => {
-        const values = [...gridBools];
-        values[index] = !values[index];
-        setGridBools(values);
+    const handleSelectedArchive = (event) => {
+        setAddTutorial(event.target.value);
     }
 
     const handleAddPatientTutorial = () => {
-        const values = { "infusionArray": [{
-            name: tutorialName,
-            description: tutorialDescription,
-            duration: tutorialDuration,
-            tutorials: [...tutorialPlaylist]
-            }]
-        };
-        for (let i = 0; i < values["infusionArray"][0]["tutorials"].length; i++){
-            values["infusionArray"][0]["tutorials"][i]["stepList"] = values["infusionArray"][0]["tutorials"][i]["stepList"].split(';');
-            values["infusionArray"][0]["tutorials"][i]["video"]["order"] = i;
-            values["infusionArray"][0]["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["infusionArray"][0]["tutorials"][i]["video"]["url"]);
-        }
-
-        const prevTutorials = patient.infusionArray;
-        prevTutorials.map((tutorial) => {
-            values["infusionArray"].push(tutorial);
-        })
-        axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values).then(res => {
-            console.log(res);
-        });
+        // get current infusion array of patient, add the selected one, post to route
+        let currentArr = patient.infusionArray;
+        currentArr.push(addTutorial);
+        let values = { "infusionArray": currentArr }
+        axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values);
         setOpenTutorialFormTwo(!openTutorialFormTwo);
     }
     const handleDeleteTutorialForm = () => {
@@ -361,6 +286,9 @@ export default function PharmAssign() {
         else {
             setPatientTutorials([]);
         }
+        axios.get('http://localhost:5000/tutorials/all').then(res => {
+            setAvailableTutorials(res.data);
+        })
 
     },[])
 
@@ -400,8 +328,7 @@ export default function PharmAssign() {
                                     keepMounted
                                     onClose={handleEventForm}
                                     aria-labelledby="alert-dialog-slide-title"
-                                    aria-describedby="alert-dialog-slide-description"
-                                >
+                                    aria-describedby="alert-dialog-slide-description">
                                     <DialogTitle>Add Notification Event Form</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText>
@@ -510,62 +437,29 @@ export default function PharmAssign() {
                                     aria-labelledby="alert-dialog-slide-title"
                                     aria-describedby="alert-dialog-slide-description"
                             >
-                                <DialogTitle>Add Tutorial Form - Tutorial Info</DialogTitle>
+                                <DialogTitle>Assign Tutorial Form</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText>
-                                        <TextField name="tutorialName" label="Tutorial Name" variant="outlined" value={tutorialName} onChange={handleTutorialName} fullWidth required />
-                                        <TextField name="tutorialDescription" label="Tutorial Description" variant="outlined" value={tutorialDescription} onChange={handleTutorialDescription} fullWidth required />
-                                        <TextField name="tutorialDuration" label="Tutorial Duration" variant="outlined" value={tutorialDuration} onChange={handleTutorialDuration} fullWidth required />
+                                    <FormControl className="selectInput">
+                                        <InputLabel>Assign Tutorial...</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        value={addTutorial}
+                                        onChange={handleSelectedArchive}
+                                        >
+                                        {availableTutorials.map(tutorial => {
+                                            return <MenuItem value={tutorial}>{tutorial.name}, {tutorial.duration}</MenuItem>
+                                        })}
+                                        </Select>
+                                    </FormControl>
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
                                     <Button onClick={handleTutorialForm} color="primary">
                                         Close
                                     </Button>
-                                    <Button onClick={handleTutorialFormTwo} variant="contained" color="primary">
-                                        Next
-                                    </Button>
-                                    </DialogActions>
-                            </Dialog>
-                            <Dialog
-                                    open={openTutorialFormTwo}
-                                    TransitionComponent={Transition}
-                                    keepMounted
-                                    onClose={handleTutorialFormTwo}
-                                    aria-labelledby="alert-dialog-slide-title"
-                                    aria-describedby="alert-dialog-slide-description"
-                            >
-                                <DialogTitle>Add Tutorial Form - Tutorial Info</DialogTitle>
-                                    <DialogContent>
-                                    <DialogContentText>
-                                    {tutorialPlaylist.map((video, index) => {
-                                            return <Grid container>
-                                            {gridBools[index] === false ? <Grid xs={11}>
-                                                <Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography>
-                                                <TextField className="videoInput" required fullWidth name="name" label="Name of Video" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="description" label="Video description" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="pharmacistNotes" label="Pharmacist Notes" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="url" label="Single Youtube Video URL" variant="outlined" value={video.video.url} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="videoDescription" label="Description of video" variant="outlined" value={video.video.description} onChange={event => handleChangeInput(index, event)}/>
-                                            </Grid> : <Grid xs={11}><Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography></Grid>}
-                                            {gridBools[index] === false ? <Grid xs={1}><Button onClick={() => toggleGridBools(index)}><ExpandMoreIcon/></Button></Grid> :
-                                            <Grid xs={1}>
-                                                <Button onClick={() => toggleGridBools(index)}><KeyboardArrowRightIcon/></Button>
-                                                <Button disabled={tutorialPlaylist.length === 1} onClick={() => handleRemoveFields(index)}><RemoveIcon/></Button>
-                                                <Button onClick={handleAddTutorialField}><AddIcon/></Button>
-                                            </Grid>}
-                                            </Grid>
-                                        })}
-                                    </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions>
-                                    <Button onClick={handleTutorialFormTwo} color="primary">
-                                        Back
-                                    </Button>
                                     <Button onClick={handleAddPatientTutorial} variant="contained" color="primary">
-                                        Submit
+                                        Assign
                                     </Button>
                                     </DialogActions>
                             </Dialog>
