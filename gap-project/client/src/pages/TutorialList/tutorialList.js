@@ -42,7 +42,8 @@ export default function TutorialList(){
             <Grid container>
                 <Grid xs={1} item></Grid>
                 <Grid xs={10} item>
-                    {user.infusionArray.map !== 0 ? user.infusionArray.map((infusion) => {
+                    {user.infusionArray.length === 0 ? <Typography variant="h4" color="primary" align="center" className="defaultMsg">Your pharmacist has not assigned any tutorials for you yet. <br/>Please check back soon.</Typography>
+                    : user.infusionArray.map((infusion) => {
                         return <Card className="cardRoot" >
                         <img src={infusion.tutorials[0].video.thumbnail} className="cover"></img>
                         <div className="cardDetails">
@@ -60,7 +61,7 @@ export default function TutorialList(){
                         </div>
                         <ArrowForwardIos id={infusion._id} onClick={handleTutorialPrompt} className="arrowButton"/>
                     </Card>
-                    }): <Typography variant="h3">Your pharmacist has not assigned any tutorials for you yet.</Typography>}
+                    })}
                 </Grid> 
                 <Grid xs={1} item></Grid>
             </Grid>

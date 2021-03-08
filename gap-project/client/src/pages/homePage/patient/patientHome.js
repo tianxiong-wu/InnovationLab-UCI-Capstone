@@ -72,7 +72,9 @@ export default function PatientHome(props){
     
 
     useEffect(() => {
-        setNextInfusion(getNextInfusion);
+        if (user.events.length > 0){
+            setNextInfusion(getNextInfusion);
+        }
         setTodaysSchedule(getTodaysSchedule);
     }, [])
 
@@ -82,17 +84,17 @@ export default function PatientHome(props){
                 <Grid container justify="center" spacing={3}>
                     <Grid item xs={2}></Grid>
                         <Grid item xs={8}>
-                            <Typography variant="h5" className="nextInfusionSummary">Hi {user.firstName}, your next infusion is on {nextInfusion}</Typography>
+                            <Typography variant="h5" className="nextInfusionSummary">{user.events.length === 0 ? `Hi ${user.firstName}, you have no upcoming infusions.` : `Hi ${user.firstName}, your next infusion is on ${nextInfusion}`}</Typography>
                         </Grid>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
                             <div>
                                 <div className="infusionWidget" onClick={()=>handleChange(0)}>
                                     <div className="infusionVideoContainer">
-                                        <img src={user.infusionArray[0].tutorials[0].video.thumbnail} className="infusionThumbnail"></img>
+                                        <img src={user.infusionArray.length === 0 ? "https://picsum.photos/seed/picsum/200/300" : user.infusionArray[0].tutorials[0].video.thumbnail} className="infusionThumbnail"></img>
                                     </div>
                                     <div className="infusionLabel">
-                                        <Typography variant="h5">Next Infusion: {user.infusionArray[0].name}</Typography>
+                                        <Typography variant="h5">{user.infusionArray.length === 0 ? "No Infusions Have Been Set." : `Next Infusion: ${user.infusionArray[0].name}`}</Typography>
                                     </div>
                                 </div>
                                 <div className="notifWidget">
@@ -101,7 +103,7 @@ export default function PatientHome(props){
                                     </div>
                                     <div className="notificationContainer">
                                         <br/>
-                                        {user.notification.map((item => {
+                                        {user.notification.length === 0 ? "No notifications" : user.notification.map((item => {
                                             return <Notifications title={item.title} description={item.description}/>
                                         }))}
                                     </div>
