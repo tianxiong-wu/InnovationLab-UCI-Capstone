@@ -154,7 +154,7 @@ export default function SignUpForm(props){
     }
 
     const handleBirthdateChange = (event) => {
-        setBirthdate(event.target.value);
+      setBirthdate(event.taret.value);
     }
 
     const handleEmailChange = (event) => {

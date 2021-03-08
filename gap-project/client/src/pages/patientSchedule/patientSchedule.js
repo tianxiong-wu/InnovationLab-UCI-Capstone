@@ -29,7 +29,7 @@ export default function PatientSchedule(){
                 return ["Su", numDate, "Sunday"];
         }
     }
-    const [currentDay, setCurrentDay] = useState(getCurrentDay(new Date().toISOString().slice(0,10))[2]);
+    const [currentDay, setCurrentDay] = useState(null);
     const [days, setDays] = useState([]);
     const [render, setRender] = useState(false);
     const [earliest, setEarliest] = useState(days[0]);
@@ -46,6 +46,8 @@ export default function PatientSchedule(){
         }
         setDays(week);
         setRender(true);
+        setTodaysSchedule(getTodaysSchedule(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})));
+        setCurrentDay(getCurrentDay(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"}))[2]);
     }, []);    
 
     
@@ -139,7 +141,7 @@ export default function PatientSchedule(){
     }
 
     const getTodaysSchedule = (selected) => {
-        let selectedDate = new Date(selected); //get new date object of a date passed into function
+        let selectedDate = new Date(`${selected} 00:00:00`); //get new date object of a date passed into function
         let scheduleArr = []; // initialized schedule array
         for (let i = 0; i < user.events.length; i++){ // iter thru events
             if (dayMonthYear(selectedDate) ===  dayMonthYear(new Date(user.events[i].notifyAt))){ // compare the selectedDate with date of notifyAt 
@@ -153,9 +155,7 @@ export default function PatientSchedule(){
         let dayIndex = event.target.id; // get day index even if day changes
         let dayString = days[getDayIndex(dayIndex)]; // get the current date object
         setCurrentDay(getCurrentDay(dayString)[2]); // change current date to what was selected
-        console.log(currentDay)
         setTodaysSchedule(getTodaysSchedule(dayString)); // change the schedule output based on the selectedDay
-        console.log(todaysSchedule);
     }
 
     return(
@@ -166,7 +166,9 @@ export default function PatientSchedule(){
                 <Typography variant="h3" align="center" className="monthStyling">{getCurrentMonth(new Date(days[0]).getMonth())}</Typography>
                 <Grid className="carouselStyling" direction="row">
                     <ul className="weekDisplay">
-                        <li className="weekDayDisplay arrowIcon" onClick={handlePrevDay}>&#60;</li>
+                    <li className="weekDayDisplay " >
+                            <div onClick={handlePrevDay} className="arrowIcon">&#60;</div>
+                    </li>                        
                         <li className="weekDayDisplay">
                                 <div className="dateContainer">
                                     <Typography variant="h3" align="center" className="nameDate">{getCurrentDay(days[0])[0]}</Typography>
@@ -209,11 +211,13 @@ export default function PatientSchedule(){
                                     <Typography variant="h5" align="center" className="numDate" id="daySeven" onClick={handleNewCurrentDay}>{getCurrentDay(days[6])[1]}</Typography>
                                 </div>
                         </li>                             
-                        <li className="weekDayDisplay arrowIcon" onClick={handleNextDay}>&#62;</li>
+                        <li className="weekDayDisplay" >
+                            <div onClick={handleNextDay} className="arrowIcon">&#62;</div>
+                        </li>
                     </ul>
                 </Grid>
                 <Grid className="dayContainer">
-                    <Typography variant="h3" align="center" className="dayStyling">{currentDay.toLocaleString('en-us', {weekday:'long'})}</Typography>
+                    <Typography variant="h3" align="center" className="dayStyling">{currentDay}</Typography>
                     <div className="scheduleComponents">
                         <br/>
                         {todaysSchedule.length === 0 ? <Typography variant="h4" color="primary" align="center">No Infusions Today</Typography> : todaysSchedule.map((item => {

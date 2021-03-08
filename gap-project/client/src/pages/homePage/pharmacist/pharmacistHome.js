@@ -61,7 +61,13 @@ export default function PharmacistHome(props){
         }
         return search;
     }
-
+    const dayMonthYear = (date) => {
+        let dd = String(date.getDate()+1);
+        let mm = String(date.getMonth()+1);
+        let yy = String(date.getFullYear());
+        let dateString = `${mm}/${dd}/${yy}`;
+        return dateString;
+    }
     const handleNewFilter = (event) => {
         setFilterSetting(event.target.value);
     }
@@ -175,7 +181,7 @@ export default function PharmacistHome(props){
                             <Paper className={classes.paper} className = "gridItem" onClick={handlePharmAssign} aria-label={patient._id}>{`${patient.firstName} ${patient.lastName}`}</Paper>
                         </Grid>
                         <Grid item xs={1}>
-                            <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.birthday).toLocaleDateString()}`}</Paper>
+                            <Paper className={classes.paper} className = "gridItem">{`${dayMonthYear(new Date(patient.birthday))}`}</Paper>
                         </Grid>
                         <Grid item xs={1}>
                             <Paper className={classes.paper} className = "gridItem">{`${patient.gender[0].toUpperCase() + patient.gender.substring(1)}`}</Paper>
