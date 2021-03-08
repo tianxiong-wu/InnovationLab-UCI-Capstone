@@ -5,6 +5,7 @@ import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
 import ScheduleEvent from "../../components/scheduleEvent/scheduleEvent";
+import Notifications from "../../components/notifications/notifications";
 import { makeStyles, useTheme, withTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -35,6 +36,7 @@ import {
   } from '@material-ui/pickers';
 import axios from 'axios';
 import './pharmAssign.css'
+import { set } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
     root: { flexGrow: 1, },
@@ -118,6 +120,7 @@ export default function PharmAssign() {
     const {user, setUser} = useContext(UserContext); // pharmacist account context
     const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
     const [todaysSchedule, setTodaysSchedule] = useState([]); // today's schedule for the patient
+    const [selectedArchive, setSelectedArchive] = useState(null);
     // Dialog States
     const [openEventForm, setOpenEventForm] = useState(false);
     const [openTutorialForm, setOpenTutorialForm] = useState(false);
@@ -132,23 +135,98 @@ export default function PharmAssign() {
     const [selectedTime, setSelectedTime] = useState(new Date());
     const [patientEvents, setPatientEvents] = useState([]);
     // Tutorial States
-    const [tutorialName, setTutorialName] = useState("");
-    const [tutorialDescription, setTutorialDescription] = useState("");
-    const [tutorialDuration, setTutorialDuration] = useState("");
-    const [tutorialPlaylist, setTutorialPlaylist] = useState([
-        {
-        "name": "", 
-        "description": "", 
-        "pharmacistNotes": "", 
-        "infusionNotes": "", 
-        "stepList": "", 
-        "video": 
-            {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
-        },]);
-    const [gridBools, setGridBools] = useState(["false"])
     const [selectedTutorial, setSelectedTutorial] = useState("");
     const [deleteTutorialForm, setDeleteTutorialForm] = useState(false);
     const [patientTutorials, setPatientTutorials] = useState([]);
+    const [addTutorial, setAddTutorial] = useState("");
+    const [availableTutorials, setAvailableTutorials] = useState([]);
+    // Notification States
+    const [openAddNotification, setOpenAddNotification] = useState(false);
+    const [openDeleteNotification, setOpenDeleteNotification] = useState(false);
+    const [selectedNotification, setSelectedNotification] = useState("");
+    const [notifTitle, setNotifTitle] = useState("");
+    const [notifDescription, setNotifDescription] = useState("");
+    const handleNotifTitle = (event) => {
+        setNotifTitle(event.target.value);
+    }
+    const handleNotifDescription = (event) => {
+        setNotifDescription(event.target.value);
+    }
+    const handleSelectedNotification = (event) => {
+        setSelectedNotification(event.target.value);
+    }
+    const handleAddNotificationForm = () => {
+        setOpenAddNotification(!openAddNotification);
+    }
+    const handleDeleteNotificationForm = () => {
+        setOpenDeleteNotification(!openDeleteNotification);
+    }
+    const handleAddNotifications = () => {
+        let pastNotifs = patient.notification;
+        let notificationObj = { "notification" : [{
+            title: notifTitle,
+            description: notifDescription
+        }]}
+        pastNotifs.map((notif) => {
+            notificationObj["notification"].push(notif);
+        })
+        axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
+        setOpenAddNotification(!openAddNotification);
+    }
+    const handleDeleteNotifications = () => {
+        let pastNotifs = patient.notification;
+        let notificationObj = { "notification" : []}
+        pastNotifs.map((notif) => {
+            if (notif._id !== selectedNotification){
+                notificationObj["notification"].push(notif);
+            }
+        })
+        axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
+        setOpenDeleteNotification(!openDeleteNotification);
+    }
+    // Patient Checkin States
+    const [openCheckinForm, setOpenCheckinForm] = useState(false);
+    const [newCheckinDate, setNewCheckinDate] = useState(new Date());
+    const [newCheckinTime, setNewCheckinTime] = useState(new Date());
+    const [updateRecentCheck, setUpdateRecentCheck] = useState("");
+
+    const handleCheckinForm = () => {
+        setOpenCheckinForm(!openCheckinForm);
+    }
+    const handleNewCheckinDate = (date) => {
+        setNewCheckinDate(date);
+    }
+    const handleNewCheckinTime = (date) => {
+        setNewCheckinTime(date);
+    }
+    const handleUpdateCheck = (event) => {
+        setUpdateRecentCheck(event.target.value);
+    }
+    const updateCheckin = () => {
+        let dateObj = (`${dayMonthYear(newCheckinDate)} ${newCheckinTime.toLocaleTimeString(navigator.language, {
+            hour: '2-digit',
+            minute:'2-digit'
+          })}`);
+        let nextCheckObj = {"nextCheckIn": new Date(dateObj)}
+        if (updateRecentCheck === "yes"){
+            let newRecentCheck = patient.nextCheckIn;
+            let recentCheckObj = { "recentCheckIn" : new Date(newRecentCheck) }
+            console.log(recentCheckObj);
+            axios.post(`http://localhost:5000/patients/updateRecentCheckin/${patient._id}`, recentCheckObj).then(res => {
+                console.log(res);
+            });
+        }
+        axios.post(`http://localhost:5000/patients/updateCheckin/${patient._id}`, nextCheckObj).then(res => {
+            console.log(res);
+        });
+        //setOpenCheckinForm(!openCheckinForm); 
+        console.log(nextCheckObj);
+    }
+    // Patient Info States
+    const [infoSelection, setInfoSelection] = useState("Schedule");
+    const handleInfoSelection = (event) => {
+        setInfoSelection(event.target.value);
+    }
 
     const theme = useTheme();
 
@@ -190,32 +268,13 @@ export default function PharmAssign() {
         setEventDescription(event.target.value);
     }
     const handleSelectedDate = (date) => {
-        console.log(date)
-        console.log(date.getDate())
         setSelectedDate(date);
     }
     const handleSelectedTime = (date) => {
         setSelectedTime(date);
     }
-    const handleTutorialName = (event) => {
-        setTutorialName(event.target.value);
-    }
-    const handleTutorialDescription = (event) => {
-        setTutorialDescription(event.target.value);
-    }
-    const handleTutorialDuration = (event) => {
-        setTutorialDuration(event.target.value);
-    }
     const handleNewEventId = (event) => {
         setEventId(event.target.value);
-    }
-    const handleChangeInput = (index, event) => {
-        const values = [...tutorialPlaylist];
-        if (event.target.name === "url" || event.target.name === "videoDescription"){
-            values[index]["video"][event.target.name] = event.target.value
-        }
-        else {values[index][event.target.name] = event.target.value;}
-        setTutorialPlaylist(values);
     }
 
     const handleEventForm = () => {
@@ -224,10 +283,7 @@ export default function PharmAssign() {
     const handleTutorialForm = () => {
         setOpenTutorialForm(!openTutorialForm);
     }
-    const handleTutorialFormTwo = () => {
-        setOpenTutorialForm(!openTutorialForm);
-        setOpenTutorialFormTwo(!openTutorialFormTwo);
-    }
+
     const handleDeleteEventForm = () => {
         setOpenDeleteEventForm(!openDeleteEventForm);
     }
@@ -244,7 +300,8 @@ export default function PharmAssign() {
                 start: dateObj,
                 end: dateObj,
                 notifyAt: dateObj,
-                description: eventDescription
+                description: eventDescription,
+                tutorialId: selectedArchive
                 }
             ]}
         patientEventsArr.map(item => {
@@ -267,59 +324,16 @@ export default function PharmAssign() {
         handleDeleteEventForm();
     }
 
-    const parseThumbnail = (url) => {
-        let https = url.slice(0, 8); // https://
-        let site = `img.youtube.com/vi/`; // img.youtube.com/vi/
-        let keyStartIndex = url.length-11;
-        let videoKey = url.slice(keyStartIndex); // 11 char key
-        let thumbnailRes = '/maxresdefault.jpg';
-
-        return `${https}${site}${videoKey}${thumbnailRes}`;
-    }
-
-    const handleAddTutorialField = () => {
-        setTutorialPlaylist([...tutorialPlaylist, 
-            {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
-            "stepList": "", 
-            "video": 
-                {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
-            },])
-    }
-
-    const handleRemoveFields = (index) => {
-        console.log(index);
-        const values = [...tutorialPlaylist];
-        values.splice(index, 1);
-        setTutorialPlaylist(values);
-    }
-
-    const toggleGridBools = (index) => {
-        const values = [...gridBools];
-        values[index] = !values[index];
-        setGridBools(values);
+    const handleSelectedArchive = (event) => {
+        setAddTutorial(event.target.value);
     }
 
     const handleAddPatientTutorial = () => {
-        const values = { "infusionArray": [{
-            name: tutorialName,
-            description: tutorialDescription,
-            duration: tutorialDuration,
-            tutorials: [...tutorialPlaylist]
-            }]
-        };
-        for (let i = 0; i < values["infusionArray"][0]["tutorials"].length; i++){
-            values["infusionArray"][0]["tutorials"][i]["stepList"] = values["infusionArray"][0]["tutorials"][i]["stepList"].split(';');
-            values["infusionArray"][0]["tutorials"][i]["video"]["order"] = i;
-            values["infusionArray"][0]["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["infusionArray"][0]["tutorials"][i]["video"]["url"]);
-        }
-
-        const prevTutorials = patient.infusionArray;
-        prevTutorials.map((tutorial) => {
-            values["infusionArray"].push(tutorial);
-        })
-        axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values).then(res => {
-            console.log(res);
-        });
+        // get current infusion array of patient, add the selected one, post to route
+        let currentArr = patient.infusionArray;
+        currentArr.push(addTutorial);
+        let values = { "infusionArray": currentArr }
+        axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values);
         setOpenTutorialFormTwo(!openTutorialFormTwo);
     }
     const handleDeleteTutorialForm = () => {
@@ -341,6 +355,10 @@ export default function PharmAssign() {
         setSelectedTutorial(event.target.value);
     }
 
+    const handleNewArchive = (event) => {
+        setSelectedArchive(event.target.value);
+    }
+
     useEffect(() => {
         setTodaysSchedule(getTodaysSchedule);
         if (patient.hasOwnProperty('events')){
@@ -355,13 +373,17 @@ export default function PharmAssign() {
         else {
             setPatientTutorials([]);
         }
+        axios.get('http://localhost:5000/tutorials/all').then(res => {
+            setAvailableTutorials(res.data);
+        })
+
     },[])
 
     return (
         <div className={classes.root}>
             <ThemeProvider theme={theme}>
                 <Grid container justify="center" spacing={0}>
-                    <Grid item xs={8} sm={8} md={5} className="">
+                    <Grid item xs={8} sm={8} md={5} className="assignPageContainer">
                         <div>
                             <div style={{ textAlign: "left", height: '30vh' }}>
                                 <br />
@@ -371,30 +393,169 @@ export default function PharmAssign() {
                                 <br />
                                 <Typography variant="h6">Phone: {patient !== null ? `(${patient.phoneNumber.slice(0,3)}) ${patient.phoneNumber.slice(3,6)}-${patient.phoneNumber.slice(6)}` : "Loading..."}</Typography>
                                 <Typography variant="h6">Email: {patient !== null ? patient.email : "Loading..."}</Typography>
-
                             </div>
                             <div className="">
-                                <div className="notificationLabel">
-                                    <Typography variant="h4">
-                                        Today's Schedule <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
-                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button>
-                                    </Typography>                                
+                                <div className="assignNotificationLabel">
+                                    <FormControl >
+                                            <Select
+                                            labelId="demo-simple-select-label"
+                                            value={infoSelection}
+                                            onChange={handleInfoSelection}
+                                            className="labelSelect"
+                                            >
+                                                <MenuItem value="Schedule">Schedule</MenuItem>
+                                                <MenuItem value="Notifications">Notifications</MenuItem>
+                                                <MenuItem value="Checkins">Check Ins</MenuItem>
+                                            </Select>
+                                        </FormControl> 
+                                        {infoSelection === "Schedule"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
+                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button></span> : null}
+                                        {infoSelection === "Notifications"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleAddNotificationForm}><AddIcon/></Button>
+                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteNotificationForm}><RemoveIcon/></Button></span> : null}
+                                        {infoSelection === "Checkins"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleCheckinForm}>Update Check-in Date</Button></span> : null}
                                 </div>
-                                <div className="notificationContainer">
+                                {infoSelection === "Schedule" ? <div className="assignNotificationContainer">
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
                                 : todaysSchedule.map((item => {
                                     return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
                                 }))}
-                                </div>
+                                </div> : null }
+                                {infoSelection === "Notifications" ? <div className="assignNotificationContainer">
+                                    {patient.notification.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Notifications</Typography> 
+                                    : patient.notification.map((notif) => {
+                                        return <Notifications title={notif.title} description={notif.description}/>
+                                    }) }
+                                </div> : null}
+                                {infoSelection === "Checkins" ? <div className="assignNotificationContainer">
+                                    {patient.hasOwnProperty('recentCheckIn') ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">{`Recently checked: ${dayMonthYear(new Date(patient.recentCheckIn))} ${new Date(patient.recentCheckIn).toLocaleTimeString(navigator.language, {
+                                        hour: '2-digit',
+                                        minute:'2-digit'
+                                    })}`}</Typography> : <Typography className="recentCheckin" variant="h5" align="center" color="primary">Patient has not been visited yet.</Typography>}
+                                    {patient.hasOwnProperty('nextCheckIn') ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">{`Next check-in is: ${dayMonthYear(new Date(patient.nextCheckIn))} ${new Date(patient.nextCheckIn).toLocaleTimeString(navigator.language, {
+                                        hour: '2-digit',
+                                        minute:'2-digit'
+                                    })}`}</Typography> : <Typography className="recentCheckin" variant="h5" align="center" color="primary">No future checkup has been set.</Typography>}
+                                    {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">Please schedule their next check in.</Typography> : null} 
+                                </div> : null}
+                                <Dialog
+                                    open={openAddNotification}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleAddNotificationForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Add Notification Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <TextField label="Title" variant="outlined" onChange = {handleNotifTitle} fullWidth required />
+                                        <TextField label="Description" variant="outlined" onChange = {handleNotifDescription} fullWidth required />
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleAddNotificationForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleAddNotifications} variant="contained" color="primary">
+                                        Submit
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
+                                <Dialog
+                                    open={openDeleteNotification}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleDeleteNotificationForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Delete Notification Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            value={selectedNotification}
+                                            onChange={handleSelectedNotification}
+                                            >
+                                        {patient.notification.map((notif) => {
+                                            return <MenuItem value={notif._id}>{notif.title}. {notif.description}</MenuItem>
+                                        })}
+                                        </Select>
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleDeleteNotificationForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleDeleteNotifications} variant="contained" color="secondary">
+                                        Delete
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
+                                <Dialog
+                                    open={openCheckinForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleCheckinForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Next Check-in Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDatePicker
+                                                margin="normal"
+                                                id="date-picker-dialog"
+                                                label="Select a Date"
+                                                format="MM/dd/yyyy"
+                                                value={newCheckinDate}
+                                                fullWidth
+                                                onChange={handleNewCheckinDate}
+                                                KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                }}/>
+                                            <KeyboardTimePicker
+                                            margin="normal"
+                                            id="time-picker"
+                                            label="Select a Time"
+                                            value={newCheckinTime}
+                                            fullWidth
+                                            onChange={handleNewCheckinTime}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change time',
+                                            }}/>
+                                        </MuiPickersUtilsProvider>        
+                                        <FormControl className="selectInput">
+                                            <InputLabel>Replace last checkin with {dayMonthYear(newCheckinDate)} {newCheckinTime.toLocaleTimeString(navigator.language, {
+                                                hour: '2-digit',
+                                                minute:'2-digit'
+                                            })}?</InputLabel>
+                                            <Select
+                                            labelId="demo-simple-select-label"
+                                            value={updateRecentCheck}
+                                            onChange={handleUpdateCheck}
+                                            >
+                                                <MenuItem value="yes">Yes, update the last checkin.</MenuItem>
+                                                <MenuItem value="no">No, do not update.</MenuItem>
+                                            </Select>
+                                        </FormControl>        
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleCheckinForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={updateCheckin} variant="contained" color="primary">
+                                        Update
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                                 <Dialog
                                     open={openEventForm}
                                     TransitionComponent={Transition}
                                     keepMounted
                                     onClose={handleEventForm}
                                     aria-labelledby="alert-dialog-slide-title"
-                                    aria-describedby="alert-dialog-slide-description"
-                                >
-                                    <DialogTitle>Add Notification Event Form</DialogTitle>
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Add Schedule Event Form</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText>
                                         <TextField label="Title" variant="outlined" onChange = {handleTitleChange} fullWidth required />
@@ -422,6 +583,18 @@ export default function PharmAssign() {
                                             }}/>
                                         </MuiPickersUtilsProvider>
                                         <TextField label="Description" variant="outlined" onChange = {handleDescriptionChange} fullWidth required />
+                                        <FormControl className="selectInput">
+                                            <InputLabel>Select a tutorial for this event...</InputLabel>
+                                            <Select
+                                            labelId="demo-simple-select-label"
+                                            value={selectedArchive}
+                                            onChange={handleNewArchive}
+                                            >
+                                                {patient.infusionArray.map((tutorial) => {
+                                                    return <MenuItem value={tutorial._id}>{tutorial.name}</MenuItem>
+                                                })}
+                                            </Select>
+                                        </FormControl>
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
@@ -474,13 +647,13 @@ export default function PharmAssign() {
                         </div>
                     </Grid>
                     <Grid item xs={8} sm={8} md={5} style={{marginLeft:'50px'}} className="widgetContainer">
-                        <div className="scheduleLabel">
+                        <div className="assignScheduleLabel">
                             <Typography variant="h4">
                                 Assigned Tutorials<Button variant="outlined" className="addMinusBtns" onClick={handleTutorialForm}><AddIcon/></Button>
                                 <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteTutorialForm}><RemoveIcon/></Button>
                             </Typography>  
                         </div>
-                        <div className="scheduleWidget">
+                        <div className="assignScheduleWidget">
                             {<TutorialsList classes={classes}></TutorialsList>}
                             <Dialog
                                     open={openTutorialForm}
@@ -490,62 +663,29 @@ export default function PharmAssign() {
                                     aria-labelledby="alert-dialog-slide-title"
                                     aria-describedby="alert-dialog-slide-description"
                             >
-                                <DialogTitle>Add Tutorial Form - Tutorial Info</DialogTitle>
+                                <DialogTitle>Assign Tutorial Form</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText>
-                                        <TextField name="tutorialName" label="Tutorial Name" variant="outlined" value={tutorialName} onChange={handleTutorialName} fullWidth required />
-                                        <TextField name="tutorialDescription" label="Tutorial Description" variant="outlined" value={tutorialDescription} onChange={handleTutorialDescription} fullWidth required />
-                                        <TextField name="tutorialDuration" label="Tutorial Duration" variant="outlined" value={tutorialDuration} onChange={handleTutorialDuration} fullWidth required />
+                                    <FormControl className="selectInput">
+                                        <InputLabel>Assign Tutorial...</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        value={addTutorial}
+                                        onChange={handleSelectedArchive}
+                                        >
+                                        {availableTutorials.map(tutorial => {
+                                            return <MenuItem value={tutorial}>{tutorial.name}, {tutorial.duration}</MenuItem>
+                                        })}
+                                        </Select>
+                                    </FormControl>
                                     </DialogContentText>
                                     </DialogContent>
                                     <DialogActions>
                                     <Button onClick={handleTutorialForm} color="primary">
                                         Close
                                     </Button>
-                                    <Button onClick={handleTutorialFormTwo} variant="contained" color="primary">
-                                        Next
-                                    </Button>
-                                    </DialogActions>
-                            </Dialog>
-                            <Dialog
-                                    open={openTutorialFormTwo}
-                                    TransitionComponent={Transition}
-                                    keepMounted
-                                    onClose={handleTutorialFormTwo}
-                                    aria-labelledby="alert-dialog-slide-title"
-                                    aria-describedby="alert-dialog-slide-description"
-                            >
-                                <DialogTitle>Add Tutorial Form - Tutorial Info</DialogTitle>
-                                    <DialogContent>
-                                    <DialogContentText>
-                                    {tutorialPlaylist.map((video, index) => {
-                                            return <Grid container>
-                                            {gridBools[index] === false ? <Grid xs={11}>
-                                                <Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography>
-                                                <TextField className="videoInput" required fullWidth name="name" label="Name of Video" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="description" label="Video description" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="pharmacistNotes" label="Pharmacist Notes" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="url" label="Single Youtube Video URL" variant="outlined" value={video.video.url} onChange={event => handleChangeInput(index, event)}/>
-                                                <TextField className="videoInput" required fullWidth name="videoDescription" label="Description of video" variant="outlined" value={video.video.description} onChange={event => handleChangeInput(index, event)}/>
-                                            </Grid> : <Grid xs={11}><Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography></Grid>}
-                                            {gridBools[index] === false ? <Grid xs={1}><Button onClick={() => toggleGridBools(index)}><ExpandMoreIcon/></Button></Grid> :
-                                            <Grid xs={1}>
-                                                <Button onClick={() => toggleGridBools(index)}><KeyboardArrowRightIcon/></Button>
-                                                <Button disabled={tutorialPlaylist.length === 1} onClick={() => handleRemoveFields(index)}><RemoveIcon/></Button>
-                                                <Button onClick={handleAddTutorialField}><AddIcon/></Button>
-                                            </Grid>}
-                                            </Grid>
-                                        })}
-                                    </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions>
-                                    <Button onClick={handleTutorialFormTwo} color="primary">
-                                        Back
-                                    </Button>
                                     <Button onClick={handleAddPatientTutorial} variant="contained" color="primary">
-                                        Submit
+                                        Assign
                                     </Button>
                                     </DialogActions>
                             </Dialog>

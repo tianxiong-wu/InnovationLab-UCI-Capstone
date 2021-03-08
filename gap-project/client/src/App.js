@@ -38,6 +38,7 @@ function App() {
 
   const [tutorial, setTutorial] = useState(null);
   const tutorialProviderValue = useMemo(() => ({tutorial, setTutorial}), [tutorial, setTutorial]);
+
   return (
     <UserContext.Provider value={providerValue}>
       {user !== null && user.role === "patient" ? 

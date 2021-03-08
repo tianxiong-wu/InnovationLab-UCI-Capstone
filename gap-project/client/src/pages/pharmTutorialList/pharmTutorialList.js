@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import {PatientContext} from "../../PatientContext";
 import { makeStyles, useTheme, withTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,18 +8,43 @@ import Typography from '@material-ui/core/Typography';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
+import {Button} from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+
+
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 const useStyles = makeStyles((theme) => ({
     box:{
         width :'100%',
+        height: '100vh',
         display: 'inline-block',
     },
     root: {
         display:'inline-block',
         // float:'left',
-        margin:'2.5vw',
+        margin:'2vw',
+        marginLeft: '8vw',
         backgroundColor: '#3F51B5',
-        width: "45vw",
+        width: "35vw",
         height: "216px",
         marginTop: '33px',
         borderRadius: 20,
@@ -35,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
 
         marginTop: 25,
         marginLeft: 3,
+    },
+    buttonContent: {
+        flex: '1 0 auto',
+        justify: 'center',
+        marginLeft: '7.5vw',
+        marginTop: '7vh'
     },
     cover: {
         marginTop:'4%',
@@ -59,53 +91,136 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 40,
         width:'10%',
         marginTop:'80px',
+    },
+    formButtons: {
+        width: '17vw',
+        height: '6vw',
+        color: 'white',
+        cursor: 'pointer',
+        fontSize: '10rem',
+        marginTop: '-10vh'
     }
 }));
 export default function PharmTutorialList(){
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();
-    const [list, setList] = useState([]);
-    //const initList = async () => {
+    const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
+    const [tutorialArchive, setArchive] = useState([]);
+    const [tutorialName, setTutorialName] = useState("");
+    const [tutorialDescription, setTutorialDescription] = useState("");
+    const [tutorialDuration, setTutorialDuration] = useState("");
+    const [tutorialPlaylist, setTutorialPlaylist] = useState([
+        {
+        "name": "", 
+        "description": "", 
+        "pharmacistNotes": "", 
+        "infusionNotes": "", 
+        "stepList": "", 
+        "video": 
+            {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
+        },]);
+    const [gridBools, setGridBools] = useState(["false"])
+    const [openTutorialForm, setOpenTutorialForm] = useState(false);
+    const [openTutorialFormTwo, setOpenTutorialFormTwo] = useState(false);
+    const [selectedTutorial, setSelectedTutorial] = useState("");
 
-    // const tutorials = [{
-    //   id: 0,
-    //   name: 'Infusion A',
-    //   summary: `Lorem ipsum dolor sit amet`,
-    //   duration: '20 min',
-    //   img: 'https://picsum.photos/seed/picsum/150/150',
-    // }, {
-    //   id: 1,
-    //   name: 'Infusion B'
-    //   summary: 'Summary B',
-    //   duration: '15 min',
-    //   img: 'https://picsum.photos/seed/picsum/150/150',
-    // }, {
-    //   id: 2,
-    //   name: 'Infusion C',
-    //   summary: 'Summary C',
-    //   duration: '17 min',
-    //   img: 'https://picsum.photos/seed/picsum/150/150',
-    // }] 
+    const handleTutorialForm = () => {
+        setOpenTutorialForm(!openTutorialForm);
+    }
+    const handleTutorialFormTwo = () => {
+        setOpenTutorialForm(!openTutorialForm);
+        setOpenTutorialFormTwo(!openTutorialFormTwo);
+    }
+    const handleTutorialName = (event) => {
+        setTutorialName(event.target.value);
+    }
+    const handleTutorialDescription = (event) => {
+        setTutorialDescription(event.target.value);
+    }
+    const handleTutorialDuration = (event) => {
+        setTutorialDuration(event.target.value);
+    }
+    const handleChangeInput = (index, event) => {
+        const values = [...tutorialPlaylist];
+        if (event.target.name === "url" || event.target.name === "videoDescription"){
+            values[index]["video"][event.target.name] = event.target.value
+        }
+        else {values[index][event.target.name] = event.target.value;}
+        setTutorialPlaylist(values);
+        console.log(tutorialPlaylist);
+    }
+    const parseThumbnail = (url) => {
+        let https = url.slice(0, 8); // https://
+        let site = `img.youtube.com/vi/`; // img.youtube.com/vi/
+        let keyStartIndex = url.length-11;
+        let videoKey = url.slice(keyStartIndex); // 11 char key
+        let thumbnailRes = '/maxresdefault.jpg';
 
-    //};
-    useEffect(async () => {
-        const response = await fetch('http://localhost:5000/tutorials/all');
-        const tutorials = await response.json();
-        setList(tutorials)
-    }, [])
+        return `${https}${site}${videoKey}${thumbnailRes}`;
+    }
 
+    const handleAddTutorialField = () => {
+        setTutorialPlaylist([...tutorialPlaylist, 
+            {"name": "", "description": "", "pharmacistNotes": "", "infusionNotes": "", 
+            "stepList": "", 
+            "video": 
+                {"url": "", "order":"", "videoDescription":"", "thumbnail":""}
+            },])
+    }
+
+    const handleRemoveFields = (index) => {
+        console.log(index);
+        const values = [...tutorialPlaylist];
+        values.splice(index, 1);
+        setTutorialPlaylist(values);
+    }
+
+    const toggleGridBools = (index) => {
+        const values = [...gridBools];
+        values[index] = !values[index];
+        setGridBools(values);
+    }
+
+    const handleAddPatientTutorial = () => {
+        const values = {
+            name: tutorialName,
+            description: tutorialDescription,
+            duration: tutorialDuration,
+            tutorials: [...tutorialPlaylist]
+            }
+        for (let i = 0; i < values["tutorials"].length; i++){
+            values["tutorials"][i]["stepList"] = values["tutorials"][i]["stepList"].split(';');
+            values["tutorials"][i]["video"]["order"] = i;
+            values["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["tutorials"][i]["video"]["url"]);
+        }
+        axios.post(`http://localhost:5000/tutorials/add`, values).then(res => {
+            console.log(res);
+        });
+        setOpenTutorialFormTwo(!openTutorialFormTwo);
+    }
 
     const handleChange = (id) => {
         history.push('/Tutorial/' + id);
     }
 
-        return <div className={classes.box}>{
-            list.map((item) => {
+    useEffect ( () => {
+        axios.get('http://localhost:5000/tutorials/all').then(res => {
+            setArchive(res.data);
+        })
+    },[])
+
+        return <div className={classes.box}>
+            <Card className={classes.root}>
+                <CardContent className={classes.buttonContent}>
+                    <Typography variant="h1" className={classes.formButtons} onClick={handleTutorialForm} align="center">+</Typography>
+                </CardContent>
+            </Card>
+            {tutorialArchive.length !== 0 ? tutorialArchive.map((item) => {
                 return  <Card onClick={() => handleChange(item._id)} className={classes.root}>
                             <CardMedia
                                 className={classes.cover}
-                                image={item.img}
+                                image={item.tutorials[0].video.thumbnail}
                                 title="Live from space album cover"
                             />
                             <div className={classes.details}>
@@ -124,6 +239,73 @@ export default function PharmTutorialList(){
                             <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
                         </Card>
             })
-
-        }</div>
+        : "Loading..."}
+        <Dialog
+            open={openTutorialForm}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleTutorialForm}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle>Add Tutorial Form - Playlist Summary</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                    <TextField name="tutorialName" label="Tutorial Name" variant="outlined" value={tutorialName} onChange={handleTutorialName} fullWidth required />
+                    <TextField name="tutorialDescription" label="Tutorial Description" variant="outlined" value={tutorialDescription} onChange={handleTutorialDescription} fullWidth required />
+                    <TextField name="tutorialDuration" label="Tutorial Duration" variant="outlined" value={tutorialDuration} onChange={handleTutorialDuration} fullWidth required />
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleTutorialForm} color="primary">
+                    Close
+                </Button>
+                <Button onClick={handleTutorialFormTwo} variant="contained" color="primary">
+                    Next
+                </Button>
+                </DialogActions>
+        </Dialog>
+        <Dialog
+            open={openTutorialFormTwo}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleTutorialFormTwo}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle>Add Tutorial Form - Playlist Videos</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                {tutorialPlaylist.map((video, index) => {
+                        return <Grid container>
+                        {gridBools[index] === false ? <Grid xs={11}>
+                            <Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography>
+                            <TextField className="videoInput" required fullWidth name="name" label="Name of Video" variant="outlined" value={video.name} onChange={event => handleChangeInput(index, event)}/>
+                            <TextField className="videoInput" required fullWidth name="description" label="Video description" variant="outlined" value={video.description} onChange={event => handleChangeInput(index, event)}/>
+                            <TextField className="videoInput" required fullWidth name="pharmacistNotes" label="Pharmacist Notes" variant="outlined" value={video.pharmacistNotes} onChange={event => handleChangeInput(index, event)}/>
+                            <TextField className="videoInput" required fullWidth name="infusionNotes" label="Infusion Notes" variant="outlined" value={video.infusionNotes} onChange={event => handleChangeInput(index, event)}/>
+                            <TextField className="videoInput" required fullWidth name="stepList" label="Instructions separated by a semi-colon" variant="outlined" value={video.stepList} onChange={event => handleChangeInput(index, event)}/>
+                            <TextField className="videoInput" required fullWidth name="url" label="Single Youtube Video URL" variant="outlined" value={video.video.url} onChange={event => handleChangeInput(index, event)}/>
+                            <TextField className="videoInput" required fullWidth name="videoDescription" label="Description of video" variant="outlined" value={video.video.description} onChange={event => handleChangeInput(index, event)}/>
+                        </Grid> : <Grid xs={11}><Typography variant="subtitle2" fullWidth>{`${video.name === "" ? "New Video" : video.name }`}</Typography></Grid>}
+                        {gridBools[index] === false ? <Grid xs={1}><Button onClick={() => toggleGridBools(index)}><ExpandMoreIcon/></Button></Grid> :
+                        <Grid xs={1}>
+                            <Button onClick={() => toggleGridBools(index)}><KeyboardArrowRightIcon/></Button>
+                            <Button disabled={tutorialPlaylist.length === 1} onClick={() => handleRemoveFields(index)}><RemoveIcon/></Button>
+                            <Button onClick={handleAddTutorialField}><AddIcon/></Button>
+                        </Grid>}
+                        </Grid>
+                    })}
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleTutorialFormTwo} color="primary">
+                    Back
+                </Button>
+                <Button onClick={handleAddPatientTutorial} variant="contained" color="primary">
+                    Submit
+                </Button>
+                </DialogActions>
+        </Dialog>
+        </div>
 }

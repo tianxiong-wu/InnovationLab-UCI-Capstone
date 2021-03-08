@@ -9,8 +9,8 @@ router.route('/all').get((req, res) =>{
 
 router.route('/add').post((req, res) =>{
     const name = req.body.name;
-    const description = req.body.name;
-    const duration = req.body.url;
+    const description = req.body.description;
+    const duration = req.body.duration;
     const tutorials = req.body.tutorials;
 
     const newTutorial = new Tutorial({

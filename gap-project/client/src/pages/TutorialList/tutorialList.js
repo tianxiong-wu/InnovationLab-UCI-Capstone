@@ -83,7 +83,7 @@ export default function TutorialList(){
                 <Button onClick={handleTutorialPrompt} color="primary">
                     Close
                 </Button>
-                <Link to="/tutorialPage"><Button variant="contained" color="primary">
+                <Link to="/tutorialPage"><Button disabled={tutorial === null} variant="contained" color="primary">
                     View
                 </Button></Link> 
                 </DialogActions>
