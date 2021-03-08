@@ -12,11 +12,10 @@ router.route('/all').get((req, res) =>{
 
 router.route('/add').post((req, res) => {
     const title = req.body.title;
-    const notifyAt = Date.parse(req.body.notifyAt);
     const description = req.body.description;
 
     const newNotification = new Notification ({
-        title, notifyAt, description
+        title, description
     });
 
     newNotification.save()

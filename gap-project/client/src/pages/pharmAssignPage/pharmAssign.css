@@ -118,3 +118,8 @@
 .assignPageContainer{
     height: 100vh;
 }
+
+.labelSelect {
+    color: white !important;
+    font-size: 1.5rem !important;
+}

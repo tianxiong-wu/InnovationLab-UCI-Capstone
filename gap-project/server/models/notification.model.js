@@ -6,10 +6,6 @@ const notificationSchema = new Schema({
     title: {
         type: String,
     },
-    notifyAt: {
-        type: Date,
-        default: Date.now
-    },
     description: {
         type: String,
         default: ''

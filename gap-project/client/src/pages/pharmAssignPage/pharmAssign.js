@@ -5,6 +5,7 @@ import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
 import ScheduleEvent from "../../components/scheduleEvent/scheduleEvent";
+import Notifications from "../../components/notifications/notifications";
 import { makeStyles, useTheme, withTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -139,6 +140,44 @@ export default function PharmAssign() {
     const [patientTutorials, setPatientTutorials] = useState([]);
     const [addTutorial, setAddTutorial] = useState("");
     const [availableTutorials, setAvailableTutorials] = useState([]);
+    // Notification States
+    const [openAddNotification, setOpenAddNotification] = useState(false);
+    const [openDeleteNotification, setOpenDeleteNotification] = useState(false);
+    const [selectedNotification, setSelectedNotification] = useState("");
+    const [notifTitle, setNotifTitle] = useState("");
+    const [notifDescription, setNotifDescription] = useState("");
+
+    const handleNotifTitle = (event) => {
+        setNotifTitle(event.target.value);
+    }
+    const handleNotifDescription = (event) => {
+        setNotifDescription(event.target.value);
+    }
+    const handleAddNotificationForm = () => {
+        setOpenAddNotification(!openAddNotification);
+    }
+    const handleDeleteNotificationForm = () => {
+        setOpenDeleteNotification(!openDeleteNotification);
+    }
+
+    const handleAddNotifications = () => {
+        let pastNotifs = patient.notification;
+        let notificationObj = { "notification" : [{
+            title: notifTitle,
+            description: notifDescription
+        }]}
+        pastNotifs.map((notif) => {
+            notificationObj["notification"].push(notif);
+        })
+        axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
+        setOpenAddNotification(!openAddNotification);
+    }
+     // Patient Info States
+    const [infoSelection, setInfoSelection] = useState("Schedule");
+    const handleInfoSelection = (event) => {
+        setInfoSelection(event.target.value);
+    }
+
     const theme = useTheme();
 
     const formatTime = (date) => {
@@ -306,22 +345,66 @@ export default function PharmAssign() {
                                 <br />
                                 <Typography variant="h6">Phone: {patient !== null ? `(${patient.phoneNumber.slice(0,3)}) ${patient.phoneNumber.slice(3,6)}-${patient.phoneNumber.slice(6)}` : "Loading..."}</Typography>
                                 <Typography variant="h6">Email: {patient !== null ? patient.email : "Loading..."}</Typography>
-
                             </div>
                             <div className="">
                                 <div className="assignNotificationLabel">
-                                    <Typography variant="h4">
-                                        Today's Schedule 
-                                        <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
-                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button>
-                                    </Typography>                                
+                                    <FormControl >
+                                            <Select
+                                            labelId="demo-simple-select-label"
+                                            value={infoSelection}
+                                            onChange={handleInfoSelection}
+                                            className="labelSelect"
+                                            >
+                                                <MenuItem value="Schedule">Schedule</MenuItem>
+                                                <MenuItem value="Notifications">Notifications</MenuItem>
+                                                <MenuItem value="Checkins">Check Ins</MenuItem>
+                                            </Select>
+                                        </FormControl> 
+                                        {infoSelection === "Schedule"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
+                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button></span> : null}
+                                        {infoSelection === "Notifications"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleAddNotificationForm}><AddIcon/></Button>
+                                        <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteNotificationForm}><RemoveIcon/></Button></span> : null}
                                 </div>
-                                <div className="assignNotificationContainer">
+                                {infoSelection === "Schedule" ? <div className="assignNotificationContainer">
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
                                 : todaysSchedule.map((item => {
                                     return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
                                 }))}
-                                </div>
+                                </div> : null }
+                                {infoSelection === "Notifications" ? <div className="assignNotificationContainer">
+                                    {patient.notification.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Notifications</Typography> 
+                                    : patient.notification.map((notif) => {
+                                        return <Notifications title={notif.title} description={notif.description}/>
+                                    }) }
+                                </div> : null}
+                                {infoSelection === "Checkins" ? <div className="assignNotificationContainer">
+                                    {patient.hasOwnProperty('recentCheckIn') ? `Recently checked on: ${patient.recentCheckIn}` : 'Patient has not been visited yet.'}
+                                    {patient.hasOwnProperty('nextCheckIn') ? `Next check on: ${patient.nextCheckIn}` : 'No future checkup has been set.'}
+                                    {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? 'Please schedule your next check in.' : null} 
+                                </div> : null}
+                                <Dialog
+                                    open={openAddNotification}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleAddNotificationForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Add Notification Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <TextField label="Title" variant="outlined" onChange = {handleNotifTitle} fullWidth required />
+                                        <TextField label="Description" variant="outlined" onChange = {handleNotifDescription} fullWidth required />
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleAddNotificationForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleAddNotifications} variant="contained" color="primary">
+                                        Submit
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
                                 <Dialog
                                     open={openEventForm}
                                     TransitionComponent={Transition}
@@ -329,7 +412,7 @@ export default function PharmAssign() {
                                     onClose={handleEventForm}
                                     aria-labelledby="alert-dialog-slide-title"
                                     aria-describedby="alert-dialog-slide-description">
-                                    <DialogTitle>Add Notification Event Form</DialogTitle>
+                                    <DialogTitle>Add Scheule Event Form</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText>
                                         <TextField label="Title" variant="outlined" onChange = {handleTitleChange} fullWidth required />
