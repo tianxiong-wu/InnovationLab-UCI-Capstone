@@ -146,7 +146,6 @@ export default function PharmAssign() {
     const [selectedNotification, setSelectedNotification] = useState("");
     const [notifTitle, setNotifTitle] = useState("");
     const [notifDescription, setNotifDescription] = useState("");
-
     const handleNotifTitle = (event) => {
         setNotifTitle(event.target.value);
     }
@@ -162,7 +161,6 @@ export default function PharmAssign() {
     const handleDeleteNotificationForm = () => {
         setOpenDeleteNotification(!openDeleteNotification);
     }
-
     const handleAddNotifications = () => {
         let pastNotifs = patient.notification;
         let notificationObj = { "notification" : [{
@@ -175,7 +173,6 @@ export default function PharmAssign() {
         axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
         setOpenAddNotification(!openAddNotification);
     }
-
     const handleDeleteNotifications = () => {
         let pastNotifs = patient.notification;
         let notificationObj = { "notification" : []}
@@ -187,7 +184,32 @@ export default function PharmAssign() {
         axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
         setOpenDeleteNotification(!openDeleteNotification);
     }
-     // Patient Info States
+    // Patient Checkin States
+    const [openCheckinForm, setOpenCheckinForm] = useState(false);
+    const [newCheckinDate, setNewCheckinDate] = useState(new Date());
+    const [newCheckinTime, setNewCheckinTime] = useState(new Date());
+    const [updateRecentCheck, setUpdateRecentCheck] = useState("");
+
+    const handleCheckinForm = () => {
+        setOpenCheckinForm(!openCheckinForm);
+    }
+    const handleNewCheckinDate = (event) => {
+        setNewCheckinDate(event.target.value);
+    }
+    const handleNewCheckinTime = (event) => {
+        setNewCheckinTime(event.target.value);
+    }
+    const handleUpdateCheck = (event) => {
+        setUpdateRecentCheck(event.target.value);
+    }
+    const updateCheckin = () => {
+        let dateObj = (`${dayMonthYear(newCheckinDate)} ${newCheckinTime.toLocaleTimeString(navigator.language, {
+            hour: '2-digit',
+            minute:'2-digit'
+          })}`);
+        console.log(dateObj);
+    }
+    // Patient Info States
     const [infoSelection, setInfoSelection] = useState("Schedule");
     const handleInfoSelection = (event) => {
         setInfoSelection(event.target.value);
@@ -379,6 +401,7 @@ export default function PharmAssign() {
                                         <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button></span> : null}
                                         {infoSelection === "Notifications"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleAddNotificationForm}><AddIcon/></Button>
                                         <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteNotificationForm}><RemoveIcon/></Button></span> : null}
+                                        {infoSelection === "Checkins"? <span><Button variant="outlined" className="addMinusBtns" onClick={handleCheckinForm}>Update Check-in Date</Button></span> : null}
                                 </div>
                                 {infoSelection === "Schedule" ? <div className="assignNotificationContainer">
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
@@ -393,9 +416,15 @@ export default function PharmAssign() {
                                     }) }
                                 </div> : null}
                                 {infoSelection === "Checkins" ? <div className="assignNotificationContainer">
-                                    {patient.hasOwnProperty('recentCheckIn') ? `Recently checked on: ${patient.recentCheckIn}` : 'Patient has not been visited yet.'}
-                                    {patient.hasOwnProperty('nextCheckIn') ? `Next check on: ${patient.nextCheckIn}` : 'No future checkup has been set.'}
-                                    {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? 'Please schedule your next check in.' : null} 
+                                    {patient.hasOwnProperty('recentCheckIn') ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">{`Recently checked: ${dayMonthYear(new Date(patient.recentCheckIn))} ${new Date(patient.recentCheckIn).toLocaleTimeString(navigator.language, {
+                                        hour: '2-digit',
+                                        minute:'2-digit'
+                                    })}`}</Typography> : <Typography variant="h5" align="center" color="primary">Patient has not been visited yet.</Typography>}
+                                    {patient.hasOwnProperty('nextCheckIn') ? <Typography className="recentCheckin" variant="h5" align="center" color="primary">{`Next check-in is: ${dayMonthYear(new Date(patient.nextCheckIn))} ${new Date(patient.nextCheckIn).toLocaleTimeString(navigator.language, {
+                                        hour: '2-digit',
+                                        minute:'2-digit'
+                                    })}`}</Typography> : <Typography variant="h5" align="center" color="primary">No future checkup has been set.</Typography>}
+                                    {patient.hasOwnProperty('recentCheckIn') === false && patient.hasOwnProperty('nextCheckIn') === false ? <Typography variant="h5" align="center" color="primary">Please schedule their next check in.</Typography> : null} 
                                 </div> : null}
                                 <Dialog
                                     open={openAddNotification}
@@ -451,13 +480,71 @@ export default function PharmAssign() {
                                     </DialogActions>
                                 </Dialog>
                                 <Dialog
+                                    open={openCheckinForm}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleCheckinForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Next Check-in Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <KeyboardDatePicker
+                                                margin="normal"
+                                                id="date-picker-dialog"
+                                                label="Select a Date"
+                                                format="MM/dd/yyyy"
+                                                value={newCheckinDate}
+                                                fullWidth
+                                                onChange={handleNewCheckinDate}
+                                                KeyboardButtonProps={{
+                                                    'aria-label': 'change date',
+                                                }}/>
+                                            <KeyboardTimePicker
+                                            margin="normal"
+                                            id="time-picker"
+                                            label="Select a Time"
+                                            value={newCheckinTime}
+                                            fullWidth
+                                            onChange={handleNewCheckinTime}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change time',
+                                            }}/>
+                                        </MuiPickersUtilsProvider>        
+                                        <FormControl className="selectInput">
+                                            <InputLabel>Replace last checkin with {dayMonthYear(newCheckinDate)} {newCheckinTime.toLocaleTimeString(navigator.language, {
+                                                hour: '2-digit',
+                                                minute:'2-digit'
+                                            })}?</InputLabel>
+                                            <Select
+                                            labelId="demo-simple-select-label"
+                                            value={updateRecentCheck}
+                                            onChange={handleUpdateCheck}
+                                            >
+                                                <MenuItem value="yes">Yes, update the last checkin.</MenuItem>
+                                                <MenuItem value="no">No, do not update.</MenuItem>
+                                            </Select>
+                                        </FormControl>        
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleCheckinForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={updateCheckin} variant="contained" color="primary">
+                                        Update
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
+                                <Dialog
                                     open={openEventForm}
                                     TransitionComponent={Transition}
                                     keepMounted
                                     onClose={handleEventForm}
                                     aria-labelledby="alert-dialog-slide-title"
                                     aria-describedby="alert-dialog-slide-description">
-                                    <DialogTitle>Add Scheule Event Form</DialogTitle>
+                                    <DialogTitle>Add Schedule Event Form</DialogTitle>
                                     <DialogContent>
                                     <DialogContentText>
                                         <TextField label="Title" variant="outlined" onChange = {handleTitleChange} fullWidth required />
