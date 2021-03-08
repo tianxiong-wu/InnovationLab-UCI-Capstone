@@ -187,13 +187,13 @@ export default function PharmacistHome(props){
                             <Paper className={classes.paper} className = "gridItem">{`${patient.gender[0].toUpperCase() + patient.gender.substring(1)}`}</Paper>
                         </Grid>
                         <Grid item xs={2}>
-                            <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.recentCheckIn).toLocaleDateString()}`}</Paper>
+                            <Paper className={classes.paper} className = "gridItem">{`${patient.hasOwnProperty('recentCheckIn') === false ? 'None Set' : new Date(patient.recentCheckIn).toLocaleDateString()}`}</Paper>
                         </Grid>
                         <Grid item xs={2}>
-                            <Paper className={classes.paper} className = "gridItem">{`${new Date(patient.nextCheckIn).toLocaleDateString()}`}</Paper>
+                            <Paper className={classes.paper} className = "gridItem">{`${patient.hasOwnProperty('nextCheckIn') === false ? 'None Set' : new Date(patient.nextCheckIn).toLocaleDateString()}`}</Paper>
                         </Grid>
                         <Grid item xs={2}>
-                            <Paper className={classes.paper} className = "gridItem">{infusionStringArr(patient.infusionType)}</Paper>
+                            <Paper className={classes.paper} className = "gridItem">{patient.infusionType.length === 0 ? "None Set" : infusionStringArr(patient.infusionType)}</Paper>
                         </Grid>
                         <Grid item xs={2}>
                             <Paper className={classes.paper} className = "gridItem">{patient.notificationType === "both" ? "Phone and Email" : `${patient.notificationType[0].toUpperCase() + patient.notificationType.substring(1)}`}</Paper>
