@@ -118,7 +118,6 @@ export default function PharmAssign() {
     const {user, setUser} = useContext(UserContext); // pharmacist account context
     const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
     const [todaysSchedule, setTodaysSchedule] = useState([]); // today's schedule for the patient
-    const [tutorialArchive, setTutorialArchive] = useState([]);
     const [selectedArchive, setSelectedArchive] = useState(null);
     // Dialog States
     const [openEventForm, setOpenEventForm] = useState(false);
@@ -246,7 +245,8 @@ export default function PharmAssign() {
                 start: dateObj,
                 end: dateObj,
                 notifyAt: dateObj,
-                description: eventDescription
+                description: eventDescription,
+                tutorialId: selectedArchive
                 }
             ]}
         patientEventsArr.map(item => {
