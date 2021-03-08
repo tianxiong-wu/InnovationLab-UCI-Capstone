@@ -29,7 +29,7 @@ export default function PatientSchedule(){
                 return ["Su", numDate, "Sunday"];
         }
     }
-    const [currentDay, setCurrentDay] = useState(getCurrentDay(new Date().toISOString().slice(0,10))[2]);
+    const [currentDay, setCurrentDay] = useState(null);
     const [days, setDays] = useState([]);
     const [render, setRender] = useState(false);
     const [earliest, setEarliest] = useState(days[0]);
@@ -46,7 +46,8 @@ export default function PatientSchedule(){
         }
         setDays(week);
         setRender(true);
-        setTodaysSchedule(getTodaysSchedule(new Date()));
+        setTodaysSchedule(getTodaysSchedule(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})));
+        setCurrentDay(getCurrentDay(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"}))[2]);
     }, []);    
 
     
@@ -140,7 +141,7 @@ export default function PatientSchedule(){
     }
 
     const getTodaysSchedule = (selected) => {
-        let selectedDate = new Date(selected); //get new date object of a date passed into function
+        let selectedDate = new Date(`${selected} 00:00:00`); //get new date object of a date passed into function
         let scheduleArr = []; // initialized schedule array
         for (let i = 0; i < user.events.length; i++){ // iter thru events
             if (dayMonthYear(selectedDate) ===  dayMonthYear(new Date(user.events[i].notifyAt))){ // compare the selectedDate with date of notifyAt 
@@ -216,7 +217,7 @@ export default function PatientSchedule(){
                     </ul>
                 </Grid>
                 <Grid className="dayContainer">
-                    <Typography variant="h3" align="center" className="dayStyling">{currentDay.toLocaleString('en-us', {weekday:'long'})}</Typography>
+                    <Typography variant="h3" align="center" className="dayStyling">{currentDay}</Typography>
                     <div className="scheduleComponents">
                         <br/>
                         {todaysSchedule.length === 0 ? <Typography variant="h4" color="primary" align="center">No Infusions Today</Typography> : todaysSchedule.map((item => {
