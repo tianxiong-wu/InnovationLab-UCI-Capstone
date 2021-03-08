@@ -34,13 +34,13 @@
     height: 80% !important;
 }
 
-.notifWidget {
+.assignNotifWidget {
     height: 18vh !important;
     margin-top: 2% !important;
     margin-bottom: 7.5% !important;
 }
 
-.notificationContainer {
+.assignNotificationContainer {
     height: 45vh !important;
     border-color: black !important;
     -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
@@ -50,7 +50,7 @@
     overflow-y: scroll;
 }
 
-.notificationLabel {
+.assignNotificationLabel {
     color: white !important;
     background-color: #00529b !important;
     padding: 2% !important;
@@ -58,7 +58,7 @@
     border-top-right-radius: 10px !important;
 }
 
-.scheduleWidget {
+.assignScheduleWidget {
     width: 100%;
     height: 75vh !important;
     -webkit-box-shadow: 14px 13px 25px -9px rgba(0,0,0,0.75);
@@ -70,14 +70,14 @@
     margin-right: 20px;
 }
 
-.scheduleWidget::-webkit-scrollbar {
+.assignScheduleWidget::-webkit-scrollbar {
 	display:none;
 }
 .notificationContainer::-webkit-scrollbar {
 	display:none;
 }
 
-.scheduleLabel {
+.assignScheduleLabel {
     margin-top: 2.5% !important;
     margin-bottom: -2.5% !important;
     color: white !important;
@@ -113,4 +113,8 @@
 .videoInput{
     width: 100% !important;
     margin: .5vh 0 !important;
+}
+
+.assignPageContainer{
+    height: 100vh;
 }

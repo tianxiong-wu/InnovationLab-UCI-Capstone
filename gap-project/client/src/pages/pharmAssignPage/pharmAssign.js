@@ -361,7 +361,7 @@ export default function PharmAssign() {
         <div className={classes.root}>
             <ThemeProvider theme={theme}>
                 <Grid container justify="center" spacing={0}>
-                    <Grid item xs={8} sm={8} md={5} className="">
+                    <Grid item xs={8} sm={8} md={5} className="assignPageContainer">
                         <div>
                             <div style={{ textAlign: "left", height: '30vh' }}>
                                 <br />
@@ -374,13 +374,13 @@ export default function PharmAssign() {
 
                             </div>
                             <div className="">
-                                <div className="notificationLabel">
+                                <div className="assignNotificationLabel">
                                     <Typography variant="h4">
                                         Today's Schedule <Button variant="outlined" className="addMinusBtns" onClick={handleEventForm}><AddIcon/></Button>
                                         <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteEventForm}><RemoveIcon/></Button>
                                     </Typography>                                
                                 </div>
-                                <div className="notificationContainer">
+                                <div className="assignNotificationContainer">
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
                                 : todaysSchedule.map((item => {
                                     return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
@@ -474,13 +474,13 @@ export default function PharmAssign() {
                         </div>
                     </Grid>
                     <Grid item xs={8} sm={8} md={5} style={{marginLeft:'50px'}} className="widgetContainer">
-                        <div className="scheduleLabel">
+                        <div className="assignScheduleLabel">
                             <Typography variant="h4">
                                 Assigned Tutorials<Button variant="outlined" className="addMinusBtns" onClick={handleTutorialForm}><AddIcon/></Button>
                                 <Button variant="outlined" className="addMinusBtns" onClick={handleDeleteTutorialForm}><RemoveIcon/></Button>
                             </Typography>  
                         </div>
-                        <div className="scheduleWidget">
+                        <div className="assignScheduleWidget">
                             {<TutorialsList classes={classes}></TutorialsList>}
                             <Dialog
                                     open={openTutorialForm}
