@@ -361,9 +361,7 @@ export default function PharmAssign() {
         else {
             setPatientTutorials([]);
         }
-        axios.get('http://localhost:5000/tutorials/all').then(res => {
-            setTutorialArchive(res.data);
-        })
+
     },[])
 
     return (
@@ -439,9 +437,6 @@ export default function PharmAssign() {
                                             value={selectedArchive}
                                             onChange={handleNewArchive}
                                             >
-                                            {tutorialArchive.length === 0 ? "No Tutorials Found" : tutorialArchive.map((tutorial) => {
-                                                return <MenuItem value={tutorial._id}>{tutorial.name}</MenuItem>
-                                            })}
                                             </Select>
                                         </FormControl>
                                     </DialogContentText>

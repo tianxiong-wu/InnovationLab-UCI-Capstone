@@ -65,7 +65,6 @@ export default function LoginForm(props){
     const toggleTwo = () => {
       switch (role){
         case "patient":
-          console.log("patient route")
           axios.post('http://localhost:5000/patients/login', loginInfo).then(res => {
             setUser(res.data);
           }).catch(err =>{
@@ -73,7 +72,6 @@ export default function LoginForm(props){
           })
           break;
         case "pharmacist":
-          console.log("pharm route")
           axios.post('http://localhost:5000/pharmacists/login', loginInfo).then(res => {
             setUser(res.data);
             }).catch(err =>{
