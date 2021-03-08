@@ -133,7 +133,7 @@ router.route('/updateNotification/:id').post((req, res) =>{
 // update next check in 
 router.route('/updateCheckin/:id').post((req, res) =>{
     Patient.findByIdAndUpdate(req.params.id).then(patient => {
-        patient.nextCheckin = req.body.nextCheckin;
+        patient.nextCheckIn = req.body.nextCheckIn;
         patient.save()
             .then(() => res.json(patient))
             .catch(err => res.status(400).json('Error: ' + err))
