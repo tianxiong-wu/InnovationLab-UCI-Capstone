@@ -153,6 +153,9 @@ export default function PharmAssign() {
     const handleNotifDescription = (event) => {
         setNotifDescription(event.target.value);
     }
+    const handleSelectedNotification = (event) => {
+        setSelectedNotification(event.target.value);
+    }
     const handleAddNotificationForm = () => {
         setOpenAddNotification(!openAddNotification);
     }
@@ -171,6 +174,18 @@ export default function PharmAssign() {
         })
         axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
         setOpenAddNotification(!openAddNotification);
+    }
+
+    const handleDeleteNotifications = () => {
+        let pastNotifs = patient.notification;
+        let notificationObj = { "notification" : []}
+        pastNotifs.map((notif) => {
+            if (notif._id !== selectedNotification){
+                notificationObj["notification"].push(notif);
+            }
+        })
+        axios.post(`http://localhost:5000/patients/updateNotification/${patient._id}`, notificationObj);
+        setOpenDeleteNotification(!openDeleteNotification);
     }
      // Patient Info States
     const [infoSelection, setInfoSelection] = useState("Schedule");
@@ -402,6 +417,36 @@ export default function PharmAssign() {
                                     </Button>
                                     <Button onClick={handleAddNotifications} variant="contained" color="primary">
                                         Submit
+                                    </Button>
+                                    </DialogActions>
+                                </Dialog>
+                                <Dialog
+                                    open={openDeleteNotification}
+                                    TransitionComponent={Transition}
+                                    keepMounted
+                                    onClose={handleDeleteNotificationForm}
+                                    aria-labelledby="alert-dialog-slide-title"
+                                    aria-describedby="alert-dialog-slide-description">
+                                    <DialogTitle>Delete Notification Form</DialogTitle>
+                                    <DialogContent>
+                                    <DialogContentText>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            value={selectedNotification}
+                                            onChange={handleSelectedNotification}
+                                            >
+                                        {patient.notification.map((notif) => {
+                                            return <MenuItem value={notif._id}>{notif.title}. {notif.description}</MenuItem>
+                                        })}
+                                        </Select>
+                                    </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                    <Button onClick={handleDeleteNotificationForm} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={handleDeleteNotifications} variant="contained" color="secondary">
+                                        Delete
                                     </Button>
                                     </DialogActions>
                                 </Dialog>
