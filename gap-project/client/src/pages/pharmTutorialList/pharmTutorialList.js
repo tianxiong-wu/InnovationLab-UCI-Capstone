@@ -200,10 +200,6 @@ export default function PharmTutorialList(){
         setOpenTutorialFormTwo(!openTutorialFormTwo);
     }
 
-    const handleNewTutorialId = (event) => {
-        setSelectedTutorial(event.target.value);
-    }
-
     const handleChange = (id) => {
         history.push('/Tutorial/' + id);
     }

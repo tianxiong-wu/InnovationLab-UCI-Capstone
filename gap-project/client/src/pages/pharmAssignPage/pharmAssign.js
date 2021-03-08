@@ -437,6 +437,9 @@ export default function PharmAssign() {
                                             value={selectedArchive}
                                             onChange={handleNewArchive}
                                             >
+                                                {patient.infusionArray.map((tutorial) => {
+                                                    return <MenuItem value={tutorial._id}>{tutorial.name}</MenuItem>
+                                                })}
                                             </Select>
                                         </FormControl>
                                     </DialogContentText>
