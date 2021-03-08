@@ -19,7 +19,7 @@ import LoginSignUp from "./pages/loginSignUp/loginSignUp";
 import Footer from './components/footer/footer'
 import PharmFooter from './components/pharmFooter/footer';
 import Settings from './pages/patientSettings/settings';
-import PharmSettings from './pages/pharmSettings/pharmSettings';
+import PharmSettings from './pages/pharmSettings/settings';
 import Schedule from './pages/patientSchedule/patientSchedule';
 import PharmTutorials from './pages/pharmTutorialList/pharmTutorialList';
 import PharmAssign from './pages/pharmAssignPage/pharmAssign';
@@ -65,7 +65,7 @@ function App() {
             <Switch>
               <Route path="/faq" component={FAQPage}/>
               <Route path="/Tutorials" component={PharmTutorials}/>
-              <Route path="/settings" component={Settings}/>
+              <Route path="/settings" component={PharmSettings}/>
               <Route path="/pharmAssign" component={PharmAssign}/>
               <Route path="/" component={PharmacistHome}/>
               <Route component = {Error}/>

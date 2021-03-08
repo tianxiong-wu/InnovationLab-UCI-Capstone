@@ -70,7 +70,6 @@ export default function PatientSettings(){
     const [currentPass, setCurrentPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [repeatPass, setRepeatPass] = useState("");
-
     const [notifyPhone, setNotifyPhone] = useState("Yes");
     const [notifyEmail, setNotifyEmail] = useState("Yes");
 
