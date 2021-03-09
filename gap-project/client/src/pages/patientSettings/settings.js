@@ -1,4 +1,4 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../../UserContext";
 import Grid from "@material-ui/core/Grid";
 import PropTypes from 'prop-types';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { TextField } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-
+import axios from 'axios';
 import {FormControl, 
         FormLabel,
         Radio, 
@@ -70,21 +70,12 @@ export default function PatientSettings(){
     const [currentPass, setCurrentPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [repeatPass, setRepeatPass] = useState("");
-
     const [notifyPhone, setNotifyPhone] = useState("Yes");
     const [notifyEmail, setNotifyEmail] = useState("Yes");
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
-
-    const handleNotifyPhone = (event, newValue) => {
-        setNotifyPhone(newValue);
-    };
-
-    const handleNotifyEmail = (event, newValue) => {
-        setNotifyEmail(newValue);
-    };
 
     const handleCurrentPass = (event, newValue) => {
         setCurrentPass(newValue);
@@ -98,17 +89,67 @@ export default function PatientSettings(){
         setRepeatPass(newValue);
     }
 
-    const handleNewPhone = (event, newValue) => {
-        setPhone(newValue);
+    const handleNotifyPhone = (event, newValue) => {
+        console.log(newValue);
+        setNotifyPhone(newValue);
+    };
+
+    const handleNotifyEmail = (event, newValue) => {
+        console.log(newValue);
+        setNotifyEmail(newValue);
+    };
+
+    const handleNewPhone = (event) => {
+        console.log(event.target.value);
+        setPhone(event.target.value);
     }
 
-    const handleNewEmail = (event, newValue) => {
-        setEmail(newValue);
+    const handleNewEmail = (event) => {
+        console.log(event.target.value);
+        setEmail(event.target.value);
     }
 
-    function updatePatientSettings() {
-        alert('you saved your phone number')
+    const updatePatientSettings = () => {
+        /* if updateNotify type was implemented
+        let type = "";
+        if (notifyEmail === "Yes" && notifyPhone === "Yes"){
+            type = "both"
+        }
+        else if (notifyEmail === "Yes" && notifyPhone === "No"){
+            type = "email"
+        }
+        else if (notifyEmail === "No" && notifyPhone === "Yes"){
+            type = "phone"
+        }
+        const notify = {"notificationType": type}
+        axios.post(`http://localhost:5000/patients/`)*/
+
+        const values = {
+            "phoneNumber": phone,
+            "email": email,
+            "birthday": "12/26/1997",
+        }
+
+        let userId = String(user._id);
+        axios.post(`http://localhost:5000/patients/updateInfo/${userId}`, values).then(res => {
+            console.log(res);
+        })
     }
+
+    useEffect(() => {
+        if (user.notificationType === "both"){
+            setNotifyEmail("Yes");
+            setNotifyPhone("Yes");
+        }
+        else if (user.notificationType === "email"){
+            setNotifyEmail("Yes");
+            setNotifyPhone("No");
+        }
+        else if (user.notificationType === "phone"){
+            setNotifyPhone("Yes");
+            setNotifyEmail("No");
+        }
+    },[])
     
     return (
         <Grid container>
@@ -177,11 +218,9 @@ export default function PatientSettings(){
                                 </div>
                                 <div className="formHalf">
                                     <FormControl component="fieldset" className="formControl">
-                                        <FormLabel component="legend" className="formLabel">Set a new phone?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
                                             label={user.phoneNumber}
-                                            defaultValue={phone}
                                             onChange={handleNewPhone}
                                             variant="outlined"
                                             className="formLabelShift"
@@ -205,11 +244,9 @@ export default function PatientSettings(){
                                 </div>
                                 <div className="formHalf">
                                     <FormControl component="fieldset" className="formControl">
-                                        <FormLabel component="legend" className="formLabel">Set a new email?</FormLabel>
                                         <TextField 
                                             id="outlined-basic"
                                             label={user.email}
-                                            defaultValue={email}
                                             onChange={handleNewEmail}
                                             variant="outlined"
                                             className="formLabelShift">
