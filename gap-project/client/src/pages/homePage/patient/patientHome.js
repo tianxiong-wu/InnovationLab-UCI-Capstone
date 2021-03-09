@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../UserContext";
+import { TutorialContext } from "../../../TutorialContext";
 import { createMuiTheme, responsiveFontSizes, ThemeProvider } from '@material-ui/core/styles';
 import { Grid } from "@material-ui/core"
 import { Typography } from "@material-ui/core"
@@ -8,7 +9,18 @@ import ScheduleEvent from "../../../components/scheduleEvent/scheduleEvent";
 import Notifications from "../../../components/notifications/notifications";
 import { useHistory } from 'react-router-dom';
 import '../patient/patientHome.css'
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import Button from "@material-ui/core/Button";
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+  } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -19,13 +31,19 @@ const useStyles = makeStyles((theme) => ({
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 
 export default function PatientHome(props){
     const classes = useStyles();
     const history = useHistory();
     const {user, setUser} = useContext(UserContext);
+    const {tutorial, setTutorial} = useContext(TutorialContext);
     const [nextInfusion, setNextInfusion] = useState("");
     const [todaysSchedule, setTodaysSchedule] = useState([]);
+    const [tutorialSelect, setTutorialSelect] = useState(null);
+    const [openTutorialPrompt, setTutorialPrompt] = useState(false);
 
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
@@ -41,10 +59,19 @@ export default function PatientHome(props){
     }
 
     const getNextInfusion = () => {
-        let infusionDate = new Date(user.events[0].notifyAt);
-        let dayMonthYear = infusionDate.toLocaleDateString("en-US", options);
-        let dateTime = formatTime(infusionDate);
-        return `${dayMonthYear} at ${dateTime}.`
+        let today = new Date().getTime();
+        let eventArr = [];
+        for (let i = 0; i < user.events.length; i++){
+            if (today < new Date(user.events[i].notifyAt).getTime()){
+                eventArr.push(user.events[i])
+            }
+        }
+        eventArr.sort(function(a,b){
+            return new Date(b.date) - new Date(a.date);
+        })
+        let dayMonthYear = new Date(eventArr[0].notifyAt).toLocaleDateString("en-US", options);
+        let dateTime = formatTime(new Date(eventArr[0].notifyAt));
+        return [`${dayMonthYear} at ${dateTime}.`, eventArr[0].tutorialId]
     }
 
     const dayMonthYear = (date) => {
@@ -66,6 +93,23 @@ export default function PatientHome(props){
         return scheduleArr;
     }
 
+    const handleTutorialPrompt = (event) => {
+        user.infusionArray.map(tutorial => {
+            if (tutorial._id === nextInfusion[1]){
+                setTutorialSelect(tutorial.name);
+                setTutorial(tutorial);
+            }
+        })
+        setTutorialPrompt(!openTutorialPrompt);
+    }
+    const findThumbnail = () => {
+        for (let i = 0; i < user.infusionArray.length; i++){
+            if (user.infusionArray[i]._id === nextInfusion[1]){
+                return `${user.infusionArray[i].tutorials[0].video.thumbnail}`
+            }
+        }
+    }
+
     const handleChange = (id)=>{
         history.push('/tutorial/' + id);
       }
@@ -84,17 +128,18 @@ export default function PatientHome(props){
                 <Grid container justify="center" spacing={3}>
                     <Grid item xs={2}></Grid>
                         <Grid item xs={8}>
-                            <Typography variant="h5" className="nextInfusionSummary">{user.events.length === 0 ? `Hi ${user.firstName}, you have no upcoming infusions.` : `Hi ${user.firstName}, your next infusion is on ${nextInfusion}`}</Typography>
+                            <Typography variant="h5" className="nextInfusionSummary">{user.events.length === 0 ? `Hi ${user.firstName}, you have no upcoming infusions.` : `Hi ${user.firstName}, your next infusion is on ${nextInfusion[0]}`}</Typography>
                         </Grid>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
                             <div>
                                 <div className="infusionWidget" onClick={()=>handleChange(0)}>
                                     <div className="infusionVideoContainer">
-                                        <img src={user.infusionArray.length === 0 ? "https://picsum.photos/seed/picsum/200/300" : user.infusionArray[0].tutorials[0].video.thumbnail} className="infusionThumbnail"></img>
+                                        {user.events.length === 0 ? <img src="https://picsum.photos/seed/picsum/200/300" className="infusionThumbnail"></img>
+                                        : <img src={findThumbnail()} onClick={handleTutorialPrompt}/>}
                                     </div>
                                     <div className="infusionLabel">
-                                        <Typography variant="h5">{user.infusionArray.length === 0 ? "No Infusions Have Been Set." : `Next Infusion: ${user.infusionArray[0].name}`}</Typography>
+                                        <Typography variant="h5">{user.infusionArray.length === 0 ? "No Upcoming Events." : <span onClick={handleTutorialPrompt}>Next Infusion: {user.infusionArray[0].name}</span>}</Typography>
                                     </div>
                                 </div>
                                 <div className="notifWidget">
@@ -124,6 +169,29 @@ export default function PatientHome(props){
                             </div>
                         </Grid>
                 </Grid>
+                <Dialog
+                    open={openTutorialPrompt}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleTutorialPrompt}
+                    aria-labelledby="alert-dialog-slide-title"
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogTitle>Tutorial Select</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText>
+                        <Typography>Go to {tutorialSelect} Tutorial? </Typography>
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleTutorialPrompt} color="primary">
+                        Close
+                    </Button>
+                    <Link to="/tutorialPage"><Button disabled={tutorial === null} variant="contained" color="primary">
+                        View
+                    </Button></Link> 
+                    </DialogActions>
+                </Dialog>
             </ThemeProvider>
        </div>
     )

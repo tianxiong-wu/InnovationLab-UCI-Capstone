@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../UserContext";
+import { TutorialContext } from "../../TutorialContext";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ScheduleEvent from "../../components/scheduleEvent/scheduleEvent";
 import './patientSchedule.css';
-
 
 export default function PatientSchedule(){
 
@@ -221,7 +221,7 @@ export default function PatientSchedule(){
                     <div className="scheduleComponents">
                         <br/>
                         {todaysSchedule.length === 0 ? <Typography variant="h4" color="primary" align="center">No Infusions Today</Typography> : todaysSchedule.map((item => {
-                            return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
+                            return <ScheduleEvent tutorialId={item.tutorialId} time={formatTime(new Date(item.notifyAt))} name={item.title}/>
                         }))}
                     </div>
                 </Grid>

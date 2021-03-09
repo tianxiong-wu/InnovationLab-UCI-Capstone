@@ -18,3 +18,42 @@
     line-height: 3.5rem;
 }
 
+.scheduleItemDialog{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.infusionTimeDialog{
+    background-color: #00529b;
+    color: white;
+    width: 10%;
+    font-size: 1rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    font-weight: bold !important;
+}
+
+.infusionNameDialog{
+    color: #00529b;
+    width: 28%;
+    font-size: 1.5rem !important;
+    text-align: center;
+    line-height: 3.5rem;
+    box-Shadow: 0 0 0 1px #00529b;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    height: 98%;
+    margin-top: .05%;
+}
+
+.viewTutorial{
+    margin-top: 1.5vh !important;
+    border-radius: 50px !important;
+    background-color: #00529b !important;
+    color: white !important;
+    text-decoration: none !important;
+}
