@@ -116,10 +116,12 @@ export default function PatientSettings(){
     const [pharmAddress, setPharmAddress] = useState({});
     const [pharmPhone, setPharmPhone] = useState("");
     const [pharmEmail, setPharmEmail] = useState("");
+    const [pharmId, setPharmId] = useState("");
     const [openPharmacyForm, setOpenPharmacyForm] = useState(false);
     
     useEffect( () => {
         axios.get('http://localhost:5000/pharmacy/all').then(res => {
+            console.log(res.data[0]._id);
             let address = {'streetName': "", 'city': "", 'state': "", 'zipCode': ""};
             let phone = "";
             let email = "";
@@ -142,6 +144,7 @@ export default function PatientSettings(){
             setPharmAddress(address);
             setPharmEmail(email);
             setPharmPhone(phone);
+            setPharmId(res.data[0]._id);
         });
     },[])   
 
@@ -151,18 +154,18 @@ export default function PatientSettings(){
     const handleCurrentPass = (event, newValue) => {
         setCurrentPass(newValue);
     }
-    const handleNewPass = (event, newValue) => {
-        setNewPass(newValue);
+    const handleNewPass = (event) => {
+        setNewPass(event.target.value);
     }
     const handleRepeatPass = (event, newValue) => {
         setRepeatPass(newValue);
     }
 
-    const handleNewPhone = (event, newValue) => {
-        setPhone(newValue);
+    const handleNewPhone = (event) => {
+        setPharmPhone(event.target.value);
     }
-    const handleNewEmail = (event, newValue) => {
-        setEmail(newValue);
+    const handleNewEmail = (event) => {
+        setPharmEmail(event.target.value);
     }
     const handleNewName = (event) => {
         setPharmName(event.target.value);
@@ -170,22 +173,38 @@ export default function PatientSettings(){
     const handlePharmacyForm = (event) => {
         setOpenPharmacyForm(!openPharmacyForm);
     }
+    const handleUpdateAddress = (event) => {
+        let address = pharmAddress;
+        switch (event.target.id){
+            case "pharmStreet":
+                address.streetName = event.target.value;
+                break;
+            case "pharmCity":
+                address.city = event.target.value;
+                break;
+            case "pharmState":
+                address.state = event.target.value;
+                break;
+            case "pharmZipcode":
+                address.zipCode = event.target.value;
+                break;
+        }
+        setPharmAddress(address);
+    }
     const handleUpdatePharmacy = () => {
-        //
-    }
-
-    function updatePatientSettings() {
-        const value = { "pharmacy": {
-            name: "",
-            streetName: "",
-            city: "",
-            state: "",
-            zipCode: "",
-            phone: "",
-            email: ""
-        }}
-        alert('you saved your phone number')
-    }
+        const value = {
+            name: pharmName,
+            streetName: pharmAddress.streetName,
+            city: pharmAddress.city,
+            state: pharmAddress.state,
+            zipCode: pharmAddress.zipCode,
+            phone: pharmPhone,
+            email: pharmEmail
+        }
+        axios.post(`http://localhost:5000/pharmacy/updateInfo/${pharmId}`, value).then(res =>{ 
+        })
+        setOpenPharmacyForm(!openPharmacyForm);
+    } 
     
     return (
         <Grid container>
@@ -235,7 +254,7 @@ export default function PatientSettings(){
                             fullWidth
                             required>
                         </TextField>
-                        <div className="saveButtonContainer"><Button variant="outlined" className="saveButton" onClick={updatePatientSettings}>Save</Button></div>
+                        <div className="saveButtonContainer"><Button variant="outlined" className="saveButton">Save</Button></div>
                     </div>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
@@ -297,7 +316,7 @@ export default function PatientSettings(){
                     </Grid>
                     <Grid container spacing={1}>
                             <Grid item xs={12} align="center">
-                                <Button fullwidth variant="outlined" className="updatePharmBtn" color="primary" onClick={handlePharmacyForm}>Update Pharmacy Info</Button>
+                                <Button variant="outlined" className="updatePharmBtn" color="primary" onClick={handlePharmacyForm}>Update Pharmacy Info</Button>
                             </Grid>
                         </Grid>
                 </Container>
@@ -316,13 +335,13 @@ export default function PatientSettings(){
                 <DialogTitle>Pharmacy Info Form</DialogTitle>
                 <DialogContent>
                 <DialogContentText>
-                    <TextField value={pharmName} variant="outlined" fullWidth required />
-                    <TextField label="Streetname" variant="outlined" fullWidth required />
-                    <TextField label="City" variant="outlined" fullWidth required />
-                    <TextField label="State" variant="outlined" fullWidth required />
-                    <TextField label="ZipCode" variant="outlined" fullWidth required />
-                    <TextField value={pharmPhone} variant="outlined" fullWidth required />
-                    <TextField value={pharmEmail} variant="outlined" fullWidth required />
+                    <TextField label="Pharmacy Name" variant="outlined" onChange={handleNewName} fullWidth required />
+                    <TextField label="Street Name" onChange={handleUpdateAddress} id="pharmStreet" variant="outlined" fullWidth required />
+                    <TextField label="City" onChange={handleUpdateAddress} id="pharmCity" variant="outlined" fullWidth required />
+                    <TextField label="State" onChange={handleUpdateAddress} id="pharmState" variant="outlined" fullWidth required />
+                    <TextField label="Zip Code" onChange={handleUpdateAddress} id="pharmZipcode" variant="outlined" fullWidth required />
+                    <TextField label="Phone Number" onChange={handleNewPhone} variant="outlined" fullWidth required />
+                    <TextField label="Email" onChange={handleNewEmail} variant="outlined" fullWidth required />
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
