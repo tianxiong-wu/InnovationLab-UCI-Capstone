@@ -41,9 +41,9 @@ function App() {
 
   return (
     <UserContext.Provider value={providerValue}>
+      <TutorialContext.Provider value={tutorialProviderValue}>
       {user !== null && user.role === "patient" ? 
         <Router>
-          <TutorialContext.Provider value={tutorialProviderValue}>
             <PatientNav/>
               <Switch>
                 <Route path="/faq" component={FAQPage}/>
@@ -57,7 +57,6 @@ function App() {
                 <Route component = {Error}/>
               </Switch>
             <Footer/>
-          </TutorialContext.Provider>
         </Router> : user !== null && user.role === "pharmacist" ?
         <PatientContext.Provider value={patientProviderValue}>
           <Router>
@@ -67,6 +66,7 @@ function App() {
               <Route path="/Tutorials" component={PharmTutorials}/>
               <Route path="/settings" component={PharmSettings}/>
               <Route path="/pharmAssign" component={PharmAssign}/>
+              <Route path="/tutorialPage" component={TutorialPage}/>
               <Route path="/" component={PharmacistHome}/>
               <Route component = {Error}/>
             </Switch>
@@ -83,6 +83,7 @@ function App() {
           </Switch>
         </Router>
         }
+      </TutorialContext.Provider>
     </UserContext.Provider>
   );
 }

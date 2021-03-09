@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import {PatientContext} from "../../PatientContext";
-import { makeStyles, useTheme, withTheme } from '@material-ui/core/styles';
+import {UserContext} from "../../UserContext";
+import {TutorialContext} from "../../TutorialContext";
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import {Button} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,7 +26,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-
+import {
+    BrowserRouter as Router,
+    Route,
+    Link
+  } from "react-router-dom";
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -103,9 +108,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function PharmTutorialList(){
     const classes = useStyles();
-    const theme = useTheme();
-    const history = useHistory();
     const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
+    const {user, setUser} = useContext(UserContext);
+    const {tutorial, setTutorial} = useContext(TutorialContext);
     const [tutorialArchive, setArchive] = useState([]);
     const [tutorialName, setTutorialName] = useState("");
     const [tutorialDescription, setTutorialDescription] = useState("");
@@ -123,8 +128,18 @@ export default function PharmTutorialList(){
     const [gridBools, setGridBools] = useState(["false"])
     const [openTutorialForm, setOpenTutorialForm] = useState(false);
     const [openTutorialFormTwo, setOpenTutorialFormTwo] = useState(false);
-    const [selectedTutorial, setSelectedTutorial] = useState("");
+    const [tutorialSelect, setTutorialSelect] = useState(null);
+    const [openTutorialPrompt, setTutorialPrompt] = useState(false);
 
+    const handleTutorialPrompt = (event) => {
+        tutorialArchive.map(tutorial => {
+            if (tutorial._id === event.target.id){
+                setTutorialSelect(tutorial.name);
+                setTutorial(tutorial);
+            }
+        })
+        setTutorialPrompt(!openTutorialPrompt);
+    }
     const handleTutorialForm = () => {
         setOpenTutorialForm(!openTutorialForm);
     }
@@ -200,10 +215,6 @@ export default function PharmTutorialList(){
         setOpenTutorialFormTwo(!openTutorialFormTwo);
     }
 
-    const handleChange = (id) => {
-        history.push('/Tutorial/' + id);
-    }
-
     useEffect ( () => {
         axios.get('http://localhost:5000/tutorials/all').then(res => {
             setArchive(res.data);
@@ -217,7 +228,7 @@ export default function PharmTutorialList(){
                 </CardContent>
             </Card>
             {tutorialArchive.length !== 0 ? tutorialArchive.map((item) => {
-                return  <Card onClick={() => handleChange(item._id)} className={classes.root}>
+                return  <Card className={classes.root}>
                             <CardMedia
                                 className={classes.cover}
                                 image={item.tutorials[0].video.thumbnail}
@@ -236,7 +247,7 @@ export default function PharmTutorialList(){
                                     </Typography>
                                 </CardContent>
                             </div>
-                            <ArrowForwardIosIcon className={classes.btn}></ArrowForwardIosIcon>
+                            <ArrowForwardIosIcon onClick={handleTutorialPrompt} id={item._id} className={classes.btn}></ArrowForwardIosIcon>
                         </Card>
             })
         : "Loading..."}
@@ -306,6 +317,29 @@ export default function PharmTutorialList(){
                     Submit
                 </Button>
                 </DialogActions>
+        </Dialog>
+        <Dialog
+            open={openTutorialPrompt}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleTutorialPrompt}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle>Tutorial Select</DialogTitle>
+            <DialogContent>
+            <DialogContentText>
+                <Typography>Go to {tutorialSelect} Tutorial? </Typography>
+            </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            <Button onClick={handleTutorialPrompt} color="primary">
+                Close
+            </Button>
+            <Link to="/tutorialPage"><Button disabled={tutorial === null} variant="contained" color="primary">
+                View
+            </Button></Link> 
+            </DialogActions>
         </Dialog>
         </div>
 }
