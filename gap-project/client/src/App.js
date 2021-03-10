@@ -69,7 +69,6 @@ function App() {
               <Route path="/" component={PharmacistHome}/>
               <Route component = {Error}/>
             </Switch>
-            <PharmFooter/>
           </Router>
         </PatientContext.Provider> :
         <Router>
