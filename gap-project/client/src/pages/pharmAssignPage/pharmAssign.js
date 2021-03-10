@@ -218,8 +218,7 @@ export default function PharmAssign() {
         axios.post(`http://localhost:5000/patients/updateCheckin/${patient._id}`, nextCheckObj).then(res => {
             console.log(res);
         });
-        //setOpenCheckinForm(!openCheckinForm); 
-        console.log(nextCheckObj);
+        setOpenCheckinForm(!openCheckinForm); 
     }
     // Patient Infusion Type States
     const [infusionType, setInfusionType] = useState("");

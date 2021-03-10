@@ -61,6 +61,7 @@ export default function PatientHome(props){
     const getNextInfusion = () => {
         let today = new Date().getTime();
         let eventArr = [];
+        console.log(user);
         for (let i = 0; i < user.events.length; i++){
             if (today < new Date(user.events[i].notifyAt).getTime()){
                 eventArr.push(user.events[i])
@@ -69,9 +70,16 @@ export default function PatientHome(props){
         eventArr.sort(function(a,b){
             return new Date(b.date) - new Date(a.date);
         })
-        let dayMonthYear = new Date(eventArr[0].notifyAt).toLocaleDateString("en-US", options);
-        let dateTime = formatTime(new Date(eventArr[0].notifyAt));
-        return [`${dayMonthYear} at ${dateTime}.`, eventArr[0].tutorialId]
+        console.log(eventArr);
+        if (eventArr.length > 0){
+            let dayMonthYear = new Date(eventArr[0].notifyAt).toLocaleDateString("en-US", options);
+            let dateTime = formatTime(new Date(eventArr[0].notifyAt));
+            return [`${dayMonthYear} at ${dateTime}.`, eventArr[0].tutorialId]
+        } 
+        else {
+            return ['not set yet.', null]
+        }
+
     }
 
     const dayMonthYear = (date) => {
@@ -128,18 +136,18 @@ export default function PatientHome(props){
                 <Grid container justify="center" >
                     <Grid item xs={2}></Grid>
                         <Grid item xs={8}>
-                            <Typography variant="h5" className="nextInfusionSummary">{user.events.length === 0 ? `Hi ${user.firstName}, you have no upcoming infusions.` : `Hi ${user.firstName}, your next infusion is on ${nextInfusion[0]}`}</Typography>
+                            <Typography variant="h5" className="nextInfusionSummary">{user.events.length === 0 ? `Hi ${user.firstName}, you have no upcoming infusions.` : `Hi ${user.firstName}, your next infusion is ${nextInfusion[0]}`}</Typography>
                         </Grid>
                         <Grid item xs={2}></Grid>
                         <Grid item xs={8} sm={8} md={4} className="widgetContainer">
                             <div>
                                 <div className="infusionWidget" onClick={()=>handleChange(0)}>
                                     <div className="infusionVideoContainer">
-                                        {user.events.length === 0 ? <img src="https://picsum.photos/seed/picsum/200/300" className="infusionThumbnail"></img>
+                                        {nextInfusion[1] === null ? <img src="https://picsum.photos/seed/picsum/200/300" className="infusionThumbnail"></img>
                                         : <img src={findThumbnail()} onClick={handleTutorialPrompt}/>}
                                     </div>
                                     <div className="infusionLabel">
-                                        <Typography variant="h5">{user.infusionArray.length === 0 ? "No Upcoming Events." : <span onClick={handleTutorialPrompt}>Next Infusion: {user.infusionArray[0].name}</span>}</Typography>
+                                        <Typography variant="h5">{nextInfusion[1] === null ? "No Upcoming Events." : <span onClick={handleTutorialPrompt}>Next Infusion: {user.infusionArray[0].name}</span>}</Typography>
                                     </div>
                                 </div>
                                 <div className="notifWidget">
