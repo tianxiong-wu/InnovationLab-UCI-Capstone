@@ -686,7 +686,7 @@ export default function PharmAssign() {
                                     <Button onClick={handleDeleteEventForm} color="primary">
                                         Close
                                     </Button>
-                                    <Button onClick={handleDeletePatientEvent} variant="contained" color="primary">
+                                    <Button onClick={handleDeletePatientEvent} variant="contained" color="secondary">
                                         Delete
                                     </Button>
                                     </DialogActions>
@@ -766,7 +766,7 @@ export default function PharmAssign() {
                                     <Button onClick={handleDeleteTutorialForm} color="primary">
                                         Close
                                     </Button>
-                                    <Button onClick={handleDeletePatientTutorial} variant="contained" color="primary">
+                                    <Button onClick={handleDeletePatientTutorial} variant="contained" color="secondary">
                                         Delete
                                     </Button>
                                     </DialogActions>
