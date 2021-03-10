@@ -127,7 +127,7 @@ export default function PatientSettings(){
         const values = {
             "phoneNumber": phone,
             "email": email,
-            "birthday": "12/26/1997",
+            "birthday": new Date(user.birthday),
         }
 
         let userId = String(user._id);

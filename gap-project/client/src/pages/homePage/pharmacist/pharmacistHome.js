@@ -62,7 +62,7 @@ export default function PharmacistHome(props){
         return search;
     }
     const dayMonthYear = (date) => {
-        let dd = String(date.getDate()+1);
+        let dd = String(date.getDate());
         let mm = String(date.getMonth()+1);
         let yy = String(date.getFullYear());
         let dateString = `${mm}/${dd}/${yy}`;
