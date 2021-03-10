@@ -56,7 +56,6 @@ function App() {
                 <Route path="/" component={PatientHome}/>
                 <Route component = {Error}/>
               </Switch>
-            <Footer/>
         </Router> : user !== null && user.role === "pharmacist" ?
         <PatientContext.Provider value={patientProviderValue}>
           <Router>
@@ -70,7 +69,6 @@ function App() {
               <Route path="/" component={PharmacistHome}/>
               <Route component = {Error}/>
             </Switch>
-            <PharmFooter/>
           </Router>
         </PatientContext.Provider> :
         <Router>
@@ -88,3 +86,6 @@ function App() {
   );
 }
 export default App;
+
+/**
+ */

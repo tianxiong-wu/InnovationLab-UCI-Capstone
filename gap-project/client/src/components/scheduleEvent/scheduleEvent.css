@@ -1,3 +1,4 @@
+
 .infusionTime{
     background-color: #00529b;
     color: white;
@@ -23,12 +24,13 @@
     height: 10vh;
     display: flex;
     flex-direction: row;
+    text-align: center;
 }
 
 .infusionTimeDialog{
     background-color: #00529b;
     color: white;
-    width: 10%;
+    width: 8rem;
     font-size: 1rem !important;
     text-align: center;
     line-height: 3.5rem;
@@ -39,7 +41,8 @@
 
 .infusionNameDialog{
     color: #00529b;
-    width: 28%;
+    width: 50vw !important;
+    max-width: 420px !important;
     font-size: 1.5rem !important;
     text-align: center;
     line-height: 3.5rem;
@@ -47,7 +50,6 @@
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
     height: 98%;
-    margin-top: .05%;
 }
 
 .viewTutorial{

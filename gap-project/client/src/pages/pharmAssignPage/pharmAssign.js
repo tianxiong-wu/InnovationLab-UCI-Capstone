@@ -106,7 +106,6 @@ const TutorialsList = ()=>{
                     </Typography>
                 </CardContent>
             </div>
-            <ArrowForwardIosIcon className="arrowIcon" style={{border:'none'}}></ArrowForwardIosIcon>
         </Card>
     }):"Loading..."}</>
 }
