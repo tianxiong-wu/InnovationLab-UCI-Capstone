@@ -125,7 +125,7 @@ export default function PatientHome(props){
     return(
        <div className={classes.root}>
             <ThemeProvider theme={theme}>
-                <Grid container justify="center" spacing={3}>
+                <Grid container justify="center" >
                     <Grid item xs={2}></Grid>
                         <Grid item xs={8}>
                             <Typography variant="h5" className="nextInfusionSummary">{user.events.length === 0 ? `Hi ${user.firstName}, you have no upcoming infusions.` : `Hi ${user.firstName}, your next infusion is on ${nextInfusion[0]}`}</Typography>
