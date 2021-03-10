@@ -2,10 +2,7 @@
 	.footerContainer{
 		width: 100%;
 		bottom: 0;
-		position: absolute;
-		clear: both;
-
-
+		position: sticky;
 	}
 	
 	.liveHelpBar{
@@ -19,17 +16,6 @@
 		box-shadow: inset 0px -3px 3px #BE6E00, inset 0px 3px 3px #FFC87C;
 	}
 	
-	.contactBar{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	
-		width: 100%;
-		color: white;
-		background-color: #00529B;
-		box-shadow: inset 0px -3px 3px #003C72, inset 0px 3px 3px #70ADE3; 
-	}
-	
 	.footerLink{
 		text-decoration: none;
 		color: white;
@@ -40,7 +26,7 @@
 	.footerContainer{
 		width: 100%;
 		bottom: 0;
-		position: sticky;
+		position: absolute;
 	}
 
 	.liveHelpBar{
@@ -51,17 +37,6 @@
 		color: white;
 		background-color: #E0952F;
 		box-shadow: inset 0px -3px 3px #BE6E00, inset 0px 3px 3px #FFC87C;
-	}
-
-	.contactBar{
-		display: none;
-		justify-content: center;
-		align-items: center;
-
-		width: 100%;
-		color: white;
-		background-color: #00529B;
-		box-shadow: inset 0px -3px 3px #003C72, inset 0px 3px 3px #70ADE3; 
 	}
 
 	.footerLink{
