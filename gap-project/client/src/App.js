@@ -7,6 +7,7 @@ import {
 import './App.css';
 import PatientNav from './components/patientNav/patientNav';
 import NavPharmResponsive from "./components/navPharmResponsive/navPharmResponsive";
+import AuthNav from './components/authNav/authNav';
 import PharmContact from './pages/pharmContact/pharmContact';
 import FAQPage from './pages/FAQPage/faq';
 import PatientHome from './pages/homePage/patient/patientHome';
@@ -28,7 +29,6 @@ import { PatientContext } from './PatientContext';
 import { TutorialContext } from './TutorialContext';
 import LoginForm from './components/loginForm/loginForm';
 import SignUpForm from './components/signUpForm/signUpForm';
-import AuthNav from './components/authNav/authNav';
 function App() {
   const [user, setUser] = useState(null);
   const providerValue = useMemo(() => ({user, setUser}), [user, setUser]);
@@ -86,6 +86,3 @@ function App() {
   );
 }
 export default App;
-
-/**
- */

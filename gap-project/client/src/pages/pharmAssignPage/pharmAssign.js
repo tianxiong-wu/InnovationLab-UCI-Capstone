@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 0,
     },
     summary: {
-        //marginBottom: 30,
         overflowY: 'hidden',
     },
     playIcon: {
@@ -78,7 +77,6 @@ const useStyles = makeStyles((theme) => ({
         width: 38,
     },
 }));
-
 
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
@@ -116,6 +114,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function PharmAssign() {
     const classes = useStyles();
+    const theme = useTheme();
     const {user, setUser} = useContext(UserContext); // pharmacist account context
     const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
     const [todaysSchedule, setTodaysSchedule] = useState([]); // today's schedule for the patient
@@ -210,14 +209,9 @@ export default function PharmAssign() {
         if (updateRecentCheck === "yes"){
             let newRecentCheck = patient.nextCheckIn;
             let recentCheckObj = { "recentCheckIn" : new Date(newRecentCheck) }
-            console.log(recentCheckObj);
-            axios.post(`http://localhost:5000/patients/updateRecentCheckin/${patient._id}`, recentCheckObj).then(res => {
-                console.log(res);
-            });
+            axios.post(`http://localhost:5000/patients/updateRecentCheckin/${patient._id}`, recentCheckObj);
         }
-        axios.post(`http://localhost:5000/patients/updateCheckin/${patient._id}`, nextCheckObj).then(res => {
-            console.log(res);
-        });
+        axios.post(`http://localhost:5000/patients/updateCheckin/${patient._id}`, nextCheckObj);
         setOpenCheckinForm(!openCheckinForm); 
     }
     // Patient Infusion Type States
@@ -232,11 +226,8 @@ export default function PharmAssign() {
     }
 
     const handleUpdateType = () => {
-        console.log(infusionType);
-        console.log(infusionType.split(';'));
         const value = { "infusionType": infusionType.split(';')}
         axios.post(`http://localhost:5000/patients/updateInfusionType/${patient._id}`, value).then(res => {
-            console.log(res);
         })
         setOpenTypeForm(!openTypeForm);
     }
@@ -245,9 +236,6 @@ export default function PharmAssign() {
     const handleInfoSelection = (event) => {
         setInfoSelection(event.target.value);
     }
-
-    const theme = useTheme();
-
     const formatTime = (date) => {
         let hours = date.getHours();
         let minutes = date.getMinutes();
@@ -294,14 +282,12 @@ export default function PharmAssign() {
     const handleNewEventId = (event) => {
         setEventId(event.target.value);
     }
-
     const handleEventForm = () => {
         setOpenEventForm(!openEventForm);
     }
     const handleTutorialForm = () => {
         setOpenTutorialForm(!openTutorialForm);
     }
-
     const handleDeleteEventForm = () => {
         setOpenDeleteEventForm(!openDeleteEventForm);
     }
@@ -341,11 +327,9 @@ export default function PharmAssign() {
         })
         handleDeleteEventForm();
     }
-
     const handleSelectedArchive = (event) => {
         setAddTutorial(event.target.value);
     }
-
     const handleAddPatientTutorial = () => {
         // get current infusion array of patient, add the selected one, post to route
         let currentArr = patient.infusionArray;
@@ -368,11 +352,9 @@ export default function PharmAssign() {
         axios.post(`http://localhost:5000/patients/updateInfusion/${patient._id}`, values);
         handleDeleteTutorialForm();
     }
-
     const handleNewTutorialId = (event) => {
         setSelectedTutorial(event.target.value);
     }
-
     const handleNewArchive = (event) => {
         setSelectedArchive(event.target.value);
     }
@@ -412,7 +394,7 @@ export default function PharmAssign() {
                                 <Typography variant="h6">Phone: {patient !== null ? `(${patient.phoneNumber.slice(0,3)}) ${patient.phoneNumber.slice(3,6)}-${patient.phoneNumber.slice(6)}` : "Loading..."}</Typography>
                                 <Typography variant="h6">Email: {patient !== null ? patient.email : "Loading..."}</Typography>
                             </div>
-                            <div className="">
+                            <div>
                                 <div className="assignNotificationLabel">
                                     <FormControl >
                                             <Select

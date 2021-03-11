@@ -40,6 +40,8 @@ export default function SignUpForm(props){
 
     // Phone validation
     const phone = require('fonz.js');
+
+    // Password Validator
     var passwordValidator = require('password-validator');
     var schema = new passwordValidator();
     schema
@@ -65,6 +67,7 @@ export default function SignUpForm(props){
     const [repeatPassword, setRepeatPassword] = useState("");
     const [loginLanding, setLoginLanding] = useState(false);    
   
+    // User and Pharmacist Objects for Sign up to pass to backend
     const user = {
       firstName: firstName,
       lastName: lastName,
@@ -86,38 +89,28 @@ export default function SignUpForm(props){
       password: password,
       role: role
     }
-
-    const toggleOne = () => {
-      setSignupLanding(false);
-      setRoleLanding(true);
-    }
-
     const toggleRoleSelect = () => {
       setRoleLanding(false);
       setSignupFormPageOne(true);
     }
-
     const toggleRoleTwo = () => {
       setSignupFormPageOne(false);
       setRoleLanding(true);
     }
-
     const toggleTwo = () => {
       setSignupFormPageOne(false);
       setSignupFormPageTwo(true);
     }
 
+    // On click handler for sending data to backend for register user
     const toggleThree = () => {
       setSignupFormPageTwo(false);
       setSuccessPage(true);
-      
       if (role === "patient"){
       axios.post(`http://localhost:5000/patients/register`, user).then(res=>{
-        console.log(res);
       })}
       else if (role === "pharmacist"){
         axios.post(`http://localhost:5000/pharmacists/register`, pharmacistUser).then(res=>{
-        console.log(res);
       })}
     }
 
@@ -125,7 +118,6 @@ export default function SignUpForm(props){
       setSignupFormPageTwo(false);
       setSignupFormPageOne(true);
     }
-
     const toggleFive = () => {
       setSuccessPage(false);
     }
@@ -148,27 +140,21 @@ export default function SignUpForm(props){
     const handleFirstNameChange = (event) => {
         setFirstName(event.target.value);
     }
-
     const handleLastNameChange = (event) => {
         setLastName(event.target.value);
     }
-
     const handleBirthdateChange = (event) => {
       setBirthdate(event.target.value);
     }
-
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
     }
-
     const handlePasswordChange = (event) => {
         setPassword(event.target.value);
     }
-
     const handlePhoneNumberChange = (event) => {
         setPhoneNumber(event.target.value);
     }
-
     const handleRepeatChange = (event) => {
         setRepeatPassword(event.target.value);
     }
@@ -256,6 +242,7 @@ export default function SignUpForm(props){
               {successPage === true ? 
                 <Grid item xs={10} md={6}>
                   <div className="formDiv">
+                    {/* Whitelabeling image */}
                     <img src="https://picsum.photos/seed/picsum/200/300" className="signupSuccessPhoto"/>
                     <Typography variant="h5" align="center" className="signupSuccessTypography">Congratulations!</Typography>
                     <Typography variant="h5" align="center">Your account is ready</Typography>

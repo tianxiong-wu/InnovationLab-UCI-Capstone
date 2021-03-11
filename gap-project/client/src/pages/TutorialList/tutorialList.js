@@ -92,6 +92,3 @@ export default function TutorialList(){
         </Grid>
     )
 }
-/*
-    <Link to="/tutorialPage" onClick={handleTutorialId(infusion)} className="arrowButton"></Link>
-*/

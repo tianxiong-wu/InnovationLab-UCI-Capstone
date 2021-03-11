@@ -40,8 +40,6 @@ const useStyles = makeStyles((theme) => ({
         borderStyle: 'solid',
         borderRadius: '20px'
     }
-
-
 }));
     
 export default function Contact() {
@@ -52,14 +50,12 @@ export default function Contact() {
     const [pharmEmail, setPharmEmail] = useState("");
     
     useEffect( () => {
-        
-
         axios.get('http://localhost:5000/pharmacy/all').then(res => {
             let address = {'streetName': "", 'city': "", 'state': "", 'zipCode': ""};
             let phone = "";
             let email = "";
             let name = "";
-            console.log(res.data);
+
             for (const [key, val] of Object.entries(res.data[0])){
                 if (key === 'streetName' || key === 'city' || key === 'state' || key === 'zipCode'){
                     address[key] = val;
@@ -99,8 +95,6 @@ export default function Contact() {
                 
                 <Grid item xl={2} lg={2} xs={2}></Grid>
             </Grid>
-
-            {/* bottom half */}
             <Grid container spacing={2}>
                 <Grid item xs={2}></Grid>
 
@@ -143,7 +137,6 @@ export default function Contact() {
                             </CardContent>
                         </Card>
                 </Grid>
-
                 <Grid item xs={2} sm={4} md={2} lg={2} xl={2}></Grid>
             </Grid>
         </Container>

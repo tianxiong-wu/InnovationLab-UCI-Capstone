@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {PatientContext} from "../../PatientContext";
-import {UserContext} from "../../UserContext";
 import {TutorialContext} from "../../TutorialContext";
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -14,10 +12,6 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -45,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
         display:'inline-block',
-        // float:'left',
         margin:'2vw',
         marginLeft: '8vw',
         backgroundColor: '#3F51B5',
@@ -82,7 +75,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: 0,
     },
     summary: {
-        //marginBottom: 30,
         overflowY: 'hidden',
         height: '80px',
     },
@@ -108,8 +100,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function PharmTutorialList(){
     const classes = useStyles();
-    const {patient, setPatient} = useContext(PatientContext); // current patient in focus, context
-    const {user, setUser} = useContext(UserContext);
     const {tutorial, setTutorial} = useContext(TutorialContext);
     const [tutorialArchive, setArchive] = useState([]);
     const [tutorialName, setTutorialName] = useState("");
@@ -210,7 +200,6 @@ export default function PharmTutorialList(){
             values["tutorials"][i]["video"]["thumbnail"] = parseThumbnail(values["tutorials"][i]["video"]["url"]);
         }
         axios.post(`http://localhost:5000/tutorials/add`, values).then(res => {
-            console.log(res);
         });
         setOpenTutorialFormTwo(!openTutorialFormTwo);
     }

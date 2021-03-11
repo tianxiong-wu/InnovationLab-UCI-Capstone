@@ -12,7 +12,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import logo from "../../innovation.png";
 import "../patientNav/patientNav.css"
-import axios from 'axios';
 import {
     BrowserRouter as Router,
     Route,
@@ -30,37 +29,33 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientNav(){
     const classes = useStyles();
-    
     const {user, setUser} = useContext(UserContext);
-
     const [auth, setAuth] = useState(true);
+
     const [profileAnchor, setProfileAnchor] = React.useState(null);
     const [hamburgerAnchor, setHamburgerAnchor] = React.useState(null);
     const openProfile = Boolean(profileAnchor);
     const openHamburger = Boolean(hamburgerAnchor);
+
     const [hbIcon, setHbIcon] = React.useState(true);
     const [closeIcon, setCloseIcon]= React.useState(false);
 
     const handleProfile = (event) => {
         setProfileAnchor(event.currentTarget);
     };
-
     const handleCloseProfile = () => {
         setProfileAnchor(null);
     };
-
     const handleHamburger = (event) => {
         setHamburgerAnchor(event.currentTarget);
         setHbIcon(false);
         setCloseIcon(true);
     };
-
     const handleHamburgerClose = () => {
         setHamburgerAnchor(null);
         setHbIcon(true);
         setCloseIcon(false);
     }
-
     const handleLogout = () => {
         setUser(null);
     }

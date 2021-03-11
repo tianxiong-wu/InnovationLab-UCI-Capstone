@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useContext} from "react";
 import { UserContext } from "../../UserContext";
 import "./profile.css";
 import Grid from "@material-ui/core/Grid";
@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 export default function PatientProfile(){
 
     const {user, setUser} = useContext(UserContext);
-
 
     return(
         <Grid container className="profileContainer">

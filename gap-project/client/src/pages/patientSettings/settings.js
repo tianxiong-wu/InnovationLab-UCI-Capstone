@@ -110,7 +110,7 @@ export default function PatientSettings(){
     }
 
     const updatePatientSettings = () => {
-        /* if updateNotify type was implemented
+        /* if updateNotify type endpoint was implemented
         let type = "";
         if (notifyEmail === "Yes" && notifyPhone === "Yes"){
             type = "both"
@@ -131,9 +131,7 @@ export default function PatientSettings(){
         }
 
         let userId = String(user._id);
-        axios.post(`http://localhost:5000/patients/updateInfo/${userId}`, values).then(res => {
-            console.log(res);
-        })
+        axios.post(`http://localhost:5000/patients/updateInfo/${userId}`, values);
     }
 
     useEffect(() => {

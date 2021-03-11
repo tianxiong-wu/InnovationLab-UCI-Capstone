@@ -22,9 +22,6 @@ import axios from 'axios';
 
 
 const useStyles = makeStyles((theme) => ({
-    /*root: {
-        flexGrow: 1,
-    },*/
     darkBluePaper: {
       background: "#00529B"
     },
@@ -48,6 +45,7 @@ export default function PharmacistHome(props){
         })
     },[])
 
+    // Search patient names via string input
     const searchPatients = () => {
         let search=[];
         if (searchString === "" || searchString === null){
@@ -72,6 +70,7 @@ export default function PharmacistHome(props){
         setFilterSetting(event.target.value);
     }
 
+    // Sets the patient in focus to view there information for View profile button
     const handlePharmAssign = (event) => {
         let patientId = event.target.ariaLabel;
         for (let i = 0; i<patients.length; i++){
@@ -81,6 +80,7 @@ export default function PharmacistHome(props){
         }       
     }
 
+    // Dynamic filtering through array of patients
     const handleFilterPatients = () => {
         let patientList = searchPatients();
         if (filterSetting === ""){

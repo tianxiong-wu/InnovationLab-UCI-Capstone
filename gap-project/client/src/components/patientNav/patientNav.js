@@ -37,29 +37,26 @@ export default function PatientNav(){
     const [hamburgerAnchor, setHamburgerAnchor] = React.useState(null);
     const openProfile = Boolean(profileAnchor);
     const openHamburger = Boolean(hamburgerAnchor);
+
     const [hbIcon, setHbIcon] = React.useState(true);
     const [closeIcon, setCloseIcon]= React.useState(false);
 
     const handleProfile = (event) => {
         setProfileAnchor(event.currentTarget);
     };
-
     const handleCloseProfile = () => {
         setProfileAnchor(null);
     };
-
     const handleHamburger = (event) => {
         setHamburgerAnchor(event.currentTarget);
         setHbIcon(false);
         setCloseIcon(true);
     };
-
     const handleHamburgerClose = () => {
         setHamburgerAnchor(null);
         setHbIcon(true);
         setCloseIcon(false);
     }
-
     const handleLogout = () => {
         setUser(null);
     }
@@ -104,6 +101,7 @@ export default function PatientNav(){
                         </Menu>
                     </div>
                     <IconButton edge="start" id="logoIcon" color="#00529b" aria-label="menu">
+                        {/* Replace logo by changing image source for whitelabeling */}
                         <img src={logo} alt="Logo" className="siteIcon"/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>

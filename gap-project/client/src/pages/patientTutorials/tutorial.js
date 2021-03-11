@@ -6,10 +6,8 @@ import Tutorial from "../TutorialPage/tutorial";
 import axios from 'axios';
 
 export default function PatientTutorials(){
-
     const {user, setUser} = useContext(UserContext);
-
-
+    
     const [tutorials, setTutorials] = useState([]);
     const [tutorialsClicked, setTutorialsClicked] = useState([]);
     const [tutorialsLoaded, setTutorialsLoaded] = useState(false);

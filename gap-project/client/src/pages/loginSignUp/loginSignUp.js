@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import SignUpForm from "../../components/signUpForm/signUpForm";
-import LoginForm from "../../components/loginForm/loginForm";
-import Typography from "@material-ui/core/Typography";
 import {
     BrowserRouter as Router,
     Route,
@@ -11,7 +8,7 @@ import { Grid } from "@material-ui/core";
 import '../loginSignUp/loginSignUp.css'
 
 export default function LoginSignUp(){
-
+    // Parent component to hold the login and signup interfaces
     const [buttonClicked, setButtonClicked] = useState(false);
     const handleClick = () => {
         setButtonClicked(!buttonClicked);

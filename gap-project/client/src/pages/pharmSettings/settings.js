@@ -22,12 +22,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import axios from 'axios';
-import {FormControl, 
-        FormLabel,
-        Radio, 
-        RadioGroup, 
-        FormControlLabel} from '@material-ui/core';
-import CreateIcon from '@material-ui/icons/Create';
 import './settings.css'
 
 function TabPanel(props) {
@@ -101,17 +95,11 @@ function TabPanel(props) {
 
 export default function PatientSettings(){
 
-    const {user, setUser} = useContext(UserContext);
-
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
     const [currentPass, setCurrentPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [repeatPass, setRepeatPass] = useState("");
-    const [notifyPhone, setNotifyPhone] = useState("Yes");
-    const [notifyEmail, setNotifyEmail] = useState("Yes");
     const [pharmName, setPharmName] = useState("");
     const [pharmAddress, setPharmAddress] = useState({});
     const [pharmPhone, setPharmPhone] = useState("");
@@ -121,7 +109,6 @@ export default function PatientSettings(){
     
     useEffect( () => {
         axios.get('http://localhost:5000/pharmacy/all').then(res => {
-            console.log(res.data[0]._id);
             let address = {'streetName': "", 'city': "", 'state': "", 'zipCode': ""};
             let phone = "";
             let email = "";
@@ -160,7 +147,6 @@ export default function PatientSettings(){
     const handleRepeatPass = (event, newValue) => {
         setRepeatPass(newValue);
     }
-
     const handleNewPhone = (event) => {
         setPharmPhone(event.target.value);
     }

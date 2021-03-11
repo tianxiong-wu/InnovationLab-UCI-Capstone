@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from "react";
-import { UserContext } from "../../UserContext";
 import {TutorialContext} from "../../TutorialContext";
 import {Grid, Typography, Button} from "@material-ui/core";
 import "./tutorial.css"
@@ -9,10 +8,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
-import {Card, CardMedia, CardContent} from '@material-ui/core';
 import KeyboardArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -25,7 +22,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import ReactPlayer from "react-player";
 import Speech from "react-speech";
-import axios from 'axios';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -80,35 +76,24 @@ function TabPanel(props) {
   }));
 
 export default function TutorialPage(props){    
-
-    const {user, setUser} = useContext(UserContext);
-    const {tutorial, setTutorial} = useContext(TutorialContext);
-
     const classes = useStyles();
-
-    useEffect(() => {
-        console.log(tutorial);
-    },[])
+    const {tutorial, setTutorial} = useContext(TutorialContext);
 
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     }
-
     const [navValue, setNavValue] = useState(0);
     const handleNavChange = (event, newValue) => {
         setNavValue(newValue);
     }
-
     const [playing, setPlaying] = useState(false);
     const handlePause = (event) => {
         setPlaying(false);
     }
-
     const handlePlay = (event) => {
         setPlaying(true);
     }
-
     const [descOpen, setOpenDesc] = React.useState(false);
     const handleClickOpenDesc = () => {
         setOpenDesc(true);
@@ -116,7 +101,6 @@ export default function TutorialPage(props){
     const handleCloseDesc = () => {
         setOpenDesc(false);
     }
-
     const [stepOpen, setOpenStep] = React.useState(false);
     const handleClickOpenStep = () => {
         setOpenStep(true);
@@ -124,7 +108,6 @@ export default function TutorialPage(props){
     const handleCloseStep = () => {
         setOpenStep(false);
     };
-
     const [notesOpen, setOpenNotes] = React.useState(false);
     const handleClickOpenNotes = () => {
         setOpenNotes(true);
@@ -132,19 +115,13 @@ export default function TutorialPage(props){
     const handleCloseNotes = () => {
         setOpenNotes(false);
     };
-
     const [videoCounter, setVideoCounter] = useState(0);
-
     const handleNextVideo = () => {
-        console.log(tutorial.tutorials);
-        console.log(tutorial.tutorials[videoCounter]);
-        console.log(tutorial.tutorials[videoCounter + 1].video.url);
         if (videoCounter < tutorial.tutorials.length-1){
             let newCount = videoCounter + 1;
             setVideoCounter(newCount);
         }
     }
-
     const handlePrevVideo = () => {
         if (videoCounter > 0){
             let newCount = videoCounter - 1;

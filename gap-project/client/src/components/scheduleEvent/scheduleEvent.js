@@ -2,13 +2,10 @@ import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../UserContext";
 import { TutorialContext } from "../../TutorialContext";
 import "./scheduleEvent.css";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import {
     BrowserRouter as Router,
@@ -28,13 +25,10 @@ export default function ScheduleEvent(props){
     const [openTutorialPrompt, setTutorialPrompt] = useState(false);
 
     const handleTutorialPrompt = (event) => {
-        console.log(user.infusionArray);
-        console.log(props.tutorialId);
         user.infusionArray.map(tutorial => {
             if (tutorial._id === props.tutorialId){
                 setTutorialSelect(tutorial.name);
                 setTutorial(tutorial);
-                console.log("true");
             }
         })
         setTutorialPrompt(!openTutorialPrompt);

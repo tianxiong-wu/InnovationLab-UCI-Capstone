@@ -39,10 +39,12 @@ export default function PatientHome(props){
     const classes = useStyles();
     const history = useHistory();
     const {user, setUser} = useContext(UserContext);
+    // Tutorial context allows us to determine which tutorial to redirect to via its id. 
     const {tutorial, setTutorial} = useContext(TutorialContext);
-    const [nextInfusion, setNextInfusion] = useState("");
-    const [todaysSchedule, setTodaysSchedule] = useState([]);
-    const [tutorialSelect, setTutorialSelect] = useState(null);
+
+    const [nextInfusion, setNextInfusion] = useState(""); // Next infusion based on the earliest item in an array for all events after the current time 
+    const [todaysSchedule, setTodaysSchedule] = useState([]); // Schedule events of the day
+    const [tutorialSelect, setTutorialSelect] = useState(null); // Selected tutorial to view
     const [openTutorialPrompt, setTutorialPrompt] = useState(false);
 
     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
@@ -58,10 +60,11 @@ export default function PatientHome(props){
         return strTime
     }
 
+    // Called on useEffect to find the next infusion
     const getNextInfusion = () => {
         let today = new Date().getTime();
         let eventArr = [];
-        console.log(user);
+
         for (let i = 0; i < user.events.length; i++){
             if (today < new Date(user.events[i].notifyAt).getTime()){
                 eventArr.push(user.events[i])
@@ -70,7 +73,6 @@ export default function PatientHome(props){
         eventArr.sort(function(a,b){
             return new Date(b.date) - new Date(a.date);
         })
-        console.log(eventArr);
         if (eventArr.length > 0){
             let dayMonthYear = new Date(eventArr[0].notifyAt).toLocaleDateString("en-US", options);
             let dateTime = formatTime(new Date(eventArr[0].notifyAt));
@@ -143,11 +145,11 @@ export default function PatientHome(props){
                             <div>
                                 <div className="infusionWidget" onClick={()=>handleChange(0)}>
                                     <div className="infusionVideoContainer">
-                                        {nextInfusion[1] === null ? <img src="https://picsum.photos/seed/picsum/200/300" className="infusionThumbnail"></img>
+                                        {nextInfusion[1] === null || user.infusionArray.length === 0 ? <img src="https://picsum.photos/seed/picsum/200/300" className="infusionThumbnail"></img>
                                         : <img src={findThumbnail()} onClick={handleTutorialPrompt}/>}
                                     </div>
                                     <div className="infusionLabel">
-                                        <Typography variant="h5">{nextInfusion[1] === null ? "No Upcoming Events." : <span onClick={handleTutorialPrompt}>Next Infusion: {user.infusionArray[0].name}</span>}</Typography>
+                                        <Typography variant="h5">{nextInfusion[1] === null || user.infusionArray.length === 0 ? "No Upcoming Events." : <span onClick={handleTutorialPrompt}>Next Infusion: {user.infusionArray[0].name}</span>}</Typography>
                                     </div>
                                 </div>
                                 <div className="notifWidget">
@@ -171,7 +173,6 @@ export default function PatientHome(props){
                                 <br/>
                                 {todaysSchedule.length === 0 ? <Typography variant="h4" align="center" className="noInfusions">No Infusions Today</Typography> 
                                 : todaysSchedule.map((item => {
-                                    console.log(item);
                                     return <ScheduleEvent time={formatTime(new Date(item.notifyAt))} name={item.title}/>
                                 }))}
                             </div>

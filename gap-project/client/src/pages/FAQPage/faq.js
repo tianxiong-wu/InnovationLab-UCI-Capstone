@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import SearchBar from "material-ui-search-bar";
-import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Questions from './question'
 import './faq.css'
@@ -12,6 +11,7 @@ export default function FAQ(){
     const [displayQuestions, setDisplayQuestions] = useState([{}]);
     const [value, setValue] = useState('');
 
+    // Retrieve all faq questions when the component first loads
     useEffect( () => {
         axios.get('http://localhost:5000/faqs/all').then(res => {
             let questionList = [];
@@ -22,6 +22,7 @@ export default function FAQ(){
         });
     }, []);
 
+    // Dynamic search function
     function handleSearch(val){
         if (val === ""){
             return;

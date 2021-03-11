@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../UserContext";
-import { TutorialContext } from "../../TutorialContext";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import ScheduleEvent from "../../components/scheduleEvent/scheduleEvent";
